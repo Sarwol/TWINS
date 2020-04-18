@@ -17,8 +17,11 @@ public class Tablero extends GridPane {
     private int filas;
     private int columnas;
     private List<Carta> baraja;
-    private int randomNumber;
-    private Carta cartaAIntroducir;
+    
+    public Tablero(int filas, int columnas, ArrayList<Carta> baraja){
+        this(filas, columnas);
+        this.baraja = baraja;
+    }
     
     public Tablero(int filas, int columnas) {
         super();
@@ -26,7 +29,57 @@ public class Tablero extends GridPane {
         this.columnas = columnas;
         baraja = new ArrayList();
     }
-
+    
+    
+    /**
+     * Distribuye las cartas de la baraja actual de manera aleatoria por el
+     * tablero. 
+     * La baraja debe tener tantas cartas como posiciones hay en el 
+     * tablero.
+     * La baraja debe estar compuesta solamente por cartas que tengan su 
+     * respectiva pareja (IMPLEMENTAR)
+     * @return retorna el tamaño de la baraja si esta es correcta.
+     * Retorna -1 si no tiene el número adecuado de cartas.
+     * Retorna -2 si alguna carta no tiene pareja (IMPLEMENTAR)
+     */
+    public int barajarTablero(){
+        
+        if(baraja.size() != filas * columnas){  // comprobar tamaño correcto
+            return -1;
+        }
+        
+        List<Carta> copiaBaraja = clonarBaraja(baraja);
+        Carta cartaAIntroducir = null;
+        
+        
+        for(int i = 0; i < columnas; i++){
+            for(int j = 0; j < filas; j++){
+                try{
+                    int randomNumber = (int) Math.floor(Math.random()*(copiaBaraja.size()));
+                    cartaAIntroducir = copiaBaraja.remove(randomNumber);
+                    super.add(cartaAIntroducir, i, j);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+           }
+        }
+        return baraja.size();   // baraja correcta
+    }
+    
+    /**
+     * Método auxiliar para copiar los elementos de una lista a otra.
+     * @param barajaOriginal
+     * @return Copia de la baraja original
+     */
+    public List<Carta> clonarBaraja(List<Carta> barajaOriginal){
+        List<Carta> copiaBaraja = new ArrayList<Carta>();
+        for(Carta carta : barajaOriginal){
+            copiaBaraja.add(carta);
+        }
+        
+        return copiaBaraja;
+    }
+    
     public int getFilas() {
         return filas;
     }
@@ -45,17 +98,5 @@ public class Tablero extends GridPane {
 
     public void setBaraja(List<Carta> baraja) {
         this.baraja = baraja;
-    }
-    
-    public void barajarTablero(){
-        for(int i = 0; i <= columnas; i++){
-            for(int j=0; i<= filas; j++){
-                try{
-                    randomNumber = (int) Math.floor(Math.random()*(baraja.size()-1));
-                    cartaAIntroducir = baraja.remove(randomNumber);
-                    super.add(cartaAIntroducir, i, j);
-                } catch(Exception e){}
-           }
-        }
     }
 }
