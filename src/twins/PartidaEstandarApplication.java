@@ -7,8 +7,10 @@ package twins;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -73,17 +75,25 @@ public class PartidaEstandarApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         
-        root = new Pane();
-        
-        tablero = new Tablero(ANCHURA_TABLERO, LONGITUD_TABLERO);
-        tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
-        tablero.barajarTablero();
-        
-        root.getChildren().add(tablero);
-        
-        Scene scene = new Scene(root, 700, 600);        
+//        root = new Pane();
+//        
+//        tablero = new Tablero(ANCHURA_TABLERO, LONGITUD_TABLERO);
+//        tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
+//        tablero.barajarTablero();
+//        
+//        root.getChildren().add(tablero);
+//        
+//        Scene scene = new Scene(root, 700, 600);        
+//        stage.setScene(scene);
+//        
+//        stage.show();
+
+        String partidaEstandarFXMLLocation = "." + File.separator + "src" + File.separator
+                + "presentation" + File.separator + "PartidaEstandar.fxml";
+        File partidaEstandarFXML = new File(partidaEstandarFXMLLocation);
+        Parent root = FXMLLoader.load(partidaEstandarFXML.toURI().toURL());
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        
         stage.show();
     }
     
