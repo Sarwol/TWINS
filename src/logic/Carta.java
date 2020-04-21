@@ -19,6 +19,7 @@ public class Carta extends Button{
     
     private int cartaID;
     private Image imagenInterior;
+    private Categoria categoira;
 
     /**
      * Creamos un Button sin texto y con una imagen.
