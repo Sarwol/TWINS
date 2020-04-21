@@ -19,7 +19,7 @@ public class Carta extends Button{
     
     private int cartaID;
     private Image imagenInterior;
-    private Categoria categoira;
+    private Categoria categoria;
 
     /**
      * Creamos un Button sin texto y con una imagen.
@@ -36,7 +36,15 @@ public class Carta extends Button{
        this.imagenInterior = imagenInterior;
        super.setText(new Integer(id).toString());
     }
-
+    
+    public Carta(int id, Image imagenInterior, Categoria category) {
+       super("", new ImageView(imagenInterior));
+       this.cartaID = id;
+       this.imagenInterior = imagenInterior;
+       this.categoria = category;
+       super.setText(new Integer(id).toString());
+       
+    }
     
 
 //    @Override
