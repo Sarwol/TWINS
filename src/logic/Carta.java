@@ -17,38 +17,62 @@ import javafx.scene.image.ImageView;
  */
 public class Carta extends Button{
     
-    private int id;
+    private int cartaID;
     private Image imagenInterior;
 
     /**
      * Creamos un Button sin texto y con una imagen.
-     * @param id
+     * @param cartaID
      * @param imagenInterior 
      */
+    
+    public Carta(){
+        super();
+    }
     public Carta(int id, Image imagenInterior) {
        super("", new ImageView(imagenInterior));
-       this.id = id;
+       this.cartaID = id;
        this.imagenInterior = imagenInterior;
+       super.setText(new Integer(id).toString());
+    }
+
+    
+
+//    @Override
+//    public boolean equals(Object o){
+//        if(!(o instanceof Carta)){return false;}
+//        
+//        Carta otra = (Carta) o;
+//        
+//        return otra.getCartaID() == this.getCartaID();
+//    }
+
+    public int getCartaID() {
+        return cartaID;
     }
 
     public Image getImagenInterior() {
         return imagenInterior;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setcartaID(int id) {
+        this.cartaID = id;
     }
 
     public void setImagenInterior(Image imagenInterior) {
         this.imagenInterior = imagenInterior;
         super.setGraphic(new ImageView(this.imagenInterior));
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
     
+//    @Override
+//    public int hashCode() {
+//        int hash = 7;
+//        hash = 59 * hash + this.cartaID;
+//        return hash;
+//    }
+    @Override
+     public String toString(){
+        return "[ID: " + getCartaID() + "]";
+     }
     
 }

@@ -18,9 +18,8 @@ public class Tablero extends GridPane {
     private int columnas;
     private List<Carta> baraja;
     
-    public Tablero(int filas, int columnas, ArrayList<Carta> baraja){
-        this(filas, columnas);
-        this.baraja = baraja;
+    public Tablero(){
+        super();
     }
     
     public Tablero(int filas, int columnas) {
@@ -30,7 +29,11 @@ public class Tablero extends GridPane {
         baraja = new ArrayList();
     }
     
-    
+    public Tablero(int filas, int columnas, ArrayList<Carta> baraja){
+        this(filas, columnas);
+        this.baraja = baraja;
+    }
+     
     /**
      * Distribuye las cartas de la baraja actual de manera aleatoria por el
      * tablero. 
