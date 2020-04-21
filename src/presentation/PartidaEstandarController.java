@@ -18,7 +18,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import logic.Carta;
+import logic.Puntuacion;
 import logic.Tablero;
 
 /**
@@ -33,6 +35,7 @@ public class PartidaEstandarController implements Initializable {
     private Tablero tablero;
     private List<Carta> parSelec;
     private ObservableList<Carta> parSeleccionado;
+    private Puntuacion puntuacion;
 
     /**
      * Initializes the controller class.
@@ -41,6 +44,7 @@ public class PartidaEstandarController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         parSelec = new ArrayList<Carta>();
+        puntuacion = new Puntuacion(0);
         parSeleccionado = FXCollections.observableList(parSelec);
         parSeleccionado.addListener(new ListChangeListener(){
             @Override
@@ -57,6 +61,9 @@ public class PartidaEstandarController implements Initializable {
                     if(carta1.getCartaID() == carta2.getCartaID()){
                         tablero.getChildren().remove(carta1);
                         tablero.getChildren().remove(carta2);
+                        puntuacion.sumarPuntos();
+                    } else {
+                        puntuacion.restarPuntos();
                     }
                     
                     // since a new event is generated when we remove an element
@@ -106,7 +113,7 @@ public class PartidaEstandarController implements Initializable {
             
             // Add card to pair to compare whether they are equal
             parSeleccionado.add(cartaElegida);
-            System.out.println("Carta elegida:\t" + "[ID: " + cartaID + "]\t" + "(" + posX + ", " + posY + ")");
+            System.out.println("Carta elegida:\t" + "[ID: " + cartaID + "]\t" + "(" + posX + ", " + posY + ")\n" + puntuacion.toString());
         }
     };
     
