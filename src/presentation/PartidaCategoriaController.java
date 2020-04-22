@@ -53,11 +53,12 @@ public class PartidaCategoriaController implements Initializable {
         parSelec = new ArrayList<Carta>();
         puntuacion = new Puntuacion(0);
         parSeleccionado = FXCollections.observableList(parSelec);
-        for(int k =0; k < 4;k++){
+        /*for(int k =0; k < 4;k++){
             categorias.add(Categoria.FLORES);
             categorias.add(Categoria.ANIMALES);
             categorias.add(Categoria.FRUTAS);
-        }
+        }*/
+        rellenarCategorias();
         categoriaActual = categorias.get(0);
         mostrarCategoria();
         parSeleccionado.addListener(new ListChangeListener(){
@@ -79,10 +80,17 @@ public class PartidaCategoriaController implements Initializable {
                         tablero.getChildren().remove(carta2);
                         puntuacion.sumarPuntos();
                         try{
-                        categorias.remove(0);
-                        categoriaActual = categorias.get(0);
-                        } catch (IndexOutOfBoundsException e){}
-                        mostrarCategoria();
+                            if(categoriaActual != categorias.get(1)){
+                                categorias.remove(0);
+                                categoriaActual = categorias.get(0);
+                                mostrarCategoria();
+                            }
+                            else {
+                            
+                                categorias.remove(0);
+                                categoriaActual = categorias.get(0);
+                            }
+                       } catch (IndexOutOfBoundsException e){}
                     } else {
                         puntuacion.restarPuntos();
                     }
@@ -140,6 +148,9 @@ public class PartidaCategoriaController implements Initializable {
         }
     };
     
+   
+    
+    //pop-up para enseñar la categoria a buscar
     private void mostrarCategoria(){
          Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Categoria Actual");
@@ -147,5 +158,22 @@ public class PartidaCategoriaController implements Initializable {
             alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
             alert.showAndWait();
     }
+    
+    
+    //métodos para rellenar la lista de categorias
+    private void bucleRellenar(Categoria cat){
+    
+        for(int i =0; i < 4; i++){
+        categorias.add(cat);
+        }
+    }   
+    private void rellenarCategorias(){
+       
+        bucleRellenar(Categoria.FLORES);
+        bucleRellenar(Categoria.ANIMALES);
+        bucleRellenar(Categoria.FRUTAS);
+    }    
+        
+    
     
 }
