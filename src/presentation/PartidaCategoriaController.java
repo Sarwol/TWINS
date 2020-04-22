@@ -53,12 +53,7 @@ public class PartidaCategoriaController implements Initializable {
         parSelec = new ArrayList<Carta>();
         puntuacion = new Puntuacion(0);
         parSeleccionado = FXCollections.observableList(parSelec);
-        /*for(int k =0; k < 4;k++){
-            categorias.add(Categoria.FLORES);
-            categorias.add(Categoria.ANIMALES);
-            categorias.add(Categoria.FRUTAS);
-        }*/
-        rellenarCategorias();
+       rellenarCategorias();
         categoriaActual = categorias.get(0);
         mostrarCategoria();
         parSeleccionado.addListener(new ListChangeListener(){
@@ -117,42 +112,38 @@ public class PartidaCategoriaController implements Initializable {
     //Comprueba si las cartas seleccionadas son iguales, y si son de la Categoria que corresponde en ese momento
      private void comprobarCartas(){
         if(parSeleccionado.size() == 2){
-                    Carta carta1 = parSeleccionado.get(0);
-                    Carta carta2 = parSeleccionado.get(1);
+            Carta carta1 = parSeleccionado.get(0);
+            Carta carta2 = parSeleccionado.get(1);
                 
-                    parSeleccionado.forEach((carta) -> {
-                        System.out.print(carta + " ");
-                    });
-                    System.out.println();
-                    
-                    
-                    if(carta1.getCartaID() == carta2.getCartaID() & 
-                            carta1.getCategoria() == categoriaActual){
-                        tablero.getChildren().remove(carta1);
-                        tablero.getChildren().remove(carta2);
-                        puntuacion.sumarPuntos();
-                        try{
-                            if(categoriaActual != categorias.get(1)){
-                                categorias.remove(0);
-                                categoriaActual = categorias.get(0);
-                                mostrarCategoria();
-                            }
-                            else {
-                            
-                                categorias.remove(0);
-                                categoriaActual = categorias.get(0);
-                            }
-                       } catch (IndexOutOfBoundsException e){}
+            parSeleccionado.forEach((carta) -> {
+                System.out.print(carta + " ");
+            });
+            System.out.println();
+            
+            if(carta1.getCartaID() == carta2.getCartaID() & 
+                carta1.getCategoria() == categoriaActual){
+                
+                tablero.getChildren().remove(carta1);
+                tablero.getChildren().remove(carta2);
+                puntuacion.sumarPuntos();
+                try{
+                    if(categoriaActual != categorias.get(1)){
+                        categorias.remove(0);
+                        categoriaActual = categorias.get(0);
+                        mostrarCategoria();
                     } else {
-                        puntuacion.restarPuntos();
+                        categorias.remove(0);
+                        categoriaActual = categorias.get(0);
                     }
+                } catch (IndexOutOfBoundsException e){}
+            } else puntuacion.restarPuntos();
                     
-                    // since a new event is generated when we remove an element
-                    // from the ObservableList, we remove instead from the List
-                    // to avoid an infinite loop
-                    parSelec.remove(0); parSelec.remove(0);
+            // since a new event is generated when we remove an element
+            // from the ObservableList, we remove instead from the List
+            // to avoid an infinite loop
+            parSelec.remove(0); parSelec.remove(0);
                 
-                }
+        }
     }
     
    
@@ -169,13 +160,11 @@ public class PartidaCategoriaController implements Initializable {
     
     //métodos para rellenar la lista de categorias
     private void bucleRellenar(Categoria cat){
-    
         for(int i =0; i < 4; i++){
-        categorias.add(cat);
+            categorias.add(cat);
         }
     }   
     private void rellenarCategorias(){
-       
         bucleRellenar(Categoria.FLORES);
         bucleRellenar(Categoria.ANIMALES);
         bucleRellenar(Categoria.FRUTAS);
