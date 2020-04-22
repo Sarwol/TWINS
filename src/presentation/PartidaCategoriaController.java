@@ -113,6 +113,8 @@ public class PartidaCategoriaController implements Initializable {
     };
     
     
+    
+    //Comprueba si las cartas seleccionadas son iguales, y si son de la Categoria que corresponde en ese momento
      private void comprobarCartas(){
         if(parSeleccionado.size() == 2){
                     Carta carta1 = parSeleccionado.get(0);
@@ -152,8 +154,6 @@ public class PartidaCategoriaController implements Initializable {
                 
                 }
     }
-    
-    
     
    
     
