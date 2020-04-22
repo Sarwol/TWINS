@@ -9,4 +9,4 @@ package logic;
  *
  * @author Jesús Yoel
  */
-public enum Categoria { FLORES,ANIMALES, FRUTAS}
+public enum Categoria { FLORES,ANIMALES, FRUTAS }

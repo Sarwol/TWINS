@@ -73,6 +73,14 @@ public class Carta extends Button{
         super.setGraphic(new ImageView(this.imagenInterior));
     }
     
+    public Categoria getCategoria(){
+        return categoria;
+    }
+    
+    public void setCategoria(Categoria category){
+        categoria = category;
+    }
+    
 //    @Override
 //    public int hashCode() {
 //        int hash = 7;
