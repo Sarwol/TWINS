@@ -37,7 +37,7 @@ public class TWINSApplication extends Application {
             }
         });
         
-        Carta carta = new Carta(1, img);
+        Carta carta = new Carta(1, img, img);
         
         StackPane root = new StackPane();
 //        root.getChildren().add(btn);

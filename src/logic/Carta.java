@@ -18,50 +18,75 @@ import javafx.scene.image.ImageView;
 public class Carta extends Button{
     
     private int cartaID;
-    private Image imagenInterior;
+    private Image imagenCarta;
+    private Image imagenBaraja;
+    private boolean isRevealed;
 
     /**
      * Creamos un Button sin texto y con una imagen.
      * @param cartaID
-     * @param imagenInterior 
+     * @param imagenCarta 
      */
     
     public Carta(){
         super();
     }
-    public Carta(int id, Image imagenInterior) {
-       super("", new ImageView(imagenInterior));
+    
+    /**
+     * 
+     * @param id id of the card. Used to identify the pairs.
+     * @param imagenCarta Specific image for the pair of cards.
+     * @param imagenBaraja Specific image for a deck.
+     */
+    public Carta(int id, Image imagenCarta, Image imagenBaraja) {
+       // By default, set the deck image.
+       super("", new ImageView(imagenBaraja));
        this.cartaID = id;
-       this.imagenInterior = imagenInterior;
-       super.setText(new Integer(id).toString());
+       this.imagenCarta = imagenCarta;
+       this.imagenBaraja = imagenBaraja;
+       this.isRevealed = false;
+       // Used to cheat, maybe remove later
+       super.setText(Integer.toString(id));
     }
 
+    /**
+     * Turns the card around alternating between the card image and the deck
+     * image.
+     */
+    public void turn(){
+        if(isRevealed){ 
+            super.setGraphic(new ImageView(imagenBaraja));
+            isRevealed = false;
+        } else{
+            super.setGraphic(new ImageView(imagenCarta));
+            isRevealed = true;
+        }
+    }
     
-
-//    @Override
-//    public boolean equals(Object o){
-//        if(!(o instanceof Carta)){return false;}
-//        
-//        Carta otra = (Carta) o;
-//        
-//        return otra.getCartaID() == this.getCartaID();
-//    }
-
     public int getCartaID() {
         return cartaID;
     }
 
     public Image getImagenInterior() {
-        return imagenInterior;
+        return imagenCarta;
+    }
+    
+    public Image getImagenExterior() {
+        return imagenBaraja;
     }
 
     public void setcartaID(int id) {
         this.cartaID = id;
     }
 
-    public void setImagenInterior(Image imagenInterior) {
-        this.imagenInterior = imagenInterior;
-        super.setGraphic(new ImageView(this.imagenInterior));
+    public void setImagenInterior(Image imagenCarta) {
+        this.imagenCarta = imagenCarta;
+        super.setGraphic(new ImageView(this.imagenCarta));
+    }
+    
+    public void setImagenExterior(Image imagenBaraja) {
+        this.imagenBaraja = imagenBaraja;
+        super.setGraphic(new ImageView(this.imagenBaraja));
     }
     
 //    @Override
