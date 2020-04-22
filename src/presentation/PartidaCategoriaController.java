@@ -64,43 +64,7 @@ public class PartidaCategoriaController implements Initializable {
         parSeleccionado.addListener(new ListChangeListener(){
             @Override
             public void onChanged(ListChangeListener.Change change){
-                if(parSeleccionado.size() == 2){
-                    Carta carta1 = parSeleccionado.get(0);
-                    Carta carta2 = parSeleccionado.get(1);
-                
-                    parSeleccionado.forEach((carta) -> {
-                        System.out.print(carta + " ");
-                    });
-                    System.out.println();
-                    
-                    
-                    if(carta1.getCartaID() == carta2.getCartaID() & 
-                            carta1.getCategoria() == categoriaActual){
-                        tablero.getChildren().remove(carta1);
-                        tablero.getChildren().remove(carta2);
-                        puntuacion.sumarPuntos();
-                        try{
-                            if(categoriaActual != categorias.get(1)){
-                                categorias.remove(0);
-                                categoriaActual = categorias.get(0);
-                                mostrarCategoria();
-                            }
-                            else {
-                            
-                                categorias.remove(0);
-                                categoriaActual = categorias.get(0);
-                            }
-                       } catch (IndexOutOfBoundsException e){}
-                    } else {
-                        puntuacion.restarPuntos();
-                    }
-                    
-                    // since a new event is generated when we remove an element
-                    // from the ObservableList, we remove instead from the List
-                    // to avoid an infinite loop
-                    parSelec.remove(0); parSelec.remove(0);
-                
-                }
+                comprobarCartas();
                 //System.out.println("Cards selected: " + parSeleccionado.size());
             }
         });
@@ -147,6 +111,49 @@ public class PartidaCategoriaController implements Initializable {
             + "\n" + cartaElegida.getCategoria().toString());
         }
     };
+    
+    
+     private void comprobarCartas(){
+        if(parSeleccionado.size() == 2){
+                    Carta carta1 = parSeleccionado.get(0);
+                    Carta carta2 = parSeleccionado.get(1);
+                
+                    parSeleccionado.forEach((carta) -> {
+                        System.out.print(carta + " ");
+                    });
+                    System.out.println();
+                    
+                    
+                    if(carta1.getCartaID() == carta2.getCartaID() & 
+                            carta1.getCategoria() == categoriaActual){
+                        tablero.getChildren().remove(carta1);
+                        tablero.getChildren().remove(carta2);
+                        puntuacion.sumarPuntos();
+                        try{
+                            if(categoriaActual != categorias.get(1)){
+                                categorias.remove(0);
+                                categoriaActual = categorias.get(0);
+                                mostrarCategoria();
+                            }
+                            else {
+                            
+                                categorias.remove(0);
+                                categoriaActual = categorias.get(0);
+                            }
+                       } catch (IndexOutOfBoundsException e){}
+                    } else {
+                        puntuacion.restarPuntos();
+                    }
+                    
+                    // since a new event is generated when we remove an element
+                    // from the ObservableList, we remove instead from the List
+                    // to avoid an infinite loop
+                    parSelec.remove(0); parSelec.remove(0);
+                
+                }
+    }
+    
+    
     
    
     
