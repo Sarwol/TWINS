@@ -26,7 +26,7 @@ import javafx.scene.media.MediaPlayer;
  *
  * @author jesus
  */
-public class MusicaController implements Initializable {
+public class MusicaController extends JuegoLibreController implements Initializable {
 
     @FXML
     private Button volerButton;
@@ -49,7 +49,7 @@ public class MusicaController implements Initializable {
     
     private MediaPlayer mediaplayer;
     
-    private String cancionActual;
+    public String cancionActual;
     
 
     /**
@@ -58,13 +58,14 @@ public class MusicaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        cancion = null;//new Media(new File("Cancion1.mp3").toURI().toString());
+        cancion = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
         
     }    
 
-    private String getMusica(){
-       return cancionActual; 
+    public String getMusica(){
+        return cancionActual;    
     }
+   
     
     @FXML
     private void volverAction(ActionEvent event) {
@@ -132,15 +133,6 @@ public class MusicaController implements Initializable {
         
     }
     
-     private void playAudio(String sonido){
-        AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
-        note.play();
-    }
-     
-     private void stopAudio(String sonido){
-         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
-         note.stop();
-     }
      
      private void manejarCanciones(RadioButton boton){
          if(boton.isSelected()){
