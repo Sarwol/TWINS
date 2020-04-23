@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import logic.Carta;
 import logic.Puntuacion;
@@ -40,6 +41,7 @@ public class JuegoLibreController implements Initializable {
     public static final int LONGITUD_TABLERO = 6;
     public static final int ANCHURA_TABLERO = 4;
     public static final int TURN_DELAY = 500;
+    private String cancion = "/music/Cancion1.mp3";
     @FXML
     protected Tablero tablero;
     protected List<Carta> parSelec;
@@ -47,13 +49,14 @@ public class JuegoLibreController implements Initializable {
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
+   
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        playAudio(cancion);
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
@@ -171,8 +174,19 @@ public class JuegoLibreController implements Initializable {
 
             // Add card to pair to compare whether they are equal
             parSeleccionado.add(cartaElegida);
-            System.out.println("Carta elegida:\t" + "[ID: " + cartaID + "]\t" + "(" + posX + ", " + posY + ")\n" + puntuacion.toString());
+            System.out.println("Carta elegida:\t" + "[ID: " + cartaID + "]\t" + "(" + posX + ", " + posY + ")\n" + puntuacion.toString()
+            + "\n" + cartaElegida.getCategoria());
         }
     };
 
+    public void playAudio(String sonido){
+        AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
+        note.play();
+    }
+     
+     public void stopAudio(String sonido){
+         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
+         note.stop();
+     }
+    
 }
