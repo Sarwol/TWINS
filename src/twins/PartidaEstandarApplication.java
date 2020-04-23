@@ -40,17 +40,17 @@ public class PartidaEstandarApplication extends Application{
     private Pane root;
     private Tablero tablero;
     
-    private Parent createContent() {
-//        root.setPrefSize(700, 600);
-        tablero.setPrefSize(700, 600);
-        tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
-        tablero.barajarTablero();
-        //root.getChildren().add(tablero);
-        
-
-        //return root;
-        return tablero;
-    }
+//    private Parent createContent() {
+////        root.setPrefSize(700, 600);
+//        tablero.setPrefSize(700, 600);
+//        tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
+//        tablero.barajarTablero();
+//        //root.getChildren().add(tablero);
+//        
+//
+//        //return root;
+//        return tablero;
+//    }
     
     /**
      * Método temporal para generar barajas.
@@ -58,19 +58,19 @@ public class PartidaEstandarApplication extends Application{
      * @return lista con las cartas. Retorna null si el número de cartas a 
      * generar no es par.
      */
-    private List<Carta> generarBaraja(int numCartas){
-        if(numCartas %2 != 0){return null;}
-        
-        List<Carta> baraja = new ArrayList<Carta>();
-        File card = new File("." + File.separator + "images" + File.separator + "card.png");
-        Image image = new Image(card.toURI().toString(), 50, 50, false, false);
-        
-        for(int i = 0; i < numCartas; i++){
-           baraja.add(new Carta(i, image));
-        }
-        
-        return baraja;
-    }
+//    private List<Carta> generarBaraja(int numCartas){
+//        if(numCartas %2 != 0){return null;}
+//        
+//        List<Carta> baraja = new ArrayList<Carta>();
+//        File card = new File("." + File.separator + "images" + File.separator + "card.png");
+//        Image image = new Image(card.toURI().toString(), 50, 50, false, false);
+//        
+//        for(int i = 0; i < numCartas; i++){
+//           baraja.add(new Carta(i, image));
+//        }
+//        
+//        return baraja;
+//    }
 
     @Override
     public void start(Stage stage) throws Exception {
