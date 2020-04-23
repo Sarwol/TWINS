@@ -35,8 +35,8 @@ import static presentation.PartidaEstandarController.LONGITUD_TABLERO;
  */
 public class PartidaCategoriaController extends JuegoLibreController {
 
-    private List<Categoria> categorias;
-    private Categoria categoriaActual;
+    /*private List<Categoria> categorias;
+    private Categoria categoriaActual;*/
 
     /**
      * Initializes the controller class.
@@ -54,6 +54,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
      * Comprueba si las cartas seleccionadas son iguales, y si son de la
      * Categoria que corresponde en ese momento
      */
+    /*
     @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
@@ -119,7 +120,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
 
         }
     }
-
+*/
     //pop-up para enseñar la categoria a buscar
     private void mostrarCategoria() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -129,6 +130,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
         alert.showAndWait();
     }
 
+    /*
     //métodos para rellenar la lista de categorias
     private void bucleRellenar(Categoria cat) {
         for (int i = 0; i < 4; i++) {
@@ -137,9 +139,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
     }
 
     private void rellenarCategorias() {
-        bucleRellenar(Categoria.FLORES);
-        bucleRellenar(Categoria.ANIMALES);
+        
         bucleRellenar(Categoria.FRUTAS);
     }
-
+*/
 }

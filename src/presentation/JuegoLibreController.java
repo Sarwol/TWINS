@@ -28,6 +28,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import logic.Carta;
+import logic.Categoria;
 import logic.Puntuacion;
 import logic.Tablero;
 
@@ -49,6 +50,8 @@ public class JuegoLibreController implements Initializable {
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
+    protected List<Categoria> categorias;
+    protected Categoria categoriaActual;
    
 
     /**
@@ -189,4 +192,16 @@ public class JuegoLibreController implements Initializable {
          note.stop();
      }
     
+      //métodos para rellenar la lista de categorias
+    protected void bucleRellenar(Categoria cat) {
+        for (int i = 0; i < 4; i++) {
+            categorias.add(cat);
+        }
+    }
+
+    protected void rellenarCategorias() {
+        bucleRellenar(Categoria.PAJAROS);
+        bucleRellenar(Categoria.FRUTAS);
+    }
+     
 }
