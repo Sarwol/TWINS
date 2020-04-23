@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 public class Carta extends Button{
     
     private int cartaID;
+    private Categoria categoria;
     private Image imagenCarta;
     private Image imagenBaraja;
     private boolean isRevealed;
@@ -48,7 +49,19 @@ public class Carta extends Button{
        // Used to cheat, maybe remove later
        super.setText(Integer.toString(id));
     }
-
+  
+    public Carta(int id, Image imagenCarta, Image imagenBaraja, Categoria cat) {
+       // By default, set the deck image.
+       super("", new ImageView(imagenBaraja));
+       this.cartaID = id;
+       this.imagenCarta = imagenCarta;
+       this.imagenBaraja = imagenBaraja;
+       this.isRevealed = false;
+       this.categoria = cat;
+       // Used to cheat, maybe remove later
+       super.setText(Integer.toString(id));
+    }
+ 
     /**
      * Turns the card around alternating between the card image and the deck
      * image.
@@ -87,6 +100,14 @@ public class Carta extends Button{
     public void setImagenExterior(Image imagenBaraja) {
         this.imagenBaraja = imagenBaraja;
         super.setGraphic(new ImageView(this.imagenBaraja));
+    }
+    
+    public Categoria getCategoria(){
+        return categoria;
+    }
+    
+    public void setCategoria(Categoria category){
+        categoria = category;
     }
     
 //    @Override
