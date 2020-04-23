@@ -44,10 +44,12 @@ public class PartidaCategoriaController extends JuegoLibreController {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        categoria = true;
         super.initialize(url, rb);
         categorias = new ArrayList<Categoria>();
-        //rellenarCategorias();
-        //categoriaActual = categorias.get(0);
+        /*rellenarCategorias();
+        categoriaActual = categorias.get(0);*/
+        //categoria = false;
         mostrarCategoria();
     }
 
@@ -122,14 +124,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
         }
     }
 */
-    //pop-up para enseñar la categoria a buscar
-    private void mostrarCategoria() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Categoria Actual");
-        alert.setHeaderText(Categoria.FRUTAS.toString());
-        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + Categoria.FRUTAS.toString());
-        alert.showAndWait();
-    }
+    
 
     /*
     //métodos para rellenar la lista de categorias

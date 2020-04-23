@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +43,7 @@ public class JuegoLibreController implements Initializable {
     public static final int LONGITUD_TABLERO = 6;
     public static final int ANCHURA_TABLERO = 4;
     public static final int TURN_DELAY = 500;
+    public static final int NUM_CATEGORIAS = 2;
     private String cancion = "/music/Cancion1.mp3";
     @FXML
     protected Tablero tablero;
@@ -53,7 +55,8 @@ public class JuegoLibreController implements Initializable {
     //protected List<Categoria> categorias;
     protected boolean porCategoria;
     protected Categoria categoriaActual;
-    protected int contador = 0;
+    protected int contador = 1;
+    protected boolean categoria = false;
 
     /**
      * Initializes the controller class.
@@ -61,6 +64,7 @@ public class JuegoLibreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playAudio(cancion);
+        if(categoria) 
         categoriaActual = Categoria.FRUTAS;
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
@@ -69,7 +73,8 @@ public class JuegoLibreController implements Initializable {
         parSeleccionado.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                comprobarCartas();
+                if (!categoria) comprobarCartas();
+                else comprobarCategoria();
             }
         });     // end parSeleccionado
 
@@ -90,13 +95,13 @@ public class JuegoLibreController implements Initializable {
                 System.out.print(carta + " ");
             });
             System.out.println();
-
-            if (carta1.getCartaID() == carta2.getCartaID()) {
-                carta1.setDisable(true);
-                carta2.setDisable(true);
-                //tablero.getChildren().remove(carta1);
-                //tablero.getChildren().remove(carta2);
-                puntuacion.sumarPuntos();
+            if (categoria) comprobarCategoria();
+            else if (carta1.getCartaID() == carta2.getCartaID()) {
+                    carta1.setDisable(true);
+            carta2.setDisable(true);
+            //tablero.getChildren().remove(carta1);
+            //tablero.getChildren().remove(carta2);
+            puntuacion.sumarPuntos();  
             } else {
                 puntuacion.restarPuntos();
                 Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
@@ -151,11 +156,12 @@ public class JuegoLibreController implements Initializable {
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
-                if(j >= 6) {cardImages = "." + File.separator + "images" + File.separator + "fruit";}
+                if(j % 2 == 0) cardImages = "." + File.separator + "images" + File.separator + "fruit";
+                else cardImages = "." + File.separator + "images" + File.separator + "card";
                 File currentCard = new File(cardImages + (j + 1) + ".png");
                 Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
-                if(j < 6) carta.setCategoria(Categoria.FRUTAS);
+                if(j % 2 == 0) carta.setCategoria(Categoria.FRUTAS);
                 else carta.setCategoria(Categoria.PAJAROS);
                 // Add event to detect when a Carta is clicked
                 carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
@@ -188,7 +194,66 @@ public class JuegoLibreController implements Initializable {
         }
     };
 
-    public void playAudio(String sonido){
+     
+     private void comprobarCategoria(){
+              if (parSeleccionado.size() == 2) {
+            carta1 = parSeleccionado.get(0);
+            carta2 = parSeleccionado.get(1);
+
+            parSeleccionado.forEach((carta) -> {
+                System.out.print(carta + " ");
+            });
+            System.out.println();
+             
+            if (carta1.getCartaID() == carta2.getCartaID() && carta1.getCategoria() ==
+                    categoriaActual && carta2.getCategoria() == categoriaActual) {
+                    carta1.setDisable(true);
+                    carta2.setDisable(true);
+                     //tablero.getChildren().remove(carta1);
+                     //tablero.getChildren().remove(carta2);
+                     puntuacion.sumarPuntos();
+                     contador++;
+                     if(contador == 1 + 12/NUM_CATEGORIAS) {
+                         categoriaActual = Categoria.PAJAROS;
+                         mostrarCategoria();
+                        }
+            } else {
+                puntuacion.restarPuntos();
+                Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
+                    @Override
+                    protected Void call() throws Exception {
+                        try {
+                            Thread.sleep(TURN_DELAY);
+                        } catch (InterruptedException ie) {
+                            System.out.println("Error sleeping before turning cards");
+                            ie.printStackTrace();
+                        }
+
+                        return null;
+                    }
+                };
+                waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        carta1.turn();
+                        carta2.turn();
+                    }
+                });
+                new Thread(waitTurnCards).start();
+
+            }
+
+            // since a new event is generated when we remove an element
+            // from the ObservableList, we remove instead from the List
+            // to avoid an infinite loop
+            parSelec.remove(0);
+            parSelec.remove(0);
+            
+
+        }
+    } 
+     
+       public void playAudio(String sonido){
         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
         note.play();
     }
@@ -198,4 +263,12 @@ public class JuegoLibreController implements Initializable {
          note.stop();
      }
      
+     //pop-up para enseñar la categoria a buscar
+    protected void mostrarCategoria() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Categoria Actual");
+        alert.setHeaderText(categoriaActual.toString());
+        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
+        alert.showAndWait();
+    }
 }
