@@ -56,10 +56,10 @@ public class JuegoLibreController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         playAudio(cancion);
-        parSelec = new ArrayList<Carta>();
         puntuacion = new Puntuacion(0);
+        // CAUTION: parSelec and parSeleccionado must be defined in each subclass
+        parSelec = new ArrayList<Carta>();
         parSeleccionado = FXCollections.observableList(parSelec);
         parSeleccionado.addListener(new ListChangeListener() {
             @Override
@@ -76,7 +76,7 @@ public class JuegoLibreController implements Initializable {
 
     }
 
-    private void comprobarCartas() {
+    public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
             carta1 = parSeleccionado.get(0);
             carta2 = parSeleccionado.get(1);
@@ -133,7 +133,7 @@ public class JuegoLibreController implements Initializable {
      * @param numCartas the amount of cards to generate
      * @return baraja the deck with cards.
      */
-    private List<Carta> generarBaraja(int numCartas) {
+    public List<Carta> generarBaraja(int numCartas) {
         if (numCartas % 2 != 0) {
             return null;
         }
