@@ -80,11 +80,11 @@ public class Carta extends Button{
         return cartaID;
     }
 
-    public Image getImagenInterior() {
+    public Image getImagenCarta() {
         return imagenCarta;
     }
     
-    public Image getImagenExterior() {
+    public Image getImagenBaraja() {
         return imagenBaraja;
     }
 
@@ -92,12 +92,12 @@ public class Carta extends Button{
         this.cartaID = id;
     }
 
-    public void setImagenInterior(Image imagenCarta) {
+    public void setImagenCarta(Image imagenCarta) {
         this.imagenCarta = imagenCarta;
         super.setGraphic(new ImageView(this.imagenCarta));
     }
     
-    public void setImagenExterior(Image imagenBaraja) {
+    public void setImagenBaraja(Image imagenBaraja) {
         this.imagenBaraja = imagenBaraja;
         super.setGraphic(new ImageView(this.imagenBaraja));
     }

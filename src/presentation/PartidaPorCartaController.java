@@ -5,7 +5,6 @@
  */
 package presentation;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,46 +16,64 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import logic.Carta;
-import logic.Categoria;
 import logic.Puntuacion;
-import logic.Tablero;
-import static presentation.PartidaEstandarController.ANCHURA_TABLERO;
-import static presentation.PartidaEstandarController.LONGITUD_TABLERO;
+import static presentation.JuegoLibreController.TURN_DELAY;
 
 /**
- * FXML Controller class para Partida por categoría.
+ * FXML Controller class
  *
- * @author Jesús Yoel
+ * @author Dani
  */
-public class PartidaCategoriaController extends JuegoLibreController {
+public class PartidaPorCartaController extends JuegoLibreController {
 
-    private List<Categoria> categorias;
-    private Categoria categoriaActual;
+    @FXML
+    private Carta cartaAEncontrar;
 
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
-        categorias = new ArrayList<Categoria>();
-        rellenarCategorias();
-        categoriaActual = categorias.get(0);
-        mostrarCategoria();
+        parSelec = new ArrayList<Carta>();
+        parSeleccionado = FXCollections.observableList(parSelec);
+        parSeleccionado.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                comprobarCartas();
+            }
+        });     // end parSeleccionado
+        seleccionarCartaAEncontrar();
     }
 
     /**
-     * Comprueba si las cartas seleccionadas son iguales, y si son de la
-     * Categoria que corresponde en ese momento
+     * Looks for cards that haven't been found and chooses a random one among
+     * them.
      */
+    private void seleccionarCartaAEncontrar() {
+        ObservableList<Node> cards = tablero.getChildren();
+        List<Carta> cardsNotFound = new ArrayList<Carta>();
+
+        for (Node nodoCarta : cards) {
+            if (!nodoCarta.isDisabled()) {
+                cardsNotFound.add((Carta) nodoCarta);
+            }
+        }
+        int randomPos = (int) Math.floor(Math.random() * (cardsNotFound.size()));
+        Carta chosenCard = cardsNotFound.get(randomPos);
+        cartaAEncontrar.setcartaID(chosenCard.getCartaID());
+        cartaAEncontrar.setGraphic(new ImageView(chosenCard.getImagenCarta()));
+        cartaAEncontrar.setText(Integer.toString(chosenCard.getCartaID()));
+    }
+    
     @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
+            System.out.println("METODO comprobarCartas EN PartidaPorCartaController");
             carta1 = parSeleccionado.get(0);
             carta2 = parSeleccionado.get(1);
 
@@ -66,25 +83,13 @@ public class PartidaCategoriaController extends JuegoLibreController {
             System.out.println();
 
             if (carta1.getCartaID() == carta2.getCartaID()
-                    && carta1.getCategoria() == categoriaActual) {
+                    && carta1.getCartaID() == cartaAEncontrar.getCartaID()) {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
                 //tablero.getChildren().remove(carta1);
                 //tablero.getChildren().remove(carta2);
                 puntuacion.sumarPuntos();
-                try {
-                    if (categoriaActual != categorias.get(1)) {
-                        categorias.remove(0);
-                        categoriaActual = categorias.get(0);
-                        mostrarCategoria();
-                    } else {
-                        categorias.remove(0);
-                        categoriaActual = categorias.get(0);
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("YOU DORK!!!!");
-                    e.printStackTrace();
-                }
+                this.seleccionarCartaAEncontrar();
             } else {
                 puntuacion.restarPuntos();
                 Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
@@ -119,27 +124,4 @@ public class PartidaCategoriaController extends JuegoLibreController {
 
         }
     }
-
-    //pop-up para enseñar la categoria a buscar
-    private void mostrarCategoria() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Categoria Actual");
-        alert.setHeaderText(categoriaActual.toString());
-        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
-        alert.showAndWait();
-    }
-
-    //métodos para rellenar la lista de categorias
-    private void bucleRellenar(Categoria cat) {
-        for (int i = 0; i < 4; i++) {
-            categorias.add(cat);
-        }
-    }
-
-    private void rellenarCategorias() {
-        bucleRellenar(Categoria.FLORES);
-        bucleRellenar(Categoria.ANIMALES);
-        bucleRellenar(Categoria.FRUTAS);
-    }
-
 }
