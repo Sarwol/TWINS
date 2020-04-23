@@ -35,8 +35,9 @@ import static presentation.PartidaEstandarController.LONGITUD_TABLERO;
  */
 public class PartidaCategoriaController extends JuegoLibreController {
 
-    /*private List<Categoria> categorias;
-    private Categoria categoriaActual;*/
+    private List<Categoria> categorias;
+    private Categoria categoriaActual;
+    
 
     /**
      * Initializes the controller class.
@@ -45,8 +46,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
         categorias = new ArrayList<Categoria>();
-        rellenarCategorias();
-        categoriaActual = categorias.get(0);
+        //rellenarCategorias();
+        //categoriaActual = categorias.get(0);
         mostrarCategoria();
     }
 
@@ -125,8 +126,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
     private void mostrarCategoria() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Categoria Actual");
-        alert.setHeaderText(categoriaActual.toString());
-        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
+        alert.setHeaderText(Categoria.FRUTAS.toString());
+        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + Categoria.FRUTAS.toString());
         alert.showAndWait();
     }
 

@@ -50,9 +50,10 @@ public class JuegoLibreController implements Initializable {
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
-    protected List<Categoria> categorias;
+    //protected List<Categoria> categorias;
+    protected boolean porCategoria;
     protected Categoria categoriaActual;
-   
+    protected int contador = 0;
 
     /**
      * Initializes the controller class.
@@ -60,6 +61,7 @@ public class JuegoLibreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playAudio(cancion);
+        categoriaActual = Categoria.FRUTAS;
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
@@ -144,13 +146,17 @@ public class JuegoLibreController implements Initializable {
         List<Carta> baraja = new ArrayList<Carta>();
         File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
         String cardImages = "." + File.separator + "images" + File.separator + "card";
+        //String fruitImages = "." + File.separator + "images" + File.separator + "fruit";
         Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
+                if(j >= 6) {cardImages = "." + File.separator + "images" + File.separator + "fruit";}
                 File currentCard = new File(cardImages + (j + 1) + ".png");
                 Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
+                if(j < 6) carta.setCategoria(Categoria.FRUTAS);
+                else carta.setCategoria(Categoria.PAJAROS);
                 // Add event to detect when a Carta is clicked
                 carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
                 baraja.add(carta);
@@ -191,17 +197,5 @@ public class JuegoLibreController implements Initializable {
          AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
          note.stop();
      }
-    
-      //métodos para rellenar la lista de categorias
-    protected void bucleRellenar(Categoria cat) {
-        for (int i = 0; i < 4; i++) {
-            categorias.add(cat);
-        }
-    }
-
-    protected void rellenarCategorias() {
-        bucleRellenar(Categoria.PAJAROS);
-        bucleRellenar(Categoria.FRUTAS);
-    }
      
 }
