@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import logic.Carta;
@@ -41,6 +42,13 @@ public class PartidaCategoriaController extends JuegoLibreController {
     //protected boolean porCategoria;
     protected int contador = 1;
     //protected boolean categoria = false;
+    @FXML
+    private Tablero tablero;
+    @FXML
+    private Label tiempo;
+   
+    @FXML
+    private Label categoriaLabel;
 
     /**
      * Initializes the controller class.
@@ -53,6 +61,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
         categoriaActual = categorias.get(0);*/
         //categoria = false;
         categoriaActual = Categoria.FRUTAS;
+        categoriaLabel.setText(categoriaActual.toString());
         mostrarCategoria();
     }
 
@@ -75,6 +84,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 contador++;
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
+                    categoriaLabel.setText(categoriaActual.toString());
                     mostrarCategoria();
                 }
             } else {

@@ -24,5 +24,6 @@
         </rowConstraints>
       </Tablero>
       <Label fx:id="tiempo" text="Label" />
+      <Label fx:id="categoriaLabel" layoutX="250.0" layoutY="350.0" text="" />
    </children>
 </AnchorPane>
