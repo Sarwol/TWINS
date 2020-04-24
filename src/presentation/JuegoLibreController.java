@@ -10,7 +10,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Application;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,14 +21,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 import logic.Carta;
 import logic.Categoria;
 import logic.Puntuacion;
@@ -44,9 +43,15 @@ public class JuegoLibreController implements Initializable {
     public static final int ANCHURA_TABLERO = 4;
     public static final int TURN_DELAY = 500;
     public static final int NUM_CATEGORIAS = 2;
+    public static final int DURACION_PARTIDA = 60;
+    
     private String cancion = "/music/Cancion1.mp3";
     @FXML
     protected Tablero tablero;
+    @FXML
+    protected Label tiempo;
+    protected Timeline countdown;
+    protected int tiempoActual;
     protected List<Carta> parSelec;
     protected ObservableList<Carta> parSeleccionado;
     protected Puntuacion puntuacion;
@@ -65,7 +70,7 @@ public class JuegoLibreController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         playAudio(cancion);
         if(categoria) 
-        categoriaActual = Categoria.FRUTAS;
+            categoriaActual = Categoria.FRUTAS;
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
@@ -75,7 +80,8 @@ public class JuegoLibreController implements Initializable {
             public void onChanged(ListChangeListener.Change change) {
                  comprobarCartas(); 
             }
-        });     // end parSeleccionado
+        });
+        setTimer(DURACION_PARTIDA);
 
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
@@ -83,6 +89,23 @@ public class JuegoLibreController implements Initializable {
         tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
         tablero.barajarTablero();
 
+    }
+    
+    /**
+     * Creates the Timeline used to implement the countdown time in the game
+     * @param duration amount of seconds the round lasts
+     */
+    public void setTimer(int duration){
+        tiempoActual = duration;
+        countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                if(tiempoActual == 0){countdown.stop();}
+                tiempo.setText((tiempoActual--) + "");
+            }
+        }));
+        countdown.setCycleCount(Timeline.INDEFINITE);
+        countdown.play();
     }
 
     public void comprobarCartas() {
