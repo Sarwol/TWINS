@@ -44,7 +44,7 @@ public class JuegoLibreController implements Initializable {
     public static final int TURN_DELAY = 500;
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
-    
+
     private String cancion = "/music/Cancion1.mp3";
     @FXML
     protected Tablero tablero;
@@ -58,10 +58,6 @@ public class JuegoLibreController implements Initializable {
     protected Carta carta1;
     protected Carta carta2;
     //protected List<Categoria> categorias;
-    protected boolean porCategoria;
-    protected Categoria categoriaActual;
-    protected int contador = 1;
-    protected boolean categoria = false;
 
     /**
      * Initializes the controller class.
@@ -69,8 +65,6 @@ public class JuegoLibreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playAudio(cancion);
-        if(categoria) 
-            categoriaActual = Categoria.FRUTAS;
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
@@ -78,7 +72,7 @@ public class JuegoLibreController implements Initializable {
         parSeleccionado.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                 comprobarCartas(); 
+                comprobarCartas();
             }
         });
         setTimer(DURACION_PARTIDA);
@@ -90,17 +84,20 @@ public class JuegoLibreController implements Initializable {
         tablero.barajarTablero();
 
     }
-    
+
     /**
      * Creates the Timeline used to implement the countdown time in the game
+     *
      * @param duration amount of seconds the round lasts
      */
-    public void setTimer(int duration){
+    public void setTimer(int duration) {
         tiempoActual = duration;
-        countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
+        countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event){
-                if(tiempoActual == 0){countdown.stop();}
+            public void handle(ActionEvent event) {
+                if (tiempoActual == 0) {
+                    countdown.stop();
+                }
                 tiempo.setText((tiempoActual--) + "");
             }
         }));
@@ -113,51 +110,66 @@ public class JuegoLibreController implements Initializable {
             carta1 = parSeleccionado.get(0);
             carta2 = parSeleccionado.get(1);
 
+            // Debugging purposes
             parSeleccionado.forEach((carta) -> {
                 System.out.print(carta + " ");
             });
             System.out.println();
-            
-            if(categoria) comprobarCategoria(); 
-            if (carta1.getCartaID() == carta2.getCartaID() && !categoria) {
-                    carta1.setDisable(true);
-                    carta2.setDisable(true);
-                    //tablero.getChildren().remove(carta1);
-                    //tablero.getChildren().remove(carta2);
-                     puntuacion.sumarPuntos();  
+
+            if (sonIguales(carta1, carta2)) {
+                carta1.setDisable(true);
+                carta2.setDisable(true);
+                puntuacion.sumarPuntos();
             } else {
                 puntuacion.restarPuntos();
-                Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
-                    @Override
-                    protected Void call() throws Exception {
-                        try {
-                            Thread.sleep(TURN_DELAY);
-                        } catch (InterruptedException ie) {
-                            System.out.println("Error sleeping before turning cards");
-                            ie.printStackTrace();
-                        }
-
-                        return null;
-                    }
-                };
-                waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        carta1.turn();
-                        carta2.turn();
-                    }
-                });
-                new Thread(waitTurnCards).start();
-
+                // Wait a specified amount of time before turning the cards back around
+                setDelayedCardTurn();
             }
 
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
-            // to avoid an infinite loop
+            // to avoid an infinite loop by triggering the listener
             parSelec.remove(0);
             parSelec.remove(0);
-
         }
+    }
+    
+    /**
+     * Creates a new thread that will turn the cards back around.
+     */
+    public void setDelayedCardTurn() {
+        Task<Void> waitTurnCards = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(TURN_DELAY);
+                } catch (InterruptedException ie) {
+                    System.out.println("Error sleeping before turning cards");
+                    ie.printStackTrace();
+                }
+
+                return null;
+            }
+        };
+        waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                carta1.turn();
+                carta2.turn();
+            }
+        });
+        new Thread(waitTurnCards).start();
+    }
+
+    /**
+     * Checks whether the two cards make up a valid pair.
+     *
+     * @param card1 one of the cards to be compared
+     * @param card2 the other card to be compared
+     * @return whether the cards are equal or not.
+     */
+    public boolean sonIguales(Carta card1, Carta card2) {
+        return carta1.getCartaID() == carta2.getCartaID() && !carta1.equals(carta2);
     }
 
     /**
@@ -173,26 +185,21 @@ public class JuegoLibreController implements Initializable {
 
         List<Carta> baraja = new ArrayList<Carta>();
         File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-        String cardImages = "." + File.separator + "images" + File.separator + "card";
-        //String fruitImages = "." + File.separator + "images" + File.separator + "fruit";
+        //String cardImages = "." + File.separator + "images" + File.separator + "card";
+        String cardImages = "." + File.separator + "images" + File.separator + "fruit";
         Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
-                if(j % 2 == 0) cardImages = "." + File.separator + "images" + File.separator + "fruit";
-                else cardImages = "." + File.separator + "images" + File.separator + "card";
                 File currentCard = new File(cardImages + (j + 1) + ".png");
                 Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
-                if(j % 2 == 0) carta.setCategoria(Categoria.FRUTAS);
-                else carta.setCategoria(Categoria.PAJAROS);
+                
                 // Add event to detect when a Carta is clicked
                 carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
                 baraja.add(carta);
             }
-
         }
-
         return baraja;
     }
 
@@ -213,44 +220,17 @@ public class JuegoLibreController implements Initializable {
             // Add card to pair to compare whether they are equal
             parSeleccionado.add(cartaElegida);
             System.out.println("Carta elegida:\t" + "[ID: " + cartaID + "]\t" + "(" + posX + ", " + posY + ")\n" + puntuacion.toString()
-            + "\n" + cartaElegida.getCategoria());
+                    + "\n" + cartaElegida.getCategoria());
         }
     };
 
-    
-       public void playAudio(String sonido){
+    public void playAudio(String sonido) {
         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
         note.play();
     }
-     
-     public void stopAudio(String sonido){
-         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
-         note.stop();
-     }
-     
-     //pop-up para enseñar la categoria a buscar
-    protected void mostrarCategoria() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Categoria Actual");
-        alert.setHeaderText(categoriaActual.toString());
-        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
-        alert.showAndWait();
-    }
-    
-    
-    protected void comprobarCategoria(){
-        if (carta1.getCartaID() == carta2.getCartaID() && carta1.getCategoria() ==
-                    categoriaActual && carta2.getCategoria() == categoriaActual) {
-                    carta1.setDisable(true);
-                    carta2.setDisable(true);
-                     //tablero.getChildren().remove(carta1);
-                     //tablero.getChildren().remove(carta2);
-                     puntuacion.sumarPuntos();
-                     contador++;
-                     if(contador == 1 + 12/NUM_CATEGORIAS) {
-                         categoriaActual = Categoria.PAJAROS;
-                         mostrarCategoria();
-                        }
-            }
+
+    public void stopAudio(String sonido) {
+        AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
+        note.stop();
     }
 }
