@@ -89,7 +89,7 @@ public class PartidaEstandarApplication extends Application{
 //        stage.show();
 
         String partidaEstandarFXMLLocation = "." + File.separator + "src" + File.separator
-                + "presentation" + File.separator + "PartidaEstandar.fxml";
+                + "presentation" + File.separator + "PartidaCategoria.fxml";
         File partidaEstandarFXML = new File(partidaEstandarFXMLLocation);
         Parent root = FXMLLoader.load(partidaEstandarFXML.toURI().toURL());
         Scene scene = new Scene(root);

@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +29,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import logic.Carta;
+import logic.Categoria;
 import logic.Puntuacion;
 import logic.Tablero;
 
@@ -41,6 +43,7 @@ public class JuegoLibreController implements Initializable {
     public static final int LONGITUD_TABLERO = 6;
     public static final int ANCHURA_TABLERO = 4;
     public static final int TURN_DELAY = 500;
+    public static final int NUM_CATEGORIAS = 2;
     private String cancion = "/music/Cancion1.mp3";
     @FXML
     protected Tablero tablero;
@@ -49,7 +52,11 @@ public class JuegoLibreController implements Initializable {
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
-   
+    //protected List<Categoria> categorias;
+    protected boolean porCategoria;
+    protected Categoria categoriaActual;
+    protected int contador = 1;
+    protected boolean categoria = false;
 
     /**
      * Initializes the controller class.
@@ -57,6 +64,8 @@ public class JuegoLibreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playAudio(cancion);
+        if(categoria) 
+        categoriaActual = Categoria.FRUTAS;
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
@@ -64,7 +73,7 @@ public class JuegoLibreController implements Initializable {
         parSeleccionado.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                comprobarCartas();
+                 comprobarCartas(); 
             }
         });     // end parSeleccionado
 
@@ -85,13 +94,14 @@ public class JuegoLibreController implements Initializable {
                 System.out.print(carta + " ");
             });
             System.out.println();
-
-            if (carta1.getCartaID() == carta2.getCartaID()) {
-                carta1.setDisable(true);
-                carta2.setDisable(true);
-                //tablero.getChildren().remove(carta1);
-                //tablero.getChildren().remove(carta2);
-                puntuacion.sumarPuntos();
+            
+            if(categoria) comprobarCategoria(); 
+            if (carta1.getCartaID() == carta2.getCartaID() && !categoria) {
+                    carta1.setDisable(true);
+                    carta2.setDisable(true);
+                    //tablero.getChildren().remove(carta1);
+                    //tablero.getChildren().remove(carta2);
+                     puntuacion.sumarPuntos();  
             } else {
                 puntuacion.restarPuntos();
                 Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
@@ -141,13 +151,18 @@ public class JuegoLibreController implements Initializable {
         List<Carta> baraja = new ArrayList<Carta>();
         File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
         String cardImages = "." + File.separator + "images" + File.separator + "card";
+        //String fruitImages = "." + File.separator + "images" + File.separator + "fruit";
         Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
+                if(j % 2 == 0) cardImages = "." + File.separator + "images" + File.separator + "fruit";
+                else cardImages = "." + File.separator + "images" + File.separator + "card";
                 File currentCard = new File(cardImages + (j + 1) + ".png");
                 Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
+                if(j % 2 == 0) carta.setCategoria(Categoria.FRUTAS);
+                else carta.setCategoria(Categoria.PAJAROS);
                 // Add event to detect when a Carta is clicked
                 carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
                 baraja.add(carta);
@@ -179,7 +194,8 @@ public class JuegoLibreController implements Initializable {
         }
     };
 
-    public void playAudio(String sonido){
+    
+       public void playAudio(String sonido){
         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
         note.play();
     }
@@ -188,5 +204,30 @@ public class JuegoLibreController implements Initializable {
          AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
          note.stop();
      }
+     
+     //pop-up para enseñar la categoria a buscar
+    protected void mostrarCategoria() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Categoria Actual");
+        alert.setHeaderText(categoriaActual.toString());
+        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
+        alert.showAndWait();
+    }
     
+    
+    protected void comprobarCategoria(){
+        if (carta1.getCartaID() == carta2.getCartaID() && carta1.getCategoria() ==
+                    categoriaActual && carta2.getCategoria() == categoriaActual) {
+                    carta1.setDisable(true);
+                    carta2.setDisable(true);
+                     //tablero.getChildren().remove(carta1);
+                     //tablero.getChildren().remove(carta2);
+                     puntuacion.sumarPuntos();
+                     contador++;
+                     if(contador == 1 + 12/NUM_CATEGORIAS) {
+                         categoriaActual = Categoria.PAJAROS;
+                         mostrarCategoria();
+                        }
+            }
+    }
 }

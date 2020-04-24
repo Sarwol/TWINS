@@ -37,16 +37,19 @@ public class PartidaCategoriaController extends JuegoLibreController {
 
     private List<Categoria> categorias;
     private Categoria categoriaActual;
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        categoria = true;
         super.initialize(url, rb);
         categorias = new ArrayList<Categoria>();
-        rellenarCategorias();
-        categoriaActual = categorias.get(0);
+        /*rellenarCategorias();
+        categoriaActual = categorias.get(0);*/
+        //categoria = false;
         mostrarCategoria();
     }
 
@@ -54,6 +57,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
      * Comprueba si las cartas seleccionadas son iguales, y si son de la
      * Categoria que corresponde en ese momento
      */
+    /*
     @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
@@ -119,16 +123,10 @@ public class PartidaCategoriaController extends JuegoLibreController {
 
         }
     }
+*/
+    
 
-    //pop-up para enseñar la categoria a buscar
-    private void mostrarCategoria() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Categoria Actual");
-        alert.setHeaderText(categoriaActual.toString());
-        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
-        alert.showAndWait();
-    }
-
+    /*
     //métodos para rellenar la lista de categorias
     private void bucleRellenar(Categoria cat) {
         for (int i = 0; i < 4; i++) {
@@ -137,9 +135,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
     }
 
     private void rellenarCategorias() {
-        bucleRellenar(Categoria.FLORES);
-        bucleRellenar(Categoria.ANIMALES);
+        
         bucleRellenar(Categoria.FRUTAS);
     }
-
+*/
 }
