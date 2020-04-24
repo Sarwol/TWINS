@@ -32,111 +32,116 @@ import static presentation.PartidaEstandarController.LONGITUD_TABLERO;
  * FXML Controller class para Partida por categoría.
  *
  * @author Jesús Yoel
+ * @author Dani
  */
 public class PartidaCategoriaController extends JuegoLibreController {
 
     private List<Categoria> categorias;
     private Categoria categoriaActual;
-    
+    //protected boolean porCategoria;
+    protected int contador = 1;
+    //protected boolean categoria = false;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        categoria = true;
         super.initialize(url, rb);
         categorias = new ArrayList<Categoria>();
         /*rellenarCategorias();
         categoriaActual = categorias.get(0);*/
         //categoria = false;
+        categoriaActual = Categoria.FRUTAS;
         mostrarCategoria();
     }
 
-    /**
-     * Comprueba si las cartas seleccionadas son iguales, y si son de la
-     * Categoria que corresponde en ese momento
-     */
-    /*
     @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
             carta1 = parSeleccionado.get(0);
             carta2 = parSeleccionado.get(1);
 
+            // Debugging purposes
             parSeleccionado.forEach((carta) -> {
                 System.out.print(carta + " ");
             });
             System.out.println();
 
-            if (carta1.getCartaID() == carta2.getCartaID()
-                    && carta1.getCategoria() == categoriaActual) {
+            if (sonIguales(carta1, carta2)) {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
-                //tablero.getChildren().remove(carta1);
-                //tablero.getChildren().remove(carta2);
                 puntuacion.sumarPuntos();
-                try {
-                    if (categoriaActual != categorias.get(1)) {
-                        categorias.remove(0);
-                        categoriaActual = categorias.get(0);
-                        mostrarCategoria();
-                    } else {
-                        categorias.remove(0);
-                        categoriaActual = categorias.get(0);
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("YOU DORK!!!!");
-                    e.printStackTrace();
+                contador++;
+                if (contador == 1 + 12 / NUM_CATEGORIAS) {
+                    categoriaActual = Categoria.PAJAROS;
+                    mostrarCategoria();
                 }
             } else {
                 puntuacion.restarPuntos();
-                Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
-                    @Override
-                    protected Void call() throws Exception {
-                        try {
-                            Thread.sleep(TURN_DELAY);
-                        } catch (InterruptedException ie) {
-                            System.out.println("Error sleeping before turning cards");
-                            ie.printStackTrace();
-                        }
-
-                        return null;
-                    }
-                };
-                waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        carta1.turn();
-                        carta2.turn();
-                    }
-                });
-                new Thread(waitTurnCards).start();
-
+                // Wait a specified amount of time before turning the cards back around
+                setDelayedCardTurn();
             }
 
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
-            // to avoid an infinite loop
+            // to avoid an infinite loop by triggering the listener
             parSelec.remove(0);
             parSelec.remove(0);
-
-        }
-    }
-*/
-    
-
-    /*
-    //métodos para rellenar la lista de categorias
-    private void bucleRellenar(Categoria cat) {
-        for (int i = 0; i < 4; i++) {
-            categorias.add(cat);
         }
     }
 
-    private void rellenarCategorias() {
-        
-        bucleRellenar(Categoria.FRUTAS);
+    @Override
+    public boolean sonIguales(Carta card1, Carta card2) {
+        return super.sonIguales(card1, card2) && carta1.getCategoria()
+                == categoriaActual && carta2.getCategoria() == categoriaActual;
     }
-*/
+
+    @Override
+    public List<Carta> generarBaraja(int numCartas) {
+        if (numCartas % 2 != 0) {
+            return null;
+        }
+
+        List<Carta> baraja = new ArrayList<Carta>();
+        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
+        String cardImages = "." + File.separator + "images" + File.separator + "card";
+        //String fruitImages = "." + File.separator + "images" + File.separator + "fruit";
+        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < numCartas / 2; j++) {
+                if (j % 2 == 0) {
+                    cardImages = "." + File.separator + "images" + File.separator + "fruit";
+                } else {
+                    cardImages = "." + File.separator + "images" + File.separator + "card";
+                }
+                File currentCard = new File(cardImages + (j + 1) + ".png");
+                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
+                Carta carta = new Carta(j, currentCardImage, deckCardImage);
+                if (j % 2 == 0) {
+                    carta.setCategoria(Categoria.FRUTAS);
+                } else {
+                    carta.setCategoria(Categoria.PAJAROS);
+                }
+                // Add event to detect when a Carta is clicked
+                carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+                baraja.add(carta);
+            }
+
+        }
+
+        return baraja;
+    }
+
+    /**
+     * Open a new window with the category of the valid pairs.
+     */
+    protected void mostrarCategoria() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Categoria Actual");
+        alert.setHeaderText(categoriaActual.toString());
+        alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
+        alert.showAndWait();
+    }
 }

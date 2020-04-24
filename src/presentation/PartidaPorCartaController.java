@@ -73,55 +73,37 @@ public class PartidaPorCartaController extends JuegoLibreController {
     @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
-            System.out.println("METODO comprobarCartas EN PartidaPorCartaController");
             carta1 = parSeleccionado.get(0);
             carta2 = parSeleccionado.get(1);
 
+            // Debugging purposes
             parSeleccionado.forEach((carta) -> {
                 System.out.print(carta + " ");
             });
             System.out.println();
 
-            if (carta1.getCartaID() == carta2.getCartaID()
-                    && carta1.getCartaID() == cartaAEncontrar.getCartaID()) {
+            if (sonIguales(carta1, carta2)) {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
-                //tablero.getChildren().remove(carta1);
-                //tablero.getChildren().remove(carta2);
                 puntuacion.sumarPuntos();
                 this.seleccionarCartaAEncontrar();
             } else {
                 puntuacion.restarPuntos();
-                Task<Void> waitTurnCards = new Task<Void>() { // task to wait a specific amount of time
-                    @Override
-                    protected Void call() throws Exception {
-                        try {
-                            Thread.sleep(TURN_DELAY);
-                        } catch (InterruptedException ie) {
-                            System.out.println("Error sleeping before turning cards");
-                            ie.printStackTrace();
-                        }
-
-                        return null;
-                    }
-                };
-                waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        carta1.turn();
-                        carta2.turn();
-                    }
-                });
-                new Thread(waitTurnCards).start();
-
+                // Wait a specified amount of time before turning the cards back around
+                setDelayedCardTurn();
             }
 
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
-            // to avoid an infinite loop
+            // to avoid an infinite loop by triggering the listener
             parSelec.remove(0);
             parSelec.remove(0);
-
         }
+    }
+    
+    @Override
+    public boolean sonIguales(Carta card1, Carta card2) {
+        return super.sonIguales(card1, card2) 
+                && card1.getCartaID() == cartaAEncontrar.getCartaID();
     }
 }
