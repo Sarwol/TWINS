@@ -81,7 +81,8 @@ public class JuegoLibreController implements Initializable {
                  comprobarCartas(); 
             }
         });
-        setTimer(DURACION_PARTIDA);
+        
+        if(!categoria) setTimer(DURACION_PARTIDA, tiempo);
 
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
@@ -95,13 +96,13 @@ public class JuegoLibreController implements Initializable {
      * Creates the Timeline used to implement the countdown time in the game
      * @param duration amount of seconds the round lasts
      */
-    public void setTimer(int duration){
+    public void setTimer(int duration, Label label){
         tiempoActual = duration;
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
                 if(tiempoActual == 0){countdown.stop();}
-                tiempo.setText((tiempoActual--) + "");
+                label.setText((tiempoActual--) + "");
             }
         }));
         countdown.setCycleCount(Timeline.INDEFINITE);
