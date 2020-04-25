@@ -33,7 +33,7 @@ public class PartidaEstandarApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         String partidaEstandarFXMLLocation = "." + File.separator + "src" + File.separator
-                + "presentation" + File.separator + "PartidaCategoria.fxml";
+                + "presentation" + File.separator + "PartidaEstandar.fxml";
         File partidaEstandarFXML = new File(partidaEstandarFXMLLocation);
         Parent root = FXMLLoader.load(partidaEstandarFXML.toURI().toURL());
         Scene scene = new Scene(root);
