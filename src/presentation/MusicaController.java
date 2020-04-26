@@ -45,7 +45,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
     private RadioButton noMuiscaRadioButton;
     
     
-    public String cancion;
+    //public String cancion;
     public static String cancionActual;
     
     
@@ -64,11 +64,11 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        if(cancion != null) 
+        /*if(cancionActual != null) 
             audio.stop();
-        
-         cancion = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
-         setAudio(cancion);
+        */
+         cancionActual = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
+         setAudio(cancionActual);
          audio.stop();
     }    
 
@@ -76,11 +76,11 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     @FXML
     private void volverAction(ActionEvent event) {
-	if(cancion != null){
+	if(cancionActual != null){
             audio.stop();
-            setAudio(cancion);
+            setAudio(cancionActual);
         }
-        cancionActual = cancion;
+        //cancionActual = cancion;
         winStage.hide(); 
         
     }
@@ -89,8 +89,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
     private void elegirCancion1(ActionEvent event) {
         audio.stop();
        
-        cancion = "/music/Cancion1.mp3";
-        setAudio(cancion);
+        cancionActual = "/music/Cancion1.mp3";
+        setAudio(cancionActual);
         audio.play();
         
         
@@ -101,8 +101,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
         audio.stop();
         
        
-        cancion = "/music/Cancion2.mp3";
-        setAudio(cancion);
+        cancionActual = "/music/Cancion2.mp3";
+        setAudio(cancionActual);
         audio.play();
          //cancion = new File("Cancion2.mp3").toURI().toString();
     
@@ -114,8 +114,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
             audio.stop();
         
         //manejarCanciones(cancion3RadioButton);
-        cancion = "/music/Cancion3.mp3";
-         setAudio(cancion);
+        cancionActual = "/music/Cancion3.mp3";
+         setAudio(cancionActual);
         audio.play();
          //cancion = new File("Cancion3.mp3").toURI().toString();
     }
@@ -126,8 +126,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
             audio.stop();
         
         //manejarCanciones(cancion4RadioButton);
-        cancion = "/music/Cancion4.mp3";
-         setAudio(cancion);
+        cancionActual = "/music/Cancion4.mp3";
+         setAudio(cancionActual);
          audio.play();
          //cancion = new File("Cancion4.mp3").toURI().toString();
     }
@@ -137,7 +137,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @FXML
     private void elegirNoCancion(ActionEvent event) {
         audio.stop();
-        cancion = null;
+        cancionActual = null;
         //manejarCanciones(noMuiscaRadioButton);
     }
 

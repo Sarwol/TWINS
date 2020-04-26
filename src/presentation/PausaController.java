@@ -42,10 +42,12 @@ public class PausaController extends JuegoLibreController implements Initializab
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //audio.stop();
+        
         if(cancionActual != null /*&& cancionActual != ""*/) {
             setAudio(cancionActual);
             audio.stop();
         }
+        cancionActual = cancion;
     }    
 
     @FXML
