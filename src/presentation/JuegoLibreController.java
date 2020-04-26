@@ -269,14 +269,17 @@ public class JuegoLibreController implements Initializable {
         PausaController pausaController = myLoader.<PausaController>getController();
         
         Stage winStage = new Stage();
+        // When this stage is closed, resume the countdown
+        winStage.setOnHidden(e ->{
+            countdown.play();
+        });
         pausaController.initPausaWindow(winStage);
-        //We create the scene foe win1
         Scene scene = new Scene(root);
-        //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("Pausa");
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
         
+        countdown.pause();
     }
 }
