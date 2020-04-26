@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import java.net.URL;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -39,20 +40,22 @@ public class MusicaController extends JuegoLibreController implements Initializa
     private RadioButton cancion3RadioButton;
     @FXML
     private RadioButton cancion4RadioButton;
-    @FXML
-    private Button reproducirButton;
+    
     @FXML
     private RadioButton noMuiscaRadioButton;
-    @FXML
-    private Button detenerButton;
     
-    String cancion;
+    
+    public String cancion;
+    public static String cancionActual;
+    
     
     private MediaPlayer mediaplayer;
     
-    public String cancionActual;
+    //public String cancionActual;
     
     private Stage winStage;
+    @FXML
+    private ToggleGroup musicaButtons;
     
 
     /**
@@ -61,81 +64,86 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        cancion = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
+        if(cancion != null) 
+            audio.stop();
         
+         cancion = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
+         setAudio(cancion);
+         audio.stop();
     }    
 
-    public String getMusica(){
-        return cancionActual;    
-    }
-   
+    
     
     @FXML
     private void volverAction(ActionEvent event) {
-	//stopAudio(cancion);
-        winStage.hide();
+	
+        audio.stop();
+        if(cancion != ""){
+            setAudio(cancion);
+            cancionActual = cancion;
+        }
+        winStage.hide(); 
+        
     }
 
     @FXML
     private void elegirCancion1(ActionEvent event) {
-        reproducirButton.setDisable(false);
-        manejarCanciones(cancion1RadioButton);
+        audio.stop();
+       
         cancion = "/music/Cancion1.mp3";
+        setAudio(cancion);
+        audio.play();
         
-        cancionActual = new File("Cancion1.mp3").toURI().toString();
+        
+        
     }
     @FXML
     private void elegirCancion2(ActionEvent event) {
-        reproducirButton.setDisable(false);
-        manejarCanciones(cancion2RadioButton);
-        cancion = "/music/Cancion2.mp3";
         
-         cancionActual = new File("Cancion2.mp3").toURI().toString();
+        audio.stop();
+        
+       
+        cancion = "/music/Cancion2.mp3";
+        setAudio(cancion);
+        audio.play();
+         //cancion = new File("Cancion2.mp3").toURI().toString();
     
     }
 
     @FXML
     private void elegirCancion3(ActionEvent event) {
-        reproducirButton.setDisable(false);
-        manejarCanciones(cancion3RadioButton);
-        cancion = "/music/Cancion3.mp3";
+        //if(songIsPlaying(cancion))
+            audio.stop();
         
-         cancionActual = new File("Cancion3.mp3").toURI().toString();
+        //manejarCanciones(cancion3RadioButton);
+        cancion = "/music/Cancion3.mp3";
+         setAudio(cancion);
+        audio.play();
+         //cancion = new File("Cancion3.mp3").toURI().toString();
     }
 
     @FXML
     private void elegirCancion4(ActionEvent event) {
-        reproducirButton.setDisable(false);
-        manejarCanciones(cancion4RadioButton);
-        cancion = "/music/Cancion4.mp3";
+        //if(songIsPlaying(cancion))
+            audio.stop();
         
-         cancionActual = new File("Cancion4.mp3").toURI().toString();
+        //manejarCanciones(cancion4RadioButton);
+        cancion = "/music/Cancion4.mp3";
+         setAudio(cancion);
+         audio.play();
+         //cancion = new File("Cancion4.mp3").toURI().toString();
     }
 
-    @FXML
-    private void reproducir(ActionEvent event) {
-        detenerButton.setDisable(false);
-        botonSeleccionado(true);
-        stopAudio(cancion);
-        playAudio(cancion);
-    }
+  
 
     @FXML
     private void elegirNoCancion(ActionEvent event) {
-        if(reproducirButton.isDisabled())
-        reproducirButton.setDisable(true);
-        cancionActual = null;
-        manejarCanciones(noMuiscaRadioButton);
+        audio.stop();
+        cancion = "";
+        //manejarCanciones(noMuiscaRadioButton);
     }
 
-    @FXML
-    private void detener(ActionEvent event) {
-        detenerButton.setDisable(true);
-        botonSeleccionado(false);
-        stopAudio(cancion);
-        
-    }
-    
+  
      
      private void manejarCanciones(RadioButton boton){
          if(boton.isSelected()){

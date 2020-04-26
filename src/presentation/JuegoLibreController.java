@@ -39,6 +39,7 @@ import javafx.util.Duration;
 import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
+import static presentation.MusicaController.cancionActual;
 
 /**
  * FXML Controller class
@@ -53,7 +54,7 @@ public class JuegoLibreController implements Initializable {
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
 
-    private String cancion = "/music/Cancion1.mp3";
+    public static String cancion;
     @FXML
     protected Tablero tablero;
     @FXML
@@ -67,13 +68,20 @@ public class JuegoLibreController implements Initializable {
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
-    //protected List<Categoria> categorias;
+    public AudioClip audio = null;
+            //protected List<Categoria> categorias;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        playAudio(cancion);
+        cancion = cancionActual;
+        if(cancion == null) cancion = "/music/Cancion1.mp3";
+        if(cancion != "") {
+            setAudio(cancion);
+            audio.play();
+        }
+        
         puntuacion = new Puntuacion(0);
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
@@ -252,21 +260,20 @@ public class JuegoLibreController implements Initializable {
         }
     };
 
-    public void playAudio(String sonido) {
-        AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
-        note.play();
+    public void setAudio(String sonido) {
+        audio = new AudioClip(this.getClass().getResource(sonido).toString());
+        //note.play();
+        
     }
-
-    public void stopAudio(String sonido) {
-        AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
-        note.stop();
-    }
+   
+   
     
     @FXML
     public void pause_onClick(ActionEvent event) throws IOException{
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Pausa.fxml"));
         Parent root = (Parent) myLoader.load();
         PausaController pausaController = myLoader.<PausaController>getController();
+        audio.stop();;
         
         Stage winStage = new Stage();
         // When this stage is closed, resume the countdown
@@ -281,5 +288,6 @@ public class JuegoLibreController implements Initializable {
         winStage.show();
         
         countdown.pause();
+        
     }
 }
