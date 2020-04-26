@@ -20,6 +20,7 @@ import java.net.URL;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -51,6 +52,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     public String cancionActual;
     
+    private Stage winStage;
+    
 
     /**
      * Initializes the controller class.
@@ -69,8 +72,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     @FXML
     private void volverAction(ActionEvent event) {
-	stopAudio(cancion);
-        exit();
+	//stopAudio(cancion);
+        winStage.hide();
     }
 
     @FXML
@@ -155,4 +158,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
          else if(cancion3RadioButton.isSelected()) {cancion3RadioButton.setDisable(bool);}
          else cancion4RadioButton.setDisable(bool);
      }
+     
+    void initMusicaWindow(Stage stage) {
+        winStage = stage;
+    }
 }

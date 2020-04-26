@@ -6,9 +6,11 @@
 package presentation;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,15 +22,21 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Carta;
-import logic.Categoria;
 import logic.Puntuacion;
 import logic.Tablero;
 
@@ -50,6 +58,8 @@ public class JuegoLibreController implements Initializable {
     protected Tablero tablero;
     @FXML
     protected Label tiempo;
+    @FXML
+    protected Label punt;
     protected Timeline countdown;
     protected int tiempoActual;
     protected List<Carta> parSelec;
@@ -58,7 +68,6 @@ public class JuegoLibreController implements Initializable {
     protected Carta carta1;
     protected Carta carta2;
     //protected List<Categoria> categorias;
-
     /**
      * Initializes the controller class.
      */
@@ -76,13 +85,13 @@ public class JuegoLibreController implements Initializable {
             }
         });
         setTimer(DURACION_PARTIDA);
-
+        
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
         tablero.setColumnas(LONGITUD_TABLERO);
         tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
         tablero.barajarTablero();
-
+        
     }
 
     /**
@@ -105,6 +114,23 @@ public class JuegoLibreController implements Initializable {
         countdown.play();
     }
 
+    /*
+    Alert alert= new Alert(AlertType.CONFIRMATION);
+    alert.setTitle("Confirmation Dialog");
+    alert.setHeaderText("This dialog has custom actions");
+    alert.setContentText("Choose an option");
+    ButtonType reset = new ButtonType("Volver a jugar");
+    ButtonType close = new ButtonType("Salir");
+    alert.getButtonTypes().setAll(reset, close);
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.isPresent()) {
+        if (result.get() == reset)
+            System.out.println("One");
+        else
+            System.exit(0);
+    }
+    */
+    
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
             carta1 = parSeleccionado.get(0);
@@ -120,8 +146,10 @@ public class JuegoLibreController implements Initializable {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
                 puntuacion.sumarPuntos();
+                punt.setText(puntuacion.getPuntos() + "");
             } else {
                 puntuacion.restarPuntos();
+                punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
             }
@@ -232,5 +260,23 @@ public class JuegoLibreController implements Initializable {
     public void stopAudio(String sonido) {
         AudioClip note = new AudioClip(this.getClass().getResource(sonido).toString());
         note.stop();
+    }
+    
+    @FXML
+    public void pause_onClick(ActionEvent event) throws IOException{
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Pausa.fxml"));
+        Parent root = (Parent) myLoader.load();
+        PausaController pausaController = myLoader.<PausaController>getController();
+        
+        Stage winStage = new Stage();
+        pausaController.initPausaWindow(winStage);
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("Pausa");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+        
     }
 }
