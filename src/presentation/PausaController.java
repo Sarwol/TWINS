@@ -42,7 +42,7 @@ public class PausaController extends JuegoLibreController implements Initializab
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //audio.stop();
-        if(cancionActual != null && cancionActual != "") {
+        if(cancionActual != null /*&& cancionActual != ""*/) {
             setAudio(cancionActual);
             audio.stop();
         }
@@ -50,13 +50,14 @@ public class PausaController extends JuegoLibreController implements Initializab
 
     @FXML
     private void resume_onClick(ActionEvent event) throws IOException {
-       try{
-        if(cancionActual != null && cancion != "") cancion = cancionActual;
+       //try{
+        cancion = cancionActual;
+        if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
             audio.play();
-            
+        }
         
-       } catch (Exception e){}
+       //} catch (Exception e){}
         winStage.hide(); 
     }
 

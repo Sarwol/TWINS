@@ -51,7 +51,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     private MediaPlayer mediaplayer;
     
-    //public String cancionActual;
+   
     
     private Stage winStage;
     @FXML
@@ -76,12 +76,11 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     @FXML
     private void volverAction(ActionEvent event) {
-	
-        audio.stop();
-        if(cancion != ""){
+	if(cancion != null){
+            audio.stop();
             setAudio(cancion);
-            cancionActual = cancion;
         }
+        cancionActual = cancion;
         winStage.hide(); 
         
     }
@@ -99,7 +98,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
     }
     @FXML
     private void elegirCancion2(ActionEvent event) {
-        
         audio.stop();
         
        
@@ -139,7 +137,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @FXML
     private void elegirNoCancion(ActionEvent event) {
         audio.stop();
-        cancion = "";
+        cancion = null;
         //manejarCanciones(noMuiscaRadioButton);
     }
 

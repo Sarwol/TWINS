@@ -54,7 +54,7 @@ public class JuegoLibreController implements Initializable {
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
 
-    public static String cancion;
+    protected static String cancion;
     @FXML
     protected Tablero tablero;
     @FXML
@@ -68,7 +68,7 @@ public class JuegoLibreController implements Initializable {
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
-    public AudioClip audio = null;
+    protected AudioClip audio = null;
             //protected List<Categoria> categorias;
     /**
      * Initializes the controller class.
@@ -263,7 +263,6 @@ public class JuegoLibreController implements Initializable {
     public void setAudio(String sonido) {
         audio = new AudioClip(this.getClass().getResource(sonido).toString());
         //note.play();
-        
     }
    
    
@@ -273,7 +272,7 @@ public class JuegoLibreController implements Initializable {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Pausa.fxml"));
         Parent root = (Parent) myLoader.load();
         PausaController pausaController = myLoader.<PausaController>getController();
-        audio.stop();;
+        audio.stop();
         
         Stage winStage = new Stage();
         // When this stage is closed, resume the countdown
