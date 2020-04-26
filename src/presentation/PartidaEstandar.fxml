@@ -25,7 +25,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </Tablero>
-      <Label fx:id="tiempo" layoutX="14.0" layoutY="14.0" text="Label" />
+      <Label fx:id="tiempo" layoutX="286.0" layoutY="18.0" text="Label" />
       <Button fx:id="pauseBtn" layoutX="534.0" layoutY="14.0" mnemonicParsing="false" onAction="#pause_onClick" text="Pausa" />
+      <Label fx:id="punt" layoutX="286.0" layoutY="39.0" text="0" />
    </children>
 </AnchorPane>
