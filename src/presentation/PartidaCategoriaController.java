@@ -81,6 +81,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
                 puntuacion.sumarPuntos();
+                punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
@@ -89,6 +90,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 }
             } else {
                 puntuacion.restarPuntos();
+                punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
             }

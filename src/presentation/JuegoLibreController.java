@@ -24,6 +24,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -52,7 +53,7 @@ public class JuegoLibreController implements Initializable {
     public static final int TURN_DELAY = 500;
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
-
+    
     private String cancion = "/music/Cancion1.mp3";
     @FXML
     protected Tablero tablero;
@@ -82,6 +83,11 @@ public class JuegoLibreController implements Initializable {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 comprobarCartas();
+                if(isVictoria()) {
+                    try{
+                        saltarAVictoria(puntuacion, tiempoActual);
+                    } catch(IOException e) {}
+                }
             }
         });
         setTimer(DURACION_PARTIDA);
@@ -93,7 +99,7 @@ public class JuegoLibreController implements Initializable {
         tablero.barajarTablero();
         
     }
-
+    
     /**
      * Creates the Timeline used to implement the countdown time in the game
      *
@@ -106,6 +112,21 @@ public class JuegoLibreController implements Initializable {
             public void handle(ActionEvent event) {
                 if (tiempoActual == 0) {
                     countdown.stop();
+                    tablero.setDisable(true);
+                    FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
+                    try{
+                        Parent root = (Parent) myLoader.load();
+                        DerrotaController derrotaController = myLoader.<DerrotaController>getController();        
+                        Stage winStage = new Stage();
+                        derrotaController.initDerrotaWindow(winStage);
+                        Scene scene = new Scene(root);
+                        winStage.setScene(scene);
+                        winStage.initModality(Modality.APPLICATION_MODAL);
+                        winStage.show();
+                    } catch (IOException ioe) {}
+                    stopAudio(cancion);
+                    Stage thisStage = (Stage) tablero.getScene().getWindow();
+                    thisStage.close();
                 }
                 tiempo.setText((tiempoActual--) + "");
             }
@@ -113,23 +134,6 @@ public class JuegoLibreController implements Initializable {
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
     }
-
-    /*
-    Alert alert= new Alert(AlertType.CONFIRMATION);
-    alert.setTitle("Confirmation Dialog");
-    alert.setHeaderText("This dialog has custom actions");
-    alert.setContentText("Choose an option");
-    ButtonType reset = new ButtonType("Volver a jugar");
-    ButtonType close = new ButtonType("Salir");
-    alert.getButtonTypes().setAll(reset, close);
-    Optional<ButtonType> result = alert.showAndWait();
-    if (result.isPresent()) {
-        if (result.get() == reset)
-            System.out.println("One");
-        else
-            System.exit(0);
-    }
-    */
     
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
@@ -281,5 +285,37 @@ public class JuegoLibreController implements Initializable {
         winStage.show();
         
         countdown.pause();
+    }
+    
+    public boolean isVictoria() {
+        boolean res = true;
+        ObservableList<Node> cartas = tablero.getChildren();
+        for(int i = 0; i < cartas.size(); i++){
+            if((cartas.get(i) instanceof Carta && cartas.get(i).isDisabled())){
+                res = true;
+            }
+            else {
+                res = false;
+                return res;
+            }
+        }
+        return res;
+    }
+    
+    public void saltarAVictoria(Puntuacion punt, int temp) throws IOException {
+        countdown.stop();
+        tablero.setDisable(true);
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));         
+        Parent root = (Parent) myLoader.load();
+        VictoriaController victoriaController = myLoader.<VictoriaController>getController();        
+        Stage winStage = new Stage();
+        victoriaController.initVictoriaWindow(winStage, punt, temp);
+        Scene scene = new Scene(root);
+        winStage.setScene(scene);
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+        stopAudio(cancion);
+        Stage thisStage = (Stage) tablero.getScene().getWindow();
+        thisStage.close();
     }
 }

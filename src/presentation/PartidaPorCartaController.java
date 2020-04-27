@@ -86,9 +86,11 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
                 puntuacion.sumarPuntos();
+                punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
             } else {
                 puntuacion.restarPuntos();
+                punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
             }
