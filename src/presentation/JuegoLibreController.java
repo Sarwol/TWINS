@@ -51,7 +51,7 @@ public class JuegoLibreController implements Initializable {
     public static final int LONGITUD_TABLERO = 6;
     public static final int ANCHURA_TABLERO = 4;
     public static final int TURN_DELAY = 500;
-    public static final int NUM_CATEGORIAS = 2;
+   
     public static final int DURACION_PARTIDA = 60;
 
     protected static String cancion;

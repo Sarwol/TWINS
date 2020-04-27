@@ -37,6 +37,7 @@ import static presentation.PartidaEstandarController.LONGITUD_TABLERO;
  */
 public class PartidaCategoriaController extends JuegoLibreController {
 
+    public static final int NUM_CATEGORIAS = 2;
     private List<Categoria> categorias;
     private Categoria categoriaActual;
     //protected boolean porCategoria;
