@@ -5,6 +5,7 @@
  */
 package presentation;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +40,19 @@ public class PartidaPorCartaController extends JuegoLibreController {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
-        parSelec = new ArrayList<Carta>();
-        parSeleccionado = FXCollections.observableList(parSelec);
-        parSeleccionado.addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(ListChangeListener.Change change) {
-                comprobarCartas();
-            }
-        });     // end parSeleccionado
+//        parSelec = new ArrayList<Carta>();
+//        parSeleccionado = FXCollections.observableList(parSelec);
+//        parSeleccionado.addListener(new ListChangeListener() {
+//            @Override
+//            public void onChanged(ListChangeListener.Change change) {
+//                comprobarCartas();
+//                if(isVictoria()) {
+//                    try{
+//                        saltarAVictoria(puntuacion, tiempoActual);
+//                    } catch(IOException e) {}
+//                }
+//            }
+//        });     // end parSeleccionado
         seleccionarCartaAEncontrar();
     }
 
@@ -57,17 +63,21 @@ public class PartidaPorCartaController extends JuegoLibreController {
     private void seleccionarCartaAEncontrar() {
         ObservableList<Node> cards = tablero.getChildren();
         List<Carta> cardsNotFound = new ArrayList<Carta>();
-
+        
         for (Node nodoCarta : cards) {
-            if (!nodoCarta.isDisabled()) {
+            if ((nodoCarta instanceof Carta) && !nodoCarta.isDisabled()) {
                 cardsNotFound.add((Carta) nodoCarta);
             }
         }
-        int randomPos = (int) Math.floor(Math.random() * (cardsNotFound.size()));
-        Carta chosenCard = cardsNotFound.get(randomPos);
-        cartaAEncontrar.setcartaID(chosenCard.getCartaID());
-        cartaAEncontrar.setGraphic(new ImageView(chosenCard.getImagenCarta()));
-        cartaAEncontrar.setText(Integer.toString(chosenCard.getCartaID()));
+         System.out.println("THERE ARE " + cardsNotFound.size() + " CARDS LEFT");
+        if(cardsNotFound.size() > 0){
+            int randomPos = (int) Math.floor(Math.random() * (cardsNotFound.size()));
+            Carta chosenCard = cardsNotFound.get(randomPos);
+            cartaAEncontrar.setcartaID(chosenCard.getCartaID());
+            cartaAEncontrar.setGraphic(new ImageView(chosenCard.getImagenCarta()));
+            cartaAEncontrar.setText(Integer.toString(chosenCard.getCartaID()));
+        }
+        
     }
     
     @Override

@@ -131,7 +131,8 @@ public class JuegoLibreController implements Initializable {
                         winStage.initModality(Modality.APPLICATION_MODAL);
                         winStage.show();
                     } catch (IOException ioe) {}
-                    stopAudio(cancion);
+                    audio.stop();
+                    //stopAudio(cancion);
                     Stage thisStage = (Stage) tablero.getScene().getWindow();
                     thisStage.close();
                 }
@@ -317,7 +318,8 @@ public class JuegoLibreController implements Initializable {
         winStage.setScene(scene);
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
-        stopAudio(cancion);
+        audio.stop();
+        //stopAudio(cancion);
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }
