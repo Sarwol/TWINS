@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -28,37 +29,30 @@
                <font>
                   <Font size="20.0" />
                </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="musicaButtons" />
+               </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="cancion2RadioButton" layoutX="330.0" layoutY="28.0" mnemonicParsing="false" onAction="#elegirCancion2" prefHeight="46.0" prefWidth="170.0" text="Cancion 2">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="cancion3RadioButton" layoutX="61.0" layoutY="110.0" mnemonicParsing="false" onAction="#elegirCancion3" prefHeight="46.0" prefWidth="170.0" text="Cancion 3">
+            <RadioButton fx:id="cancion2RadioButton" layoutX="330.0" layoutY="28.0" mnemonicParsing="false" onAction="#elegirCancion2" prefHeight="46.0" prefWidth="170.0" text="Cancion 2" toggleGroup="$musicaButtons">
                <font>
                   <Font size="20.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="cancion4RadioButton" layoutX="330.0" layoutY="110.0" mnemonicParsing="false" onAction="#elegirCancion4" prefHeight="46.0" prefWidth="170.0" text="Cancion 4">
+            <RadioButton fx:id="cancion3RadioButton" layoutX="61.0" layoutY="110.0" mnemonicParsing="false" onAction="#elegirCancion3" prefHeight="46.0" prefWidth="170.0" text="Cancion 3" toggleGroup="$musicaButtons">
                <font>
                   <Font size="20.0" />
                </font>
             </RadioButton>
-            <Button fx:id="reproducirButton" disable="true" layoutX="133.0" layoutY="269.0" mnemonicParsing="false" onAction="#reproducir" prefHeight="58.0" prefWidth="142.0" text="Reproducir">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <RadioButton fx:id="noMuiscaRadioButton" layoutX="166.0" layoutY="185.0" mnemonicParsing="false" onAction="#elegirNoCancion" text="No seleccionar música">
+            <RadioButton fx:id="cancion4RadioButton" layoutX="330.0" layoutY="110.0" mnemonicParsing="false" onAction="#elegirCancion4" prefHeight="46.0" prefWidth="170.0" text="Cancion 4" toggleGroup="$musicaButtons">
                <font>
                   <Font size="20.0" />
                </font>
             </RadioButton>
-            <Button fx:id="detenerButton" disable="true" layoutX="299.0" layoutY="272.0" mnemonicParsing="false" onAction="#detener" prefHeight="58.0" prefWidth="117.0" text="Detener">
+            <RadioButton fx:id="noMuiscaRadioButton" layoutX="166.0" layoutY="185.0" mnemonicParsing="false" onAction="#elegirNoCancion" text="No seleccionar música" toggleGroup="$musicaButtons">
                <font>
                   <Font size="20.0" />
                </font>
-            </Button>
+            </RadioButton>
          </children></AnchorPane>
   </items>
 </SplitPane>
