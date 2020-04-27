@@ -19,13 +19,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static presentation.MusicaController.cancionActual;
 
 /**
  * FXML Controller class
  *
  * @author User
  */
-public class PausaController implements Initializable {    
+public class PausaController extends JuegoLibreController implements Initializable {    
     @FXML
     private Button resume;
     @FXML
@@ -40,11 +41,26 @@ public class PausaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //audio.stop();
+        
+        if(cancionActual != null /*&& cancionActual != ""*/) {
+            setAudio(cancionActual);
+            audio.stop();
+        }
+        cancionActual = cancion;
     }    
 
     @FXML
     private void resume_onClick(ActionEvent event) throws IOException {
-        winStage.hide();
+       //try{
+        cancion = cancionActual;
+        if(cancionActual != null /*&& cancionActual != ""*/){
+            setAudio(cancion);
+            audio.play();
+        }
+        
+       //} catch (Exception e){}
+        winStage.hide(); 
     }
 
     @FXML
