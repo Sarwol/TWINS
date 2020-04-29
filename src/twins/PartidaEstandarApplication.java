@@ -30,10 +30,12 @@ import logic.Tablero;
  * @author davit
  */
 public class PartidaEstandarApplication extends Application{
+    public static String mode = "PartidaCategoria.fxml";
+    
     @Override
     public void start(Stage stage) throws Exception {
         String partidaEstandarFXMLLocation = "." + File.separator + "src" + File.separator
-                + "presentation" + File.separator + "PartidaPorCarta.fxml";
+                + "presentation" + File.separator + mode;
         File partidaEstandarFXML = new File(partidaEstandarFXMLLocation);
         Parent root = FXMLLoader.load(partidaEstandarFXML.toURI().toURL());
         Scene scene = new Scene(root);
@@ -41,7 +43,7 @@ public class PartidaEstandarApplication extends Application{
         stage.show();
     }
     
-
+    
     public static void main(String[] args) {
         launch(args);
     }

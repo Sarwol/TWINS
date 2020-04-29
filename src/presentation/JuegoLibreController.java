@@ -41,6 +41,7 @@ import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
 import static presentation.MusicaController.cancionActual; 
+import twins.PartidaEstandarApplication;
 
 /**
  * FXML Controller class
@@ -54,6 +55,8 @@ public class JuegoLibreController implements Initializable {
     public static final int TURN_DELAY = 500;
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
+    
+    protected static String modo = PartidaEstandarApplication.mode;
     
     protected static String cancion;
     @FXML
@@ -92,7 +95,7 @@ public class JuegoLibreController implements Initializable {
                 comprobarCartas();
                 if(isVictoria()) {
                     try{
-                        saltarAVictoria(puntuacion, tiempoActual);
+                        saltarAVictoria(puntuacion, tiempoActual, modo);
                     } catch(IOException e) {}
                 }
             }
@@ -119,22 +122,9 @@ public class JuegoLibreController implements Initializable {
             public void handle(ActionEvent event) {
                 if (tiempoActual == 0) {
                     countdown.stop();
-                    tablero.setDisable(true);
-                    FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
-                    try{
-                        Parent root = (Parent) myLoader.load();
-                        DerrotaController derrotaController = myLoader.<DerrotaController>getController();        
-                        Stage winStage = new Stage();
-                        derrotaController.initDerrotaWindow(winStage);
-                        Scene scene = new Scene(root);
-                        winStage.setScene(scene);
-                        winStage.initModality(Modality.APPLICATION_MODAL);
-                        winStage.show();
-                    } catch (IOException ioe) {}
-                    audio.stop();
-                    //stopAudio(cancion);
-                    Stage thisStage = (Stage) tablero.getScene().getWindow();
-                    thisStage.close();
+                    try {
+                        saltarADerrota(modo);
+                    } catch (IOException e) {}
                 }
                 tiempo.setText((tiempoActual--) + "");
             }
@@ -270,6 +260,11 @@ public class JuegoLibreController implements Initializable {
     }
     
     @FXML
+    public void mute_onClick(ActionEvent event) {
+        audio.stop();
+    }
+    
+    @FXML
     public void pause_onClick(ActionEvent event) throws IOException{
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Pausa.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -306,19 +301,36 @@ public class JuegoLibreController implements Initializable {
         return res;
     }
     
-    public void saltarAVictoria(Puntuacion punt, int temp) throws IOException {
+    public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
+        audio.stop();
         countdown.stop();
         tablero.setDisable(true);
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));         
         Parent root = (Parent) myLoader.load();
         VictoriaController victoriaController = myLoader.<VictoriaController>getController();        
         Stage winStage = new Stage();
-        victoriaController.initVictoriaWindow(winStage, punt, temp);
+        victoriaController.initVictoriaWindow(winStage, punt, temp, m);
         Scene scene = new Scene(root);
         winStage.setScene(scene);
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
+        //stopAudio(cancion);
+        Stage thisStage = (Stage) tablero.getScene().getWindow();
+        thisStage.close();
+    }
+    
+    public void saltarADerrota(String m) throws IOException{
         audio.stop();
+        tablero.setDisable(true);
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
+        Parent root = (Parent) myLoader.load();
+        DerrotaController derrotaController = myLoader.<DerrotaController>getController();        
+        Stage winStage = new Stage();
+        derrotaController.initDerrotaWindow(winStage, m);
+        Scene scene = new Scene(root);
+        winStage.setScene(scene);
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
         //stopAudio(cancion);
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();

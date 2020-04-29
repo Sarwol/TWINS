@@ -38,6 +38,7 @@ public class VictoriaController implements Initializable {
     protected Label tempo;
     
     private Stage winStage;
+    private String modo;
     /**
      * Initializes the controller class.
      */
@@ -50,7 +51,7 @@ public class VictoriaController implements Initializable {
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
         
-        Parent root = FXMLLoader.load(getClass().getResource("PartidaEstandar.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -62,10 +63,11 @@ public class VictoriaController implements Initializable {
         System.exit(0);
     }
     
-    void initVictoriaWindow(Stage stage, Puntuacion p, int t) {
+    void initVictoriaWindow(Stage stage, Puntuacion p, int t, String m) {
         winStage = stage;
         puntu.setText(p.getPuntos() + "");
         tempo.setText(t + "");
+        modo = m;
     }
     
 }
