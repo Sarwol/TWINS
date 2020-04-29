@@ -30,6 +30,7 @@ public class DerrotaController implements Initializable {
     protected Button resetBtn;
     
     private Stage winStage;
+    private String modo;
     /**
      * Initializes the controller class.
      */
@@ -42,7 +43,7 @@ public class DerrotaController implements Initializable {
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
         
-        Parent root = FXMLLoader.load(getClass().getResource("PartidaEstandar.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -54,8 +55,9 @@ public class DerrotaController implements Initializable {
         System.exit(0);
     }
     
-    void initDerrotaWindow(Stage stage) {
+    void initDerrotaWindow(Stage stage, String m) {
         winStage = stage;
+        modo = m;
     }
     
 }
