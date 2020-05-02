@@ -27,7 +27,8 @@
         </rowConstraints>
       </Tablero>
       <Label fx:id="tiempo" layoutX="272.0" layoutY="14.0" text="Label" />
-      <Label fx:id="categoriaLabel" layoutX="250.0" layoutY="350.0" text="" />
+      <Label fx:id="categoriaActualLabel" layoutX="15.0" layoutY="5.0" text="Categoría Actual: " />
+      <Label fx:id="categoriaLabel" layoutX="110.0" layoutY="5.0" text="" />
       <Label fx:id="punt" layoutX="272.0" layoutY="35.0" text="0" />
       <Button layoutX="463.0" layoutY="10.0" mnemonicParsing="false" onAction="#mute_onClick" text="Silenciar" />
    </children>

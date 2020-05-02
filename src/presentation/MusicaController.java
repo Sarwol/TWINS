@@ -143,28 +143,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
 
   
      
-     private void manejarCanciones(RadioButton boton){
-         if(boton.isSelected()){
-        cancion1RadioButton.setDisable(true);
-        cancion2RadioButton.setDisable(true);
-        cancion3RadioButton.setDisable(true);
-        cancion4RadioButton.setDisable(true);
-        noMuiscaRadioButton.setDisable(true);
-        boton.setDisable(false);
-        } else {cancion1RadioButton.setDisable(false);
-        cancion2RadioButton.setDisable(false);
-        cancion3RadioButton.setDisable(false);
-        cancion4RadioButton.setDisable(false);
-        noMuiscaRadioButton.setDisable(false);
-         }
-      }
-     private void botonSeleccionado(Boolean bool){
-         if(cancion1RadioButton.isSelected()) {cancion1RadioButton.setDisable(bool);}
-         else if(cancion2RadioButton.isSelected()) {cancion2RadioButton.setDisable(bool);}
-         else if(cancion3RadioButton.isSelected()) {cancion3RadioButton.setDisable(bool);}
-         else cancion4RadioButton.setDisable(bool);
-     }
-     
     void initMusicaWindow(Stage stage) {
         winStage = stage;
     }

@@ -62,7 +62,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
         //categoria = false;
         categoriaActual = Categoria.FRUTAS;
         categoriaLabel.setText(categoriaActual.toString());
-        mostrarCategoria();
+        //mostrarCategoria();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
                     categoriaLabel.setText(categoriaActual.toString());
-                    mostrarCategoria();
+                    //mostrarCategoria();
                 }
             } else {
                 puntuacion.restarPuntos();
@@ -145,15 +145,13 @@ public class PartidaCategoriaController extends JuegoLibreController {
 
         return baraja;
     }
-
-    /**
-     * Open a new window with the category of the valid pairs.
-     */
+/*
+    
     protected void mostrarCategoria() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Categoria Actual");
         alert.setHeaderText(categoriaActual.toString());
         alert.setContentText("La pareja de cartas que tiene que buscar es de la categoria " + categoriaActual.toString());
         alert.showAndWait();
-    }
+    }*/
 }
