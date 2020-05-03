@@ -91,7 +91,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
        
         cancionActual = "/music/Cancion1.mp3";
         setAudio(cancionActual);
-        audio.play();
+        audio.play(0.5);
         
         
         
@@ -103,7 +103,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
        
         cancionActual = "/music/Cancion2.mp3";
         setAudio(cancionActual);
-        audio.play();
+        audio.play(0.5);
          //cancion = new File("Cancion2.mp3").toURI().toString();
     
     }
@@ -116,7 +116,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
         //manejarCanciones(cancion3RadioButton);
         cancionActual = "/music/Cancion3.mp3";
          setAudio(cancionActual);
-        audio.play();
+        audio.play(0.5);
          //cancion = new File("Cancion3.mp3").toURI().toString();
     }
 
@@ -128,7 +128,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
         //manejarCanciones(cancion4RadioButton);
         cancionActual = "/music/Cancion4.mp3";
          setAudio(cancionActual);
-         audio.play();
+         audio.play(0.5);
          //cancion = new File("Cancion4.mp3").toURI().toString();
     }
 

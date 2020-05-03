@@ -95,7 +95,7 @@ public class JuegoLibreController implements Initializable {
         if(cancion == null) cancion = "/music/Cancion1.mp3"; 
         if(cancion != "") { 
             setAudio(cancion);
-            audio.play(); 
+            audio.play(0.3); 
         } 
         puntuacion = new Puntuacion(0);
         pauseList = new ArrayList<Boolean>();

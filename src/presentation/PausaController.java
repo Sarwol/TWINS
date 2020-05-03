@@ -45,7 +45,7 @@ public class PausaController extends JuegoLibreController implements Initializab
         // TODO
         //audio.stop();
         pauseMusic = new AudioClip(this.getClass().getResource("/music/cancionPausa.mp3").toString());
-        pauseMusic.play();
+        pauseMusic.play(0.07);
         if(cancionActual != null /*&& cancionActual != ""*/) {
             setAudio(cancionActual);
             audio.stop();
@@ -60,7 +60,7 @@ public class PausaController extends JuegoLibreController implements Initializab
         cancion = cancionActual;
         if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
-            audio.play();
+            audio.play(0.3);
         }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
