@@ -83,6 +83,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
+                countdown.stop();
+                setTimer(DURACION_TURNO, tiempoTurno);
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
                     categoriaLabel.setText(categoriaActual.toString());

@@ -30,7 +30,7 @@ import logic.Tablero;
  * @author davit
  */
 public class PartidaEstandarApplication extends Application{
-    public static String mode = "PartidaEstandar.fxml";
+    public static String mode = "PartidaCategoria.fxml";
     
     @Override
     public void start(Stage stage) throws Exception {

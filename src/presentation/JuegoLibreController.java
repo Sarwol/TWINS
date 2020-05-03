@@ -58,6 +58,7 @@ public class JuegoLibreController implements Initializable {
     public static final int TURN_DELAY = 500;
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
+    public static final int DURACION_TURNO = 5;
     
     protected static String modo = PartidaEstandarApplication.mode;
    
@@ -69,9 +70,12 @@ public class JuegoLibreController implements Initializable {
     @FXML
     protected Label tiempo;
     @FXML
+    protected Label tiempoTurno;
+    @FXML
     protected Label punt;
     protected Timeline countdown;
     protected int tiempoActual;
+    protected int turnoActual;
     protected List<Carta> parSelec;
     protected ObservableList<Carta> parSeleccionado;
     protected Puntuacion puntuacion;
@@ -111,6 +115,7 @@ public class JuegoLibreController implements Initializable {
         
         
         setTimer(DURACION_PARTIDA,tiempo);
+        setTimer(DURACION_TURNO, tiempoTurno);
         
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
@@ -126,21 +131,35 @@ public class JuegoLibreController implements Initializable {
      * @param duration amount of seconds the round lasts
      */
     public void setTimer(int duration, Label label) {
-        tiempoActual = duration;
+        if(label == tiempo) tiempoActual = duration;
+        else turnoActual = duration;
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (tiempoActual == 0) {
-                    countdown.stop();
-                    try {
-                        saltarADerrota(modo);
-                    } catch (IOException e) {}
+                if(label == tiempo) {
+                    if (tiempoActual == 0) {
+                        countdown.stop();
+                        try {
+                            saltarADerrota(modo);
+                        } catch (IOException e) {}
+                    } 
+                    label.setText((tiempoActual--) + "");
+               } else {
+                    if(turnoActual == 0) {
+                        countdown.stop();
+                        puntuacion.restarPuntos();
+                         punt.setText(puntuacion.getPuntos() + "");
+                        setTimer(DURACION_TURNO,tiempoTurno);
+                    }
+                   else label.setText((turnoActual--) + "");
+                    
                 }
-                label.setText((tiempoActual--) + "");
             }
+            
         }));
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
+        
     }
     
     public void comprobarCartas() {
@@ -159,6 +178,8 @@ public class JuegoLibreController implements Initializable {
                 carta2.setDisable(true);
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
+                countdown.stop();
+                setTimer(DURACION_TURNO, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");

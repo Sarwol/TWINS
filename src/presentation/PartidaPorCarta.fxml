@@ -26,9 +26,14 @@
         </rowConstraints>
       </Tablero>
       <Carta fx:id="cartaAEncontrar" mnemonicParsing="false" text="" />
-      <Label fx:id="tiempo" layoutX="286.0" layoutY="14.0" text="Label" />
+       <Label fx:id="tiempoPartidaLabel" layoutX="206.0" layoutY="5.0" text="Tiempo Restante" />
+      <Label fx:id="tiempo" layoutX="236.0" layoutY="25.0" text="" />
+      <Label fx:id="minutos" layoutX="219.0" layoutY="25.0" text="00:" />
+      <Label fx:id="tiempoTurnoLabel" layoutX="334.0" layoutY="05.0" text="Tiempo del Turno" />
+      <Label fx:id="tiempoTurno" layoutX="374.0" layoutY="25.0" text="0" />
       <Button layoutX="534.0" layoutY="10.0" mnemonicParsing="false" onAction="#pause_onClick" text="Pausa" />
-      <Label fx:id="punt" layoutX="286.0" layoutY="35.0" text="0" />
+      <Label fx:id="puntos" layoutX="20.0" layoutY="30.0" text="Puntos" />
+      <Label fx:id="punt" layoutX="25.0" layoutY="50.0" text="0" />
       <Button layoutX="469.0" layoutY="10.0" mnemonicParsing="false" onAction="#mute_onClick" text="Silenciar" />
    </children>
 </AnchorPane>

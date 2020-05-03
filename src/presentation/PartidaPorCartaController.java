@@ -98,6 +98,8 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
+                countdown.stop();
+                setTimer(DURACION_TURNO, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
