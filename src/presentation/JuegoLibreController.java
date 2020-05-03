@@ -78,6 +78,8 @@ public class JuegoLibreController implements Initializable {
     protected int turnoActual;
     protected List<Carta> parSelec;
     protected ObservableList<Carta> parSeleccionado;
+    protected static List<Boolean> pauseList;
+    protected static ObservableList<Boolean> observPauseList; 
     protected Puntuacion puntuacion;
     protected Carta carta1;
     protected Carta carta2;
@@ -95,6 +97,10 @@ public class JuegoLibreController implements Initializable {
             audio.play(); 
         } 
         puntuacion = new Puntuacion(0);
+        pauseList = new ArrayList<Boolean>();
+        pauseList.add(Boolean.FALSE);
+        observPauseList = FXCollections.observableList(pauseList);
+
         
         
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
@@ -112,6 +118,16 @@ public class JuegoLibreController implements Initializable {
             }
         });
         
+       //listener para activar de nuevo el tablero después de Pausa
+        observPauseList.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                if(observPauseList.get(0)){
+                    tablero.setDisable(false);
+                    
+                }
+            }
+        });
         
         
         setTimer(DURACION_PARTIDA,tiempo);

@@ -60,6 +60,7 @@ public class PausaController extends JuegoLibreController implements Initializab
             audio.play();
         }
        
+        observPauseList.set(0, Boolean.TRUE);
        //} catch (Exception e){}
         winStage.hide(); 
     }
