@@ -34,7 +34,6 @@ public class VictoriaController implements Initializable {
     @FXML
     protected Label puntu;
     
-    @FXML
     protected Label tempo;
     
     private Stage winStage;
@@ -66,7 +65,7 @@ public class VictoriaController implements Initializable {
     void initVictoriaWindow(Stage stage, Puntuacion p, int t, String m) {
         winStage = stage;
         puntu.setText(p.getPuntos() + "");
-        tempo.setText(t + "");
+        //tempo.setText(t + "");
         modo = m;
     }
     

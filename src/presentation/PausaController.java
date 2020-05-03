@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static presentation.JuegoLibreController.cancion;
 import static presentation.MusicaController.cancionActual;
 
 /**
@@ -58,7 +59,7 @@ public class PausaController extends JuegoLibreController implements Initializab
             setAudio(cancion);
             audio.play();
         }
-        
+       
        //} catch (Exception e){}
         winStage.hide(); 
     }

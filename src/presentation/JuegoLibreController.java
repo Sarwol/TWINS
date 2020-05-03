@@ -14,6 +14,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -57,7 +60,9 @@ public class JuegoLibreController implements Initializable {
     public static final int DURACION_PARTIDA = 60;
     
     protected static String modo = PartidaEstandarApplication.mode;
+   
     
+    //private BooleanProperty pauseProperty = new SimpleBooleanProperty();
     protected static String cancion;
     @FXML
     protected Tablero tablero;
@@ -86,6 +91,8 @@ public class JuegoLibreController implements Initializable {
             audio.play(); 
         } 
         puntuacion = new Puntuacion(0);
+        
+        
         // CAUTION: parSelec and parSeleccionado must be defined in each subclass
         parSelec = new ArrayList<Carta>();
         parSeleccionado = FXCollections.observableList(parSelec);
@@ -100,7 +107,10 @@ public class JuegoLibreController implements Initializable {
                 }
             }
         });
-        setTimer(DURACION_PARTIDA);
+        
+        
+        
+        setTimer(DURACION_PARTIDA,tiempo);
         
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
@@ -115,7 +125,7 @@ public class JuegoLibreController implements Initializable {
      *
      * @param duration amount of seconds the round lasts
      */
-    public void setTimer(int duration) {
+    public void setTimer(int duration, Label label) {
         tiempoActual = duration;
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
@@ -126,7 +136,7 @@ public class JuegoLibreController implements Initializable {
                         saltarADerrota(modo);
                     } catch (IOException e) {}
                 }
-                tiempo.setText((tiempoActual--) + "");
+                label.setText((tiempoActual--) + "");
             }
         }));
         countdown.setCycleCount(Timeline.INDEFINITE);
@@ -269,7 +279,8 @@ public class JuegoLibreController implements Initializable {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Pausa.fxml"));
         Parent root = (Parent) myLoader.load();
         PausaController pausaController = myLoader.<PausaController>getController();
-        audio.stop(); 
+        audio.stop();
+        tablero.setDisable(true);
         
         Stage winStage = new Stage();
         // When this stage is closed, resume the countdown
@@ -335,4 +346,5 @@ public class JuegoLibreController implements Initializable {
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }
+    
 }

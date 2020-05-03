@@ -22,9 +22,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label layoutX="72.0" layoutY="106.0" text="Puntuación:" />
-      <Label fx:id="puntu" layoutX="145.0" layoutY="106.0" text="Label" />
-      <Label layoutX="92.0" layoutY="135.0" text="Tiempo:" />
-      <Label fx:id="tempo" layoutX="145.0" layoutY="135.0" text="Label" />
+      <Label layoutX="66.0" layoutY="123.0" text="Puntuación:" />
+      <Label fx:id="puntu" layoutX="145.0" layoutY="123.0" text="Label" />
    </children>
 </AnchorPane>
