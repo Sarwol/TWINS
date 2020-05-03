@@ -44,6 +44,7 @@ import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
 import static presentation.MusicaController.cancionActual; 
+import static presentation.PausaController.pauseMusic;
 import twins.PartidaEstandarApplication;
 
 /**
@@ -124,7 +125,7 @@ public class JuegoLibreController implements Initializable {
             public void onChanged(ListChangeListener.Change change) {
                 if(observPauseList.get(0)){
                     tablero.setDisable(false);
-                    
+                    if(pauseMusic.isPlaying()) pauseMusic.stop();
                 }
             }
         });
