@@ -194,6 +194,8 @@ public class JuegoLibreController implements Initializable {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
                 puntuacion.sumarPuntos();
+                AudioClip ok = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
+                ok.play(0.1);
                 punt.setText(puntuacion.getPuntos() + "");
                 countdown.stop();
                 setTimer(DURACION_TURNO, tiempoTurno);
@@ -202,6 +204,8 @@ public class JuegoLibreController implements Initializable {
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
+                AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
+                fail.play(0.05);
             }
 
             // since a new event is generated when we remove an element

@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import logic.Carta;
 import logic.Categoria;
 import logic.Puntuacion;
@@ -83,6 +84,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
+                AudioClip ok = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
+                ok.play(0.1);
                 countdown.stop();
                 setTimer(DURACION_TURNO, tiempoTurno);
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
@@ -95,6 +98,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
+                AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
+                fail.play(0.05);
             }
 
             // since a new event is generated when we remove an element
