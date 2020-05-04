@@ -17,11 +17,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import static presentation.JuegoLibreController.observPauseList;
+import static presentation.PausaController.pauseMusic;
 
 /**
  * FXML Controller class
@@ -29,7 +38,8 @@ import javafx.stage.Stage;
  * @author jesus
  */
 public class MusicaController extends JuegoLibreController implements Initializable {
-
+    @FXML
+    private Label song;
     @FXML
     private Button volerButton;
     @FXML
@@ -41,8 +51,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @FXML
     private RadioButton cancion4RadioButton;
     
-    @FXML
-    private RadioButton noMuiscaRadioButton;
+   
     
     
     //public String cancion;
@@ -50,12 +59,14 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     
     private MediaPlayer mediaplayer;
-    
+    protected List<String> lista = new ArrayList<String>();
    
     
     private Stage winStage;
     @FXML
     private ToggleGroup musicaButtons;
+    @FXML
+    private ComboBox<String> desplegableMusica;
     
 
     /**
@@ -67,9 +78,13 @@ public class MusicaController extends JuegoLibreController implements Initializa
         /*if(cancionActual != null) 
             audio.stop();
         */
-         cancionActual = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
-         setAudio(cancionActual);
-         audio.stop();
+        setLista();
+        ObservableList<String> items = FXCollections.observableArrayList(lista);
+        desplegableMusica.setItems(items);
+        
+        cancionActual = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
+        setAudio(cancionActual);
+        audio.stop();
     }    
 
     
@@ -79,6 +94,26 @@ public class MusicaController extends JuegoLibreController implements Initializa
 	if(cancionActual != null){
             audio.stop();
             setAudio(cancionActual);
+        }
+        
+        switch(desplegableMusica.getSelectionModel().getSelectedIndex()){
+            case 0:
+                cancionActual = null;
+                break;
+            case 1:
+                cancionActual = "/music/Cancion1.mp3";
+                break;
+            case 2:
+                cancionActual = "/music/Cancion2.mp3";
+                break;
+            case 3:
+                cancionActual = "/music/Cancion3.mp3";
+                break;
+            case 4:
+                cancionActual = "/music/Cancion4.mp3";
+                break;
+                default:
+                 cancionActual = "/music/Cancion1.mp3";   
         }
         //cancionActual = cancion;
         winStage.hide(); 
@@ -133,17 +168,17 @@ public class MusicaController extends JuegoLibreController implements Initializa
     }
 
   
-
-    @FXML
-    private void elegirNoCancion(ActionEvent event) {
-        audio.stop();
-        cancionActual = null;
-        //manejarCanciones(noMuiscaRadioButton);
-    }
-
-  
      
     void initMusicaWindow(Stage stage) {
         winStage = stage;
+    }
+    
+    public void setLista(){
+        lista.add("Sin Música");
+        lista.add("Golf It Music");
+        lista.add("Zelda Remix");
+        lista.add("Force Theme Star Wars");
+        lista.add("Chill Music to play");
+        
     }
 }
