@@ -25,6 +25,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -39,17 +42,7 @@ import static presentation.PausaController.pauseMusic;
  */
 public class MusicaController extends JuegoLibreController implements Initializable {
     @FXML
-    private Label song;
-    @FXML
     private Button volerButton;
-    @FXML
-    private RadioButton cancion1RadioButton;
-    @FXML
-    private RadioButton cancion2RadioButton;
-    @FXML
-    private RadioButton cancion3RadioButton;
-    @FXML
-    private RadioButton cancion4RadioButton;
     
    
     
@@ -63,8 +56,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
    
     
     private Stage winStage;
-    @FXML
-    private ToggleGroup musicaButtons;
     @FXML
     private ComboBox<String> desplegableMusica;
     
@@ -81,7 +72,8 @@ public class MusicaController extends JuegoLibreController implements Initializa
         setLista();
         ObservableList<String> items = FXCollections.observableArrayList(lista);
         desplegableMusica.setItems(items);
-        
+        File f = new File("./images/appImages/playG.png");
+       
         cancionActual = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
         setAudio(cancionActual);
         audio.stop();
@@ -95,32 +87,13 @@ public class MusicaController extends JuegoLibreController implements Initializa
             audio.stop();
             setAudio(cancionActual);
         }
-        
-        switch(desplegableMusica.getSelectionModel().getSelectedIndex()){
-            case 0:
-                cancionActual = null;
-                break;
-            case 1:
-                cancionActual = "/music/Cancion1.mp3";
-                break;
-            case 2:
-                cancionActual = "/music/Cancion2.mp3";
-                break;
-            case 3:
-                cancionActual = "/music/Cancion3.mp3";
-                break;
-            case 4:
-                cancionActual = "/music/Cancion4.mp3";
-                break;
-                default:
-                 cancionActual = "/music/Cancion1.mp3";   
-        }
+         
+        seleccionarCancion();
         //cancionActual = cancion;
         winStage.hide(); 
         
     }
 
-    @FXML
     private void elegirCancion1(ActionEvent event) {
         audio.stop();
        
@@ -131,7 +104,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
         
         
     }
-    @FXML
     private void elegirCancion2(ActionEvent event) {
         audio.stop();
         
@@ -143,7 +115,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
     
     }
 
-    @FXML
     private void elegirCancion3(ActionEvent event) {
         //if(songIsPlaying(cancion))
             audio.stop();
@@ -155,7 +126,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
          //cancion = new File("Cancion3.mp3").toURI().toString();
     }
 
-    @FXML
     private void elegirCancion4(ActionEvent event) {
         //if(songIsPlaying(cancion))
             audio.stop();
@@ -163,7 +133,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
         //manejarCanciones(cancion4RadioButton);
         cancionActual = "/music/Cancion4.mp3";
          setAudio(cancionActual);
-         audio.play(0.5);
+         audio.play(0.3);
          //cancion = new File("Cancion4.mp3").toURI().toString();
     }
 
@@ -180,5 +150,38 @@ public class MusicaController extends JuegoLibreController implements Initializa
         lista.add("Force Theme Star Wars");
         lista.add("Chill Music to play");
         
+    }
+
+    
+    
+    private void seleccionarCancion(){
+        switch(desplegableMusica.getSelectionModel().getSelectedIndex()){
+            case 0:
+                cancionActual = null;
+                break;
+            case 1:
+                cancionActual = "/music/Cancion1.mp3";
+                break;
+            case 2:
+                cancionActual = "/music/Cancion2.mp3";
+                break;
+            case 3:
+                cancionActual = "/music/Cancion3.mp3";
+                break;
+            case 4:
+                cancionActual = "/music/Cancion4.mp3";
+                break;
+            default:
+                cancionActual = "/music/Cancion1.mp3";   
+        }
+       
+    }
+
+    @FXML
+    private void playMusic(ActionEvent event) {
+         if(audio.isPlaying()) audio.stop();
+         seleccionarCancion();
+         setAudio(cancionActual);
+         audio.play(0.4);
     }
 }
