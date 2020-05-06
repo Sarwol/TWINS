@@ -124,7 +124,7 @@ public class JuegoLibreController implements Initializable {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 if(observPauseList.get(0)){
-                    tablero.setDisable(false);
+                    tablero.setVisible(true);
                     if(pauseMusic.isPlaying()) pauseMusic.stop();
                 }
             }
@@ -322,7 +322,7 @@ public class JuegoLibreController implements Initializable {
         Parent root = (Parent) myLoader.load();
         PausaController pausaController = myLoader.<PausaController>getController();
         audio.stop();
-        tablero.setDisable(true);
+        tablero.setVisible(false);
         
         Stage winStage = new Stage();
         // When this stage is closed, resume the countdown
