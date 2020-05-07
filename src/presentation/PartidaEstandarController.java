@@ -5,6 +5,9 @@
  */
 package presentation;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 
 
 /**
@@ -14,13 +17,18 @@ package presentation;
  */
 public class PartidaEstandarController extends JuegoLibreController {
 
-
+    
     /**
-     * Initializes the controller class. 
+     * Initializes the controller class
+     * @param url
+     * @param rb 
      */
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        super.initialize(url, rb); 
+        
+    }
 
-//    }
+    
 
 }

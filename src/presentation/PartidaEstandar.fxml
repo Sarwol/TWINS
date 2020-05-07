@@ -26,7 +26,7 @@
         </rowConstraints>
       </Tablero>
        <Label fx:id="tiempoPartidaLabel" layoutX="206.0" layoutY="5.0" text="Tiempo Restante" />
-      <Label fx:id="tiempo" layoutX="236.0" layoutY="25.0" text="" />
+      <Label fx:id="tiempoPartida" layoutX="236.0" layoutY="25.0" text="" />
       <Label fx:id="minutos" layoutX="219.0" layoutY="25.0" text="00:" />
       <Label fx:id="tiempoTurnoLabel" layoutX="334.0" layoutY="05.0" text="Tiempo del Turno" />
       <Label fx:id="tiempoTurno" layoutX="374.0" layoutY="25.0" text="0" />

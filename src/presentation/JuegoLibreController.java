@@ -43,12 +43,16 @@ import javafx.util.Duration;
 import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
-import static presentation.MusicaController.cancionActual; 
+import static presentation.MusicaController.cancionActual;
 import static presentation.PausaController.pauseMusic;
 import twins.PartidaEstandarApplication;
 
 /**
  * FXML Controller class
+ *
+ * @author Dani
+ */
+/**
  *
  * @author Dani
  */
@@ -60,125 +64,194 @@ public class JuegoLibreController implements Initializable {
     public static final int NUM_CATEGORIAS = 2;
     public static final int DURACION_PARTIDA = 60;
     public static final int DURACION_TURNO = 5;
-    
+
     protected static String modo = PartidaEstandarApplication.mode;
-   
-    
-    //private BooleanProperty pauseProperty = new SimpleBooleanProperty();
+
     protected static String cancion;
     @FXML
     protected Tablero tablero;
+    // tiempoPartida restante de la partida actual
     @FXML
-    protected Label tiempo;
+    protected Label tiempoPartida;
+    // tiempoPartida restante del turno actual
     @FXML
     protected Label tiempoTurno;
+    // Label de puntuación
     @FXML
     protected Label punt;
-    protected Timeline countdown;
-    protected int tiempoActual;
-    protected int turnoActual;
+    // Actualiza el tiempoPartida restante de partida
+    protected Timeline countdownPartida;
+    // Actualiza el tiempoPartida restante del turno
+    protected Timeline countdownTurno;
+    // se usa para la cuenta atrás de la partida
+    protected int tiempoActualPartida;
+    // se usa para la cuenta atrás del turno
+    protected int tiempoActualTurno;
+    // Se usa para guardar las dos cartas seleccionadas
     protected List<Carta> parSelec;
+    // Se usa para guardar las dos cartas seleccionadas
     protected ObservableList<Carta> parSeleccionado;
+    // Guarda un booleano para ocultar el tablero
     protected static List<Boolean> pauseList;
-    protected static ObservableList<Boolean> observPauseList; 
+    // Guarda un booleano para ocultar el tablero
+    protected static ObservableList<Boolean> observPauseList;
+    // Lleva el registro de la puntuación
     protected Puntuacion puntuacion;
+    // La primera carta que se selecciona
     protected Carta carta1;
+    // La segunda carta que se selecciona
     protected Carta carta2;
-    protected AudioClip audio = null; 
-    //protected List<Categoria> categorias;
+    // Para reproducir la canción
+    protected AudioClip audio = null;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cancion = cancionActual; 
-        if(cancion == null) cancion = "/music/Cancion1.mp3"; 
-        if(cancion != "") { 
+        cancion = cancionActual;
+        if (cancion == null) {
+            cancion = "/music/Cancion1.mp3";
+        }
+        if (cancion != "") {
             setAudio(cancion);
-            audio.play(0.3); 
-        } 
+            audio.play(0.3);
+        }
         puntuacion = new Puntuacion(0);
         pauseList = new ArrayList<Boolean>();
         pauseList.add(Boolean.FALSE);
         observPauseList = FXCollections.observableList(pauseList);
 
-        
-        
-        // CAUTION: parSelec and parSeleccionado must be defined in each subclass
-        parSelec = new ArrayList<Carta>();
+        /*
+        Construye la lista para guardar las cartas seleccionadas
+         */
+        parSelec = new ArrayList<>();
         parSeleccionado = FXCollections.observableList(parSelec);
         parSeleccionado.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 comprobarCartas();
-                if(isVictoria()) {
-                    try{
-                        saltarAVictoria(puntuacion, tiempoActual, modo);
-                    } catch(IOException e) {}
+                if (isVictoria()) {
+                    try {
+                        saltarAVictoria(puntuacion, tiempoActualPartida, modo);
+                    } catch (IOException e) {
+                        System.out.println("Error intentando saltar a victoria");
+                        e.printStackTrace();
+                    }
                 }
             }
         });
-        
-       //listener para activar de nuevo el tablero después de Pausa
+
+        //listener para activar de nuevo el tablero después de Pausa
         observPauseList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                if(observPauseList.get(0)){
+                if (observPauseList.get(0)) {
                     tablero.setVisible(true);
-                    if(pauseMusic.isPlaying()) pauseMusic.stop();
+                    // La música de la pausa
+                    if (pauseMusic.isPlaying()) {
+                        pauseMusic.stop();
+                    }
                 }
             }
         });
-        
-        
-        setTimer(DURACION_PARTIDA,tiempo);
+
+        setTimers(DURACION_PARTIDA, DURACION_TURNO);
+        /*
+        setTimer(DURACION_PARTIDA, tiempoPartida);
         setTimer(DURACION_TURNO, tiempoTurno);
-        
+         */
+
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
         tablero.setColumnas(LONGITUD_TABLERO);
         tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
         tablero.barajarTablero();
-        
+
     }
-    
+
     /**
      * Creates the Timeline used to implement the countdown time in the game
+     * Creates de Timeline used to implement the turn countdown time in the game
      *
-     * @param duration amount of seconds the round lasts
+     * @param roundDuration amount of seconds the round lasts
+     * @param turnDuration amount of seconds the turn lasts
      */
+    public void setTimers(int roundDuration, int turnDuration) {
+        tiempoActualPartida = roundDuration;
+        tiempoActualTurno = turnDuration;
+        countdownPartida = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (tiempoActualPartida == 0) {
+                    countdownPartida.stop();
+                    try {
+                        saltarADerrota(modo);
+                    } catch (IOException e) {
+                        System.out.println("No se pudo saltar a la pantalla de derrota");
+                        e.printStackTrace();
+                    }
+                }
+                tiempoPartida.setText((tiempoActualPartida--) + "");
+                //System.out.println("UPDATED GAME TIME");
+            }
+        }));
+        countdownPartida.setCycleCount(Timeline.INDEFINITE);
+        countdownPartida.play();
+        countdownTurno = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (tiempoActualTurno == 0) {
+                    puntuacion.restarPuntos();
+                    punt.setText(puntuacion.getPuntos() + "");
+                    tiempoActualTurno = DURACION_TURNO;
+                }
+                tiempoTurno.setText((tiempoActualTurno--) + "");
+                //System.out.println("UPDATED TURN TIME");
+            }
+        }));
+        countdownTurno.setCycleCount(Timeline.INDEFINITE);
+        countdownTurno.play();
+    }
+
+    /*
     public void setTimer(int duration, Label label) {
-        if(label == tiempo) tiempoActual = duration;
-        else turnoActual = duration;
+        if (label == tiempoPartida) {
+            tiempoActualPartida = duration;
+        } else {
+            tiempoActualTurno = duration;
+        }
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(label == tiempo) {
-                    if (tiempoActual == 0) {
+                if (label == tiempoPartida) {
+                    if (tiempoActualPartida == 0) {
                         countdown.stop();
                         try {
                             saltarADerrota(modo);
-                        } catch (IOException e) {}
-                    } 
-                    label.setText((tiempoActual--) + "");
-               } else {
-                    if(turnoActual == 0) {
+                        } catch (IOException e) {
+                        }
+                    }
+                    label.setText((tiempoActualPartida--) + "");
+                } else {
+                    if (tiempoActualTurno == 0) {
                         countdown.stop();
                         puntuacion.restarPuntos();
-                         punt.setText(puntuacion.getPuntos() + "");
-                        setTimer(DURACION_TURNO,tiempoTurno);
+                        punt.setText(puntuacion.getPuntos() + "");
+                        setTimer(DURACION_TURNO, tiempoTurno);
+                    } else {
+                        label.setText((tiempoActualTurno--) + "");
                     }
-                   else label.setText((turnoActual--) + "");
-                    
+
                 }
             }
-            
+
         }));
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
-        
+
     }
-    
+     */
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
             carta1 = parSeleccionado.get(0);
@@ -197,8 +270,7 @@ public class JuegoLibreController implements Initializable {
                 AudioClip ok = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
                 ok.play(0.1);
                 punt.setText(puntuacion.getPuntos() + "");
-                countdown.stop();
-                setTimer(DURACION_TURNO, tiempoTurno);
+                //setTimer(DURACION_TURNO, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
@@ -207,6 +279,8 @@ public class JuegoLibreController implements Initializable {
                 AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
                 fail.play(0.05);
             }
+            // Reset turn countdown
+            resetTurnCountdown();
 
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
@@ -215,7 +289,16 @@ public class JuegoLibreController implements Initializable {
             parSelec.remove(0);
         }
     }
-    
+
+    /**
+     * Resets the turn countdown
+     */
+    public void resetTurnCountdown() {
+        // Reset turn countdown
+        tiempoActualTurno = DURACION_TURNO;
+        //tiempoTurno.setText(tiempoActualTurno + "");
+    }
+
     /**
      * Creates a new thread that will turn the cards back around.
      */
@@ -276,7 +359,7 @@ public class JuegoLibreController implements Initializable {
                 File currentCard = new File(cardImages + (j + 1) + ".png");
                 Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
-                
+
                 // Add event to detect when a Carta is clicked
                 carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
                 baraja.add(carta);
@@ -310,24 +393,32 @@ public class JuegoLibreController implements Initializable {
         audio = new AudioClip(this.getClass().getResource(sonido).toString());
         //note.play();
     }
-    
+
     @FXML
     public void mute_onClick(ActionEvent event) {
-        audio.stop();
+        // If audio is playing, stop it. Otherwise, start audio
+        if (audio.isPlaying()) {
+            audio.stop();
+        } else {
+            audio.play();
+        }
     }
-    
+
     @FXML
-    public void pause_onClick(ActionEvent event) throws IOException{
+    public void pause_onClick(ActionEvent event) throws IOException {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Pausa.fxml"));
         Parent root = (Parent) myLoader.load();
         PausaController pausaController = myLoader.<PausaController>getController();
         audio.stop();
         tablero.setVisible(false);
-        
+        countdownPartida.pause();
+        countdownTurno.pause();
+
         Stage winStage = new Stage();
         // When this stage is closed, resume the countdown
-        winStage.setOnHidden(e ->{
-            countdown.play();
+        winStage.setOnHidden(e -> {
+            countdownTurno.play();
+            countdownPartida.play();
         });
         pausaController.initPausaWindow(winStage);
         Scene scene = new Scene(root);
@@ -335,32 +426,30 @@ public class JuegoLibreController implements Initializable {
         winStage.setTitle("Pausa");
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
-        
-        countdown.pause();
     }
-    
+
     public boolean isVictoria() {
         boolean res = true;
         ObservableList<Node> cartas = tablero.getChildren();
-        for(int i = 0; i < cartas.size(); i++){
-            if((cartas.get(i) instanceof Carta && cartas.get(i).isDisabled())){
+        for (int i = 0; i < cartas.size(); i++) {
+            if ((cartas.get(i) instanceof Carta && cartas.get(i).isDisabled())) {
                 res = true;
-            }
-            else {
+            } else {
                 res = false;
                 return res;
             }
         }
         return res;
     }
-    
+
     public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
         audio.stop();
-        countdown.stop();
+        countdownPartida.stop();
+        countdownTurno.stop();
         tablero.setDisable(true);
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));         
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));
         Parent root = (Parent) myLoader.load();
-        VictoriaController victoriaController = myLoader.<VictoriaController>getController();        
+        VictoriaController victoriaController = myLoader.<VictoriaController>getController();
         Stage winStage = new Stage();
         victoriaController.initVictoriaWindow(winStage, punt, temp, m);
         Scene scene = new Scene(root);
@@ -371,13 +460,13 @@ public class JuegoLibreController implements Initializable {
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }
-    
-    public void saltarADerrota(String m) throws IOException{
+
+    public void saltarADerrota(String m) throws IOException {
         audio.stop();
         tablero.setDisable(true);
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
         Parent root = (Parent) myLoader.load();
-        DerrotaController derrotaController = myLoader.<DerrotaController>getController();        
+        DerrotaController derrotaController = myLoader.<DerrotaController>getController();
         Stage winStage = new Stage();
         derrotaController.initDerrotaWindow(winStage, m);
         Scene scene = new Scene(root);
@@ -388,5 +477,5 @@ public class JuegoLibreController implements Initializable {
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }
-    
+
 }
