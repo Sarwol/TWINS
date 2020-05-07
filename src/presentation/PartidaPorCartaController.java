@@ -49,7 +49,7 @@ public class PartidaPorCartaController extends JuegoLibreController {
 //                comprobarCartas();
 //                if(isVictoria()) {
 //                    try{
-//                        saltarAVictoria(puntuacion, tiempoActual);
+//                        saltarAVictoria(puntuacion, tiempoActualPartida);
 //                    } catch(IOException e) {}
 //                }
 //            }
@@ -99,8 +99,7 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
-                countdown.stop();
-                setTimer(DURACION_TURNO, tiempoTurno);
+                //setTimer(DURACION_TURNO, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
@@ -109,7 +108,9 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
                 fail.play(0.1);
             }
-
+            
+            resetTurnCountdown();
+            
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
             // to avoid an infinite loop by triggering the listener

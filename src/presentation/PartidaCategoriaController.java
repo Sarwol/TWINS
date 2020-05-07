@@ -86,8 +86,6 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 contador++;
                 AudioClip ok = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
                 ok.play(0.1);
-                countdown.stop();
-                setTimer(DURACION_TURNO, tiempoTurno);
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
                     categoriaLabel.setText(categoriaActual.toString());
@@ -101,6 +99,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
                 fail.play(0.05);
             }
+            resetTurnCountdown();
 
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
