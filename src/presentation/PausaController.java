@@ -17,8 +17,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static presentation.JuegoLibreController.cancion;
 import static presentation.MusicaController.cancionActual;
 
 /**
@@ -33,7 +35,7 @@ public class PausaController extends JuegoLibreController implements Initializab
     private Button exit;
     @FXML
     private Button musicOptions;
-
+    protected static AudioClip pauseMusic;
     private Stage winStage;
     /**
      * Initializes the controller class.
@@ -42,11 +44,13 @@ public class PausaController extends JuegoLibreController implements Initializab
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //audio.stop();
-        
+        pauseMusic = new AudioClip(this.getClass().getResource("/music/cancionPausa.mp3").toString());
+        pauseMusic.play(0.07);
         if(cancionActual != null /*&& cancionActual != ""*/) {
             setAudio(cancionActual);
             audio.stop();
         }
+        
         cancionActual = cancion;
     }    
 
@@ -56,9 +60,10 @@ public class PausaController extends JuegoLibreController implements Initializab
         cancion = cancionActual;
         if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
-            audio.play();
+            audio.play(0.3);
         }
-        
+        pauseMusic.stop();
+        observPauseList.set(0, Boolean.TRUE);
        //} catch (Exception e){}
         winStage.hide(); 
     }
@@ -80,7 +85,7 @@ public class PausaController extends JuegoLibreController implements Initializab
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Musica.fxml"));
         Parent root = (Parent) myLoader.load();
         MusicaController musicaController = myLoader.<MusicaController>getController();
-        
+        pauseMusic.stop();
         Stage winStage = new Stage();
         musicaController.initMusicaWindow(winStage);
         //We create the scene foe win1

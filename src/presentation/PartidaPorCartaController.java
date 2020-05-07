@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import logic.Carta;
 import logic.Puntuacion;
 import static presentation.JuegoLibreController.TURN_DELAY;
@@ -98,11 +99,15 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
+                countdown.stop();
+                setTimer(DURACION_TURNO, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
+                AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
+                fail.play(0.1);
             }
 
             // since a new event is generated when we remove an element
