@@ -51,7 +51,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
     public static String cancionActual;
     
     
-    private MediaPlayer mediaplayer;
+    //private MediaPlayer mediaplayer;
     protected List<String> lista = new ArrayList<String>();
    
     
@@ -72,7 +72,7 @@ public class MusicaController extends JuegoLibreController implements Initializa
         setLista();
         ObservableList<String> items = FXCollections.observableArrayList(lista);
         desplegableMusica.setItems(items);
-        File f = new File("./images/appImages/playG.png");
+        
        
         cancionActual = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
         setAudio(cancionActual);
@@ -179,9 +179,10 @@ public class MusicaController extends JuegoLibreController implements Initializa
 
     @FXML
     private void playMusic(ActionEvent event) {
+        if(cancionActual != null)
          if(audio.isPlaying()) audio.stop();
-         seleccionarCancion();
-         setAudio(cancionActual);
-         audio.play(0.4);
+            seleccionarCancion();
+            setAudio(cancionActual);
+            audio.play(0.4);
     }
 }

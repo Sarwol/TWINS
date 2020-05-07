@@ -314,6 +314,7 @@ public class JuegoLibreController implements Initializable {
     @FXML
     public void mute_onClick(ActionEvent event) {
         audio.stop();
+        
     }
     
     @FXML
