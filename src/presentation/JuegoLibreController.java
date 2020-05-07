@@ -10,13 +10,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
+import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -27,12 +24,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -103,6 +98,8 @@ public class JuegoLibreController implements Initializable {
     protected Carta carta2;
     // Para reproducir la canción
     protected AudioClip audio = null;
+    // Animación de rotación
+    public RotateTransition rotateAnimation;
 
     /**
      * Initializes the controller class.
@@ -167,9 +164,21 @@ public class JuegoLibreController implements Initializable {
         tablero.setColumnas(LONGITUD_TABLERO);
         tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
         tablero.barajarTablero();
-
+        
+        setAnimation();
     }
-
+    
+    /**
+     * Configures animations for cards
+     */
+    public void setAnimation(){
+        rotateAnimation = new RotateTransition();
+        rotateAnimation.setDuration(Duration.millis(200));
+        rotateAnimation.setByAngle(360);
+        rotateAnimation.setCycleCount(1);
+        rotateAnimation.setAutoReverse(false);
+        rotateAnimation.setAxis(new Point3D(0, 1, 0));
+    }
     /**
      * Creates the Timeline used to implement the countdown time in the game
      * Creates de Timeline used to implement the turn countdown time in the game
@@ -281,6 +290,7 @@ public class JuegoLibreController implements Initializable {
             }
             // Reset turn countdown
             resetTurnCountdown();
+            
 
             // since a new event is generated when we remove an element
             // from the ObservableList, we remove instead from the List
@@ -320,7 +330,11 @@ public class JuegoLibreController implements Initializable {
             @Override
             public void handle(WorkerStateEvent event) {
                 carta1.turn();
+                rotateAnimation.setNode(carta1);
+                rotateAnimation.play();
                 carta2.turn();
+                rotateAnimation.setNode(carta2);
+                rotateAnimation.play();
             }
         });
         new Thread(waitTurnCards).start();
@@ -376,6 +390,10 @@ public class JuegoLibreController implements Initializable {
         public void handle(MouseEvent e) {
             Carta cartaElegida = (Carta) e.getSource();
             cartaElegida.turn();
+            
+            // Plays animation
+            rotateAnimation.setNode(cartaElegida);
+            rotateAnimation.play();
 
             // Just for the debug print
             int cartaID = cartaElegida.getCartaID();

@@ -7,6 +7,13 @@ package presentation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Point3D;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.util.Duration;
 
 
 
@@ -16,7 +23,7 @@ import java.util.ResourceBundle;
  * @author Dani
  */
 public class PartidaEstandarController extends JuegoLibreController {
-
+    
     
     /**
      * Initializes the controller class
@@ -27,8 +34,7 @@ public class PartidaEstandarController extends JuegoLibreController {
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb); 
         
+     
     }
-
     
-
 }
