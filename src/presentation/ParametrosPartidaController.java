@@ -179,13 +179,13 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Efectos de Partida
             //Sonidos
-                setSonido("Acierto 1");
+                setSonido("Acierto 1","Acierto 2", "Acierto 3");
                 ObservableList<String> itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundOKBox.setItems(itemsSonidos);
-                setSonido("Giro 1");
+                setSonido("Giro 1", "Giro 2", "Giro 3");
                 itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundFlipBox.setItems(itemsSonidos);
-                setSonido("Fallo 1");
+                setSonido("Fallo 1","Fallo 2", "Fallo 3");
                 itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundFailBox.setItems(itemsSonidos);
         //A falta de añadir los Efectos Visuales
@@ -332,14 +332,16 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             if(audio.isPlaying()) audio.stop();
             seleccionarSonidoGiro();
             setAudio(sonidoActualGiro);
-            audio.play(0.1);
+            audio.play(0.4);
         } else if(audio.isPlaying()) audio.stop();
     }
     
     
-    public void setSonido(String string){
+    public void setSonido(String string1, String string2, String string3){
          sonidos.clear();
-         sonidos.add(string);
+         sonidos.add(string1);
+         sonidos.add(string2);
+         sonidos.add(string3);
      } 
     
     
@@ -349,10 +351,10 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 sonidoActualAcierto = "/music/correct.mp3"; 
                 break;
             case 1:
-                sonidoActualAcierto = "/music/correct.mp3"; //insertar nueva
+                sonidoActualAcierto = "/music/correct2.mp3"; 
                 break;
             case 2:
-                sonidoActualAcierto = "/music/correct.mp3"; //insertar nueva
+                sonidoActualAcierto = "/music/correct3.wav"; 
                 break;
             
             default:
@@ -367,10 +369,10 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 sonidoActualFallo = "/music/fail.mp3";
                 break;
             case 1:
-                sonidoActualFallo = "/music/fail.mp3"; //insertar nueva
+                sonidoActualFallo = "/music/fail2.mp3"; 
                 break;
             case 2:
-                sonidoActualFallo = "/music/fail.mp3"; //insertar nueva
+                sonidoActualFallo = "/music/fail3.wav";
                 break;
             
             default:
@@ -382,16 +384,16 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private void seleccionarSonidoGiro(){
         switch(soundFlipBox.getSelectionModel().getSelectedIndex()){ //insertar sonido de giro
             case 0:
-                sonidoActualGiro = "";
+                sonidoActualGiro = "/music/flip.wav";
                 break;
             case 1:
-                sonidoActualGiro = "";
+                sonidoActualGiro = "/music/flip2.wav";
                 break;
             case 2:
-                sonidoActualGiro = "";
+                sonidoActualGiro = "/music/flip3.wav";
                 break;
             default:
-                sonidoActualGiro = "";  
+                sonidoActualGiro = "/music/flip.wav";  
         }
         
     } 
