@@ -10,13 +10,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
@@ -40,20 +43,28 @@ public class MenuPrincipalController implements Initializable {
     @FXML
     private Button salirButton;
 
-    private MediaPlayer player;
+    public MediaPlayer player;
+    private AudioClip musicaInicial;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        player = new MediaPlayer(cargarCancion("src/music/HOME - Resonance.mp3"));
-        player.setAutoPlay(true);
-        player.play();
+        
+        //player = new MediaPlayer(cargarCancion("src/music/HOME-Resonance.mp3"));
+        //player.setAutoPlay(true);
+        //player.play();
+        //audio = new AudioClip((this.getClass().getResource("src/music/HOME-Resonance.mp3").toString()));
+        musicaInicial = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
+        musicaInicial.play(0.3);
     }    
 
     @FXML
-    private void abrirJuegoLibre(ActionEvent event) {
+    private void abrirJuegoLibre(ActionEvent event) throws IOException {
+        cargarFXML("VentanaJuegoLibre.fxml");
+        //salir(event);
+       //stopMediaPlayer();
     }
 
     @FXML
@@ -66,7 +77,8 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void salir(ActionEvent event) {
-        System.exit(0);
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+         //System.exit(0);
     }
     
     public void cargarFXML(String fxml) throws IOException{
@@ -81,5 +93,25 @@ public class MenuPrincipalController implements Initializable {
     
     public Media cargarCancion(String cancion){
         return new Media(new File(cancion).toURI().toString());
+    }
+    
+    /*public void stopMediaPlayer(){
+        player.stop();
+        player.setOnPaused(() -> System.out.println("pausado"));
+        
+    }
+    
+    public void playMediaPlayer(){
+        player.setAutoPlay(true);
+        player.play();
+    }
+*/
+    
+    public void play() {
+        musicaInicial.play();
+    }
+    
+    public void stop(){
+        musicaInicial.stop();
     }
 }

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -91,6 +93,17 @@ public class JuegoLibreController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /*FXMLLoader miCargador = new FXMLLoader(getClass().getResource("/presentation/MenuPrincipal.fxml"));
+        try {
+            Parent root = (Parent) miCargador.load();
+        } catch (IOException ex) {
+            Logger.getLogger(JuegoLibreController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MenuPrincipalController controller = miCargador.<MenuPrincipalController>getController();
+        controller.stopMediaPlayer();
+        controller.cargarCancion("/src/music/Cancion1.mp3");
+        controller.playMediaPlayer();
+        */
         cancion = cancionActual; 
         if(cancion == null) cancion = "/music/Cancion1.mp3"; 
         if(cancion != "") { 

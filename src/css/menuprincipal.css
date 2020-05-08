@@ -49,5 +49,42 @@
     #nivelesButton:hover{
         -fx-background-image: url("/buttons/nivelesHover.png");
     }
+    
+    #estandarButton{
+        -fx-background-image: url("/buttons/estandar.png");
+    }
 
+    #estandarButton:hover{
+        -fx-background-image: url("/buttons/estandarHover.png");
+    }
+    
+    #parametrosButton{
+        -fx-background-image: url("/buttons/parametros.png");
+    }
+    
+    #parametrosButton:hover{
+        -fx-background-image: url("/buttons/parametrosHover.png");
+    }
 
+    #cartaButton{
+        -fx-background-image: url("/buttons/carta.png");
+    }
+    
+     #cartaButton:hover{
+        -fx-background-image: url("/buttons/cartaHover.png");
+    }
+    
+     #categoriaButton{
+        -fx-background-image: url("/buttons/categoria.png");
+    }
+    
+     #categoriaButton:hover{
+        -fx-background-image: url("/buttons/categoriaHover.png");
+    }
+    
+    #juegoLibreLabel{
+        -fx-font-family: "Road rage";
+        -fx-text-fill: white;
+        
+         
+    }
