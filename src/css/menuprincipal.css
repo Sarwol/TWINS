@@ -1,0 +1,90 @@
+/*
+ * Empty Stylesheet file.
+ */
+    #AnchorPane{
+        -fx-background-image: url("/buttons/twins_menu_principal.png");
+        -fx-background-position: center center;
+        -fx-background-size: 700 600;
+        -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+    }
+    
+    .button{
+        -fx-background-color: transparent;
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: center;
+        -fx-border-color: transparent;
+        -fx-border-width: 0;
+        -fx-background-size: 200px;
+        
+    }
+   
+    #juegoLibreButton{
+        -fx-background-image: url("/buttons/juegolibre.png");
+    }
+    
+    #juegoLibreButton:hover{
+        -fx-background-image: url("/buttons/juegolibreHover.png");
+    }
+    
+    #salirButton{
+        -fx-background-image: url("/buttons/salir.png");
+    }
+    
+   #salirButton:hover{
+        -fx-background-image: url("/buttons/salirHover.png");
+    }
+    
+    #barajasButton{
+        -fx-background-image: url("/buttons/barajas.png");
+    }
+    
+    #barajasButton:hover{
+        -fx-background-image: url("/buttons/barajasHover.png");
+    }
+    
+    #nivelesButton{
+        -fx-background-image: url("/buttons/niveles.PNG");
+    }
+    
+    #nivelesButton:hover{
+        -fx-background-image: url("/buttons/nivelesHover.png");
+    }
+    
+    #estandarButton{
+        -fx-background-image: url("/buttons/estandar.png");
+    }
+
+    #estandarButton:hover{
+        -fx-background-image: url("/buttons/estandarHover.png");
+    }
+    
+    #parametrosButton{
+        -fx-background-image: url("/buttons/parametros.png");
+    }
+    
+    #parametrosButton:hover{
+        -fx-background-image: url("/buttons/parametrosHover.png");
+    }
+
+    #cartaButton{
+        -fx-background-image: url("/buttons/carta.png");
+    }
+    
+     #cartaButton:hover{
+        -fx-background-image: url("/buttons/cartaHover.png");
+    }
+    
+     #categoriaButton{
+        -fx-background-image: url("/buttons/categoria.png");
+    }
+    
+     #categoriaButton:hover{
+        -fx-background-image: url("/buttons/categoriaHover.png");
+    }
+    
+    #juegoLibreLabel{
+        -fx-font-family: "Road rage";
+        -fx-text-fill: white;
+        
+         
+    }
