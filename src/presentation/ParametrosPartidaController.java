@@ -21,7 +21,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
+import javax.swing.SpinnerNumberModel;
 import static presentation.MusicaController.cancionActual;
 
 /**
@@ -37,6 +39,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private Button defaultBarajasButton;
     @FXML
     private RadioButton pajarosNormal;
+    @FXML
+    private RadioButton defaultBaraja;
     @FXML
     private ToggleGroup seleccionBaraja;
     @FXML
@@ -72,9 +76,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private Button defaultParametrosButton;
     @FXML
-    private Spinner<Integer> volteoCartaBox;
-    @FXML
-    private Spinner<Integer> cartasInicioBox;
+    private ComboBox<Integer> volteoCartaBox;
     @FXML
     private ComboBox<Integer> largoBox;
     @FXML
@@ -84,41 +86,95 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private ComboBox<?> visualOKBox;
     @FXML
-    private ComboBox<AudioClip> soundOKBox;
+    private ComboBox<String> soundOKBox;
     @FXML
     private ComboBox<?> visualFlipBox;
     @FXML
-    private ComboBox<AudioClip> soundFlipBox;
+    private ComboBox<String> soundFlipBox;
     @FXML
     private ComboBox<?> visualFailBox;
     @FXML
-    private ComboBox<AudioClip> soundFailBox;
+    private ComboBox<String> soundFailBox;
     @FXML
     private Tab msuicaPane;
     @FXML
     private ComboBox<String> desplegableMusica;
     @FXML
-    private Spinner<Integer> exposicionParErrorBox;
+    private ComboBox<Integer> exposicionParErrorBox;
+    @FXML
+    private ComboBox<Integer> tiempoPartidaBox;
+    
     
      //Música de la Partida   
      protected List<String> gameSongList = new ArrayList<String>();
      public static String cancionActual;
-    /**
-     * Initializes the controller class.
-     */
+     ////////////////////////////////////////////////////////////////////////////////
+     
+    //Parámetro de la Partida
+        //Parámetros
+            protected List<Integer> tamañoTablero = new ArrayList<Integer>();
+        //Efectos
+            protected List<String> sonidos = new ArrayList<String>();
+            protected static String sonidoActual;
+    
+    
+            
+            
+   //Barajas
+     //Baraja barajaPartida;
+     //Baraja barajaRotacion;       
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Barajas
+        defaultBaraja.setSelected(true);
+        //pajarosRotacion.setSelected(true);
+        //frutasRotacion.setSelected(true);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Parámetros de la Partida (tamaño tablero)
+        setComboBox(2,4,6,8);
+        ObservableList<Integer> itemsTablero = FXCollections.observableArrayList(tamañoTablero);
+        largoBox.setItems(itemsTablero);
+        tamañoTablero.remove(3);
+        itemsTablero = FXCollections.observableArrayList(tamañoTablero);
+        anchoBox.setItems(itemsTablero);
+        //Parámetros de Partida (tiempo volteo carta)
+        setComboBox(5,10,15);
+        itemsTablero = FXCollections.observableArrayList(tamañoTablero);
+        volteoCartaBox.setItems(itemsTablero);
+        //Parámetros de Partida (tiempo pareja errónea)
+        setComboBox(1,2,3,4);
+        itemsTablero = FXCollections.observableArrayList(tamañoTablero);
+        exposicionParErrorBox.setItems(itemsTablero);
+        //Parámetros de Partida (tiempo de partida)
+        setComboBox(45,60,90,120);
+        itemsTablero = FXCollections.observableArrayList(tamañoTablero);
+        tiempoPartidaBox.setItems(itemsTablero);
+        //Parámetros de Partida (tipo de tablero)
+        normal.setSelected(true);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Efectos de Partida
+        //Sonidos
+        setSonido("Acierto 1");
+        ObservableList<String> itemsSonidos = FXCollections.observableArrayList(sonidos);
+        soundOKBox.setItems(itemsSonidos);
+        setSonido("Giro 1");
+        itemsSonidos = FXCollections.observableArrayList(sonidos);
+        soundFlipBox.setItems(itemsSonidos);
+        setSonido("Fallo 1");
+        itemsSonidos = FXCollections.observableArrayList(sonidos);
+        soundFailBox.setItems(itemsSonidos);
+        //A falta de añadir los Efectos Visuales
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Música de la partida
-         setLista();
-        ObservableList<String> items = FXCollections.observableArrayList(gameSongList);
-        desplegableMusica.setItems(items);
-        
-       
-        cancionActual = "/music/Cancion1.mp3" ;//new Media(new File("Cancion1.mp3").toURI().toString());
+        setListaCanciones();
+        ObservableList<String> itemsSong = FXCollections.observableArrayList(gameSongList);
+        desplegableMusica.setItems(itemsSong);
+        cancionActual = "/music/Cancion1.mp3" ;
         setAudio(cancionActual);
         audio.stop();
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }    
 
     @FXML
@@ -133,7 +189,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private void setDefaultParametros(ActionEvent event) {
     }
 
-    
+    //Métodos Música
     @FXML
     private void playGameMusic(ActionEvent event) {
         seleccionarCancion();
@@ -146,7 +202,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     }
     
     
-     public void setLista(){
+     public void setListaCanciones(){
         gameSongList.add("Sin Música");
         gameSongList.add("Golf It Music");
         gameSongList.add("Zelda Remix");
@@ -177,4 +233,97 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         }
         
     }
+    ///////////////////////////////////////////////////////////////////////////////////
+     
+    //Métodos Parámetros de Partida
+     public void setComboBox(int i, int j, int k){
+        tamañoTablero.clear();
+        tamañoTablero.add(i);
+        tamañoTablero.add(j);
+        tamañoTablero.add(k);
+     }
+     public void setComboBox(int i, int j, int k, int m){
+        tamañoTablero.clear();
+        tamañoTablero.add(i);
+        tamañoTablero.add(j);
+        tamañoTablero.add(k);
+        tamañoTablero.add(m);
+     }
+     
+     //Métodos de Efectos de Partida
+     public void setSonido(String string){
+         sonidos.clear();
+         sonidos.add(string);
+     }
+     
+     //////////////////////////////////////////////////////////////////////////////////////
+     //Métodos de Barajas
+     
+    @FXML
+    private void elegirBarajaEstandar(ActionEvent event) {
+        
+    }
+    
+     @FXML
+    private void pajarosNormal1(MouseEvent event) {
+         if(pajarosNormal.isSelected()) {
+            pajarosNormal.setSelected(false);
+        } else pajarosNormal.setSelected(true);
+    }
+
+    @FXML
+    private void frutasNormal2(MouseEvent event) {
+        if(frutasNormal.isSelected()) {
+            frutasNormal.setSelected(false);
+        } else frutasNormal.setSelected(true);
+    }
+
+    @FXML
+    private void barajaNormal3(MouseEvent event) {
+        if(baraja3Normal.isSelected()) {
+            baraja3Normal.setSelected(false);
+        } else baraja3Normal.setSelected(true);
+    }
+
+    @FXML
+    private void barajaNormal4(MouseEvent event) {
+        if(baraja4Normal.isSelected()) {
+            baraja4Normal.setSelected(false);
+        } else baraja4Normal.setSelected(true);
+    }
+    
+    @FXML
+    private void pajarosRotacion1(MouseEvent event) {
+        if(pajarosRotacion.isSelected()) {
+            pajarosRotacion.setSelected(false);
+        } else pajarosRotacion.setSelected(true);
+    
+    }
+
+    @FXML
+    private void frutasRotacion2(MouseEvent event) {
+        if(frutasRotacion.isSelected()) {
+            frutasRotacion.setSelected(false);
+        } else frutasRotacion.setSelected(true);
+    }
+    
+
+    @FXML
+    private void barajaRotacion3(MouseEvent event) {
+        if(baraja3Rotacion.isSelected()) {
+            baraja3Rotacion.setSelected(false);
+        } else baraja3Rotacion.setSelected(true);
+    }
+
+
+    @FXML
+    private void barajaRotacion4(MouseEvent event) {
+        if(baraja4Rotacion.isSelected()) {
+            baraja4Rotacion.setSelected(false);
+        } else baraja4Rotacion.setSelected(true);
+    }
+
+   
+
+     
 }
