@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -113,6 +114,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private ComboBox<Integer> exposicionParErrorBox;
     @FXML
     private ComboBox<Integer> tiempoPartidaBox;
+    @FXML
+    private CheckBox limiteChekbox;
     
     
      //Música de la Partida   
@@ -129,6 +132,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 public static int nuevoTiempoTurno;
                 public static int nuevoTiempoPartida;
                 public static int nuevoTiempoError;
+                public static boolean limiteActivado;
             //Tipo de Tablero 
                 //
         //Efectos
@@ -143,6 +147,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
      //Baraja barajaPartida;
      //Baraja barajaRotacion; 
    ////////////////////////////////////////////////////////////////////////////////////         
+    
    
     
             
@@ -203,6 +208,15 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     
     @FXML
     private void saveAction(ActionEvent event) {
+        //Parámetros de partida
+        limiteActivado = limiteChekbox.isSelected();
+        if(limiteActivado) {
+          nuevoTiempoTurno = volteoCartaBox.getValue();
+          nuevoTiempoPartida = tiempoPartidaBox.getValue();
+        } 
+        nuevoTiempoError = exposicionParErrorBox.getValue();
+        //Barajas
+        
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
     }
 
@@ -296,6 +310,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private void elegirTablero(ActionEvent event) {
     }
      
+    @FXML
+    private void disableLimites(ActionEvent event) {
+        if(limiteChekbox.isSelected()) {volteoCartaBox.setDisable(false); tiempoPartidaBox.setDisable(false);}
+        else {volteoCartaBox.setDisable(true); tiempoPartidaBox.setDisable(true);}
+    }
      //Métodos de Efectos de Partida
      
      
