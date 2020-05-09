@@ -77,6 +77,25 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
 
     @FXML
     private void abrirParametros(ActionEvent event) {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ParametrosPartida.fxml"));
+        MenuPrincipalController.musicaInicial.stop();
+        Parent root = null;
+        try{
+        root = (Parent) myLoader.load();
+        } catch(IOException e){}
+        ParametrosPartidaController ventanaJuegoLibreController = myLoader.<ParametrosPartidaController>getController();
+        Stage winStage = new Stage();
+        ventanaJuegoLibreController.initWindow(winStage);
+        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+        thisStage.close();
+        parentStage.close();
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
     }
 
     @FXML
