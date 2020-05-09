@@ -40,7 +40,7 @@ import logic.Puntuacion;
 import logic.Tablero;
 import static presentation.MusicaController.cancionActual;
 import static presentation.PausaController.pauseMusic;
-import twins.PartidaEstandarApplication;
+import presentation.VentanaJuegoLibreController;
 
 /**
  * FXML Controller class
@@ -60,8 +60,9 @@ public class JuegoLibreController implements Initializable {
     public static final int DURACION_PARTIDA = 60;
     public static final int DURACION_TURNO = 5;
 
-    protected static String modo = PartidaEstandarApplication.mode;
-
+    protected static String modo = VentanaJuegoLibreController.mode;
+    private Stage winStage;
+    
     protected static String cancion;
     @FXML
     protected Tablero tablero;
@@ -495,5 +496,8 @@ public class JuegoLibreController implements Initializable {
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }
-
+    
+    void initWindow(Stage stage) {
+        winStage = stage;
+    }
 }
