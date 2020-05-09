@@ -116,6 +116,10 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private ComboBox<Integer> tiempoPartidaBox;
     @FXML
     private CheckBox limiteChekbox;
+    @FXML
+    private CheckBox showCardsBox;
+    @FXML
+    private ComboBox<Integer> showCardsTime;
     
     
      //Música de la Partida   
@@ -137,6 +141,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 //
         //Efectos
             protected List<String> sonidos = new ArrayList<String>();
+            public static int tiempoMostrarCartas;
             //Variables que setearán los sonidos en la partida
                 public static String sonidoActualAcierto;
                 public static String sonidoActualFallo;
@@ -147,6 +152,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
      //Baraja barajaPartida;
      //Baraja barajaRotacion; 
    ////////////////////////////////////////////////////////////////////////////////////         
+    
     
    
     
@@ -179,6 +185,10 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             setComboBox(45,60,90,120);
             itemsTablero = FXCollections.observableArrayList(tamañoTablero);
             tiempoPartidaBox.setItems(itemsTablero);
+        //Efecto de mostrar las cartas al principio
+            setComboBox(2,3,4,5);
+            itemsTablero = FXCollections.observableArrayList(tamañoTablero);
+            showCardsTime.setItems(itemsTablero);
         //Parámetros de Partida (tipo de tablero)
             normal.setSelected(true);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +225,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
           nuevoTiempoPartida = tiempoPartidaBox.getValue();
         } 
         nuevoTiempoError = exposicionParErrorBox.getValue();
+        //Efectos
+        if(showCardsBox.isSelected())tiempoMostrarCartas = showCardsTime.getValue(); 
         //Barajas
         
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
@@ -320,6 +332,12 @@ public class ParametrosPartidaController extends JuegoLibreController implements
      
      //////////////////////////////////////////////////////////////////////////////////////
      //Métodos de los Efectos
+    
+    @FXML
+    private void disableCardTime(ActionEvent event) {
+        if(showCardsBox.isSelected()) showCardsTime.setDisable(false); 
+        else showCardsTime.setDisable(true); 
+    }
     
      @FXML
     private void playOKSound(ActionEvent event) {
@@ -483,5 +501,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             baraja4Rotacion.setSelected(false);
         } else baraja4Rotacion.setSelected(true);
     }
+
+    
 
 }
