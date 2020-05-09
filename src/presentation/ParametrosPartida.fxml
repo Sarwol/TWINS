@@ -61,10 +61,13 @@
                               <Image url="@../../images/fruit4.png" />
                            </image>
                         </ImageView>
-                        <RadioButton fx:id="pajarosRotacion" layoutX="14.0" layoutY="207.0" mnemonicParsing="false" />
-                        <RadioButton fx:id="frutasRotacion" layoutX="152.0" layoutY="207.0" mnemonicParsing="false" />
-                        <RadioButton fx:id="baraja3Rotacion" layoutX="300.0" layoutY="207.0" mnemonicParsing="false" />
-                        <RadioButton fx:id="baraja4Rotacion" layoutX="431.0" layoutY="207.0" mnemonicParsing="false" />
+                        <RadioButton fx:id="pajarosRotacion" layoutX="14.0" layoutY="207.0" mnemonicParsing="false">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="barajasCategoria" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="frutasRotacion" layoutX="152.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
+                        <RadioButton fx:id="baraja3Rotacion" layoutX="300.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
+                        <RadioButton fx:id="baraja4Rotacion" layoutX="431.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
                         <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="185.0" onMouseClicked="#pajarosRotacion1" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card1.png" />
@@ -118,11 +121,11 @@
                         <RadioButton fx:id="normal" layoutX="355.0" layoutY="219.0" mnemonicParsing="false" onAction="#elegirTablero" text="Normal" toggleGroup="$rotacionButtons" />
                         <Button fx:id="defaultParametrosButton" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#setDefaultParametros" prefHeight="32.0" prefWidth="196.0" text="Restablecer predeterminados" />
                         <Button fx:id="saveButton2" layoutX="481.0" layoutY="294.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="88.0" text="Guardar" />
-                        <ComboBox fx:id="largoBox" layoutX="296.0" layoutY="6.0" prefHeight="28.0" prefWidth="75.0" promptText="6" />
-                        <ComboBox fx:id="anchoBox" layoutX="459.0" layoutY="6.0" prefHeight="28.0" prefWidth="68.0" promptText="4" />
-                        <ComboBox fx:id="volteoCartaBox" layoutX="290.0" layoutY="52.0" prefHeight="28.0" prefWidth="82.0" promptText="5" />
-                        <ComboBox fx:id="exposicionParErrorBox" layoutX="289.0" layoutY="96.0" prefHeight="28.0" prefWidth="84.0" promptText="2" />
-                        <ComboBox fx:id="tiempoPartidaBox" layoutX="289.0" layoutY="136.0" prefHeight="28.0" prefWidth="84.0" promptText="60" />
+                        <ComboBox fx:id="largoBox" layoutX="296.0" layoutY="6.0" prefHeight="28.0" prefWidth="75.0" promptText="-" />
+                        <ComboBox fx:id="anchoBox" layoutX="459.0" layoutY="6.0" prefHeight="28.0" prefWidth="68.0" promptText="-" />
+                        <ComboBox fx:id="volteoCartaBox" layoutX="290.0" layoutY="52.0" prefHeight="28.0" prefWidth="82.0" promptText="-" />
+                        <ComboBox fx:id="exposicionParErrorBox" layoutX="289.0" layoutY="96.0" prefHeight="28.0" prefWidth="84.0" promptText="-" />
+                        <ComboBox fx:id="tiempoPartidaBox" layoutX="289.0" layoutY="136.0" prefHeight="28.0" prefWidth="84.0" promptText="-" />
                         <CheckBox fx:id="limiteChekbox" layoutX="473.0" layoutY="137.0" mnemonicParsing="false" onAction="#disableLimites" prefHeight="26.0" prefWidth="116.0" selected="true" text="Activar límite" />
                      </children>
                   </AnchorPane>
@@ -164,7 +167,7 @@
                         <ComboBox fx:id="soundFailBox" layoutX="272.0" layoutY="283.0" onAction="#playFailSound" prefHeight="29.0" prefWidth="164.0" promptText="Seleccione sonido" />
                         <Button fx:id="saveButton3" layoutX="481.0" layoutY="294.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="88.0" text="Guardar" />
                         <CheckBox fx:id="showCardsBox" layoutX="389.0" layoutY="106.0" mnemonicParsing="false" onAction="#disableCardTime" prefHeight="26.0" prefWidth="200.0" text="Mostar cartas al comenzar" />
-                        <ComboBox fx:id="showCardsTime" disable="true" layoutX="454.0" layoutY="134.0" prefHeight="28.0" prefWidth="71.0" promptText="2" />
+                        <ComboBox fx:id="showCardsTime" disable="true" layoutX="454.0" layoutY="134.0" prefHeight="28.0" prefWidth="71.0" promptText="-" />
                         <Label layoutX="544.0" layoutY="139.0" text="seg." />
                      </children></AnchorPane>
                </content>

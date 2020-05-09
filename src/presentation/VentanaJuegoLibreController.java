@@ -87,8 +87,8 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Stage winStage = new Stage();
         ventanaJuegoLibreController.initWindow(winStage);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        thisStage.close();
-        parentStage.close();
+        //thisStage.close();
+        //parentStage.close();
         //We create the scene foe win1
         Scene scene = new Scene(root);
         //we asign new scene to current stage/window
