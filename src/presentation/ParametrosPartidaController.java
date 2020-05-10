@@ -128,10 +128,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private ToggleGroup barajasCategoria;
     
-    
+   
      //Música de la Partida   
         protected List<String> gameSongList = new ArrayList<String>();
         public static String cancionActual;
+        public static boolean sinMusica = false;
      ////////////////////////////////////////////////////////////////////////////////
      
     //Parámetro de la Partida
@@ -169,7 +170,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+        enParametros = true;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Barajas
             defaultBaraja.setSelected(true);
@@ -237,7 +238,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             audio.stop();
             //Parámetros de partida
             limiteActivado = limiteChekbox.isSelected();
-        
+            if (cancionActual != null) sinMusica = false; 
             if(limiteActivado) {
                 nuevoTiempoTurno = volteoCartaBox.getValue();
                 nuevoTiempoPartida = tiempoPartidaBox.getValue();
@@ -296,7 +297,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
      private void seleccionarCancion(){
         switch(desplegableMusica.getSelectionModel().getSelectedIndex()){
             case 0:
-                cancionActual = null;
+                cancionActual = null; 
+                sinMusica = true;
                 break;
             case 1:
                 cancionActual = "/music/Cancion1.mp3";
@@ -578,7 +580,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
          largoBox.setValue(6);
           anchoBox.setValue(4);
           volteoCartaBox.setValue(5);
-          exposicionParErrorBox.setValue(2);
+          exposicionParErrorBox.setValue(1);
           tiempoPartidaBox.setValue(60);
           showCardsTime.setValue(2);
           soundOKBox.setValue("Acierto 1");

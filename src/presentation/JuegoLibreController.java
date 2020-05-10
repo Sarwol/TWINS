@@ -38,7 +38,7 @@ import javafx.util.Duration;
 import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
-import static presentation.MusicaController.cancionActual;
+import static presentation.ParametrosPartidaController.*;
 import static presentation.PausaController.pauseMusic;
 import presentation.VentanaJuegoLibreController;
 
@@ -53,12 +53,12 @@ import presentation.VentanaJuegoLibreController;
  */
 public class JuegoLibreController implements Initializable {
 
-    public static final int LONGITUD_TABLERO = 6;
-    public static final int ANCHURA_TABLERO = 4;
-    public static final int TURN_DELAY = 500;
-    public static final int NUM_CATEGORIAS = 2;
-    public static final int DURACION_PARTIDA = 60;
-    public static final int DURACION_TURNO = 5;
+    public static  int LONGITUD_TABLERO = 6;
+    public static  int ANCHURA_TABLERO = 4;
+    public static  int TURN_DELAY = 500;
+    public static  int NUM_CATEGORIAS = 2;
+    public static  int DURACION_PARTIDA = 60;
+    public static  int DURACION_TURNO = 2;
 
     protected static String modo = VentanaJuegoLibreController.mode;
     private Stage winStage;
@@ -101,17 +101,29 @@ public class JuegoLibreController implements Initializable {
     protected AudioClip audio = null;
     // Animación de rotación
     public RotateTransition rotateAnimation;
+    //Variable que comprobará en JuegoLibre si se han inicializado los parámetros 
+    public static boolean enParametros;
+    //Audio de fallo de carta
+    public static AudioClip audioFail;
+    //Audio de Acierto
+     public static AudioClip audioOK;
+     //Audio de Giro
+     public static AudioClip audioFlip;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
+        if(enParametros) recibirParametros();
+        
+        
         cancion = cancionActual;
         if (cancion == null) {
             cancion = "/music/Cancion1.mp3";
         }
-        if (cancion != "") {
+        if (!sinMusica) {
             setAudio(cancion);
             audio.play(0.3);
         }
@@ -390,6 +402,8 @@ public class JuegoLibreController implements Initializable {
         @Override
         public void handle(MouseEvent e) {
             Carta cartaElegida = (Carta) e.getSource();
+            AudioClip a = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
+            a.play(0.1);
             cartaElegida.turn();
             
             // Plays animation
@@ -499,5 +513,16 @@ public class JuegoLibreController implements Initializable {
     
     void initWindow(Stage stage) {
         winStage = stage;
+    }
+    
+    protected void recibirParametros(){
+        LONGITUD_TABLERO = nuevaLargura;
+        ANCHURA_TABLERO = nuevaAnchura;
+        DURACION_PARTIDA = nuevoTiempoPartida;
+        DURACION_TURNO = nuevoTiempoTurno;
+        TURN_DELAY = nuevoTiempoError*1000;
+        audioFail = new AudioClip(this.getClass().getResource(sonidoActualFallo).toString());
+        audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
+        audioFlip = new AudioClip(this.getClass().getResource(sonidoActualGiro).toString());
     }
 }
