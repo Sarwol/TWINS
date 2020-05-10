@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
+import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
 import logic.Puntuacion;
@@ -116,7 +117,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
     }
 
     @Override
-    public List<Carta> generarBaraja(int numCartas) {
+    public Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
         if (numCartas % 2 != 0) {
             return null;
         }
@@ -148,8 +149,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
             }
 
         }
-
-        return baraja;
+        Baraja laBaraja = new Baraja(nombreBaraja,baraja,deckCardImage);
+        return laBaraja;
     }
 /*
     
