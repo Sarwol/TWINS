@@ -102,8 +102,6 @@ public class JuegoLibreController implements Initializable {
     protected AudioClip audio = null;
     // Animación de rotación
     public RotateTransition rotateAnimation;
-    //Variable que comprobará en JuegoLibre si se han inicializado los parámetros 
-    public static boolean enParametros;
     //Audio de fallo de carta
     public static AudioClip audioFail;
     //Audio de Acierto
@@ -114,14 +112,21 @@ public class JuegoLibreController implements Initializable {
      public static Baraja barajaActual;
      //Baraja que contendrá el tablero de la partida por Categoria
      public static Baraja barajaCategoria;
+     //String para comprobar si se ha activado el límite de tiempo de la partida
+     public static String limiteActivado;
+     //Baraja default que, si la de Parámetros es null, instanciará el tablero
+     Baraja nuevaBaraja;
+     //Variable que comprobará en JuegoLibre si se han inicializado los parámetros 
+     public String enParametros;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        recibirParametros();
+        if(barajaNormalActual == null)
+            defaultData(); 
+        else recibirParametros();
         
         cancion = cancionActual;
         if (cancion == null) {
@@ -170,16 +175,22 @@ public class JuegoLibreController implements Initializable {
             }
         });
 
-        if(limiteActivado != null && limiteActivado != "") setTimers(DURACION_PARTIDA, DURACION_TURNO);
-        /*
-        setTimer(DURACION_PARTIDA, tiempoPartida);
-        setTimer(DURACION_TURNO, tiempoTurno);
-         */
-
+        if(limiteActivado != "") 
+            setTimers(DURACION_PARTIDA, DURACION_TURNO);
+        
+        
+        if(barajaCategoriaActual == null) {
+             nuevaBaraja = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, "fruit", "Baraja Default");
+             barajaActual = nuevaBaraja;
+           } else {
+             barajaActual = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, imagenCarta , "Baraja Default");
+             barajaCategoria = barajaCategoriaActual;
+        }
+        
         // initialize tablero
         tablero.setFilas(ANCHURA_TABLERO);
         tablero.setColumnas(LONGITUD_TABLERO);
-        tablero.setBaraja(generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO));
+        tablero.setBaraja(barajaActual.getCartas());
         tablero.barajarTablero();
         
         setAnimation();
@@ -372,11 +383,32 @@ public class JuegoLibreController implements Initializable {
      * @param numCartas the amount of cards to generate
      * @return baraja the deck with cards.
      */
-    public List<Carta> generarBaraja(int numCartas) {
+    public Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
         if (numCartas % 2 != 0) {
             return null;
         }
+        
+        
+        List<Carta> baraja = new ArrayList<Carta>();
+        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
+        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
+        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
 
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < numCartas / 2; j++) {
+                File currentCard = new File(cardImages + (j + 1) + ".png");
+                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
+                Carta carta = new Carta(j, currentCardImage, deckCardImage);
+
+                // Add event to detect when a Carta is clicked
+                carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+                baraja.add(carta);
+            }
+        }
+        Baraja barajaCartas = new Baraja(nombreBaraja,baraja, deckCardImage);
+        return barajaCartas;
+        
+        /*
         List<Carta> baraja = new ArrayList<Carta>();
         File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
         //String cardImages = "." + File.separator + "images" + File.separator + "card";
@@ -394,7 +426,8 @@ public class JuegoLibreController implements Initializable {
                 baraja.add(carta);
             }
         }
-        return baraja;
+        return baraja;*/
+        
     }
 
     /*
@@ -520,7 +553,6 @@ public class JuegoLibreController implements Initializable {
     protected void recibirParametros(){
         //LONGITUD_TABLERO = nuevaLargura;
         //ANCHURA_TABLERO = nuevaAnchura;
-       
         DURACION_PARTIDA = nuevoTiempoPartida;
         DURACION_TURNO = nuevoTiempoTurno;
         TURN_DELAY = nuevoTiempoError*1000;
@@ -533,7 +565,17 @@ public class JuegoLibreController implements Initializable {
              audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
              audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
          } 
-        barajaActual = barajaNormalActual;
-        barajaCategoria = barajaCategoriaActual;
+        
+    }
+    protected void defaultData(){
+        LONGITUD_TABLERO = 6;
+        ANCHURA_TABLERO = 4;
+        DURACION_PARTIDA = 60;
+        DURACION_TURNO = 5;
+        TURN_DELAY = 1000;
+        audioFail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
+        audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
+        audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
+       
     }
 }

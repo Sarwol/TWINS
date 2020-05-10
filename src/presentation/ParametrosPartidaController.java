@@ -139,7 +139,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 public static int nuevoTiempoTurno;
                 public static int nuevoTiempoPartida;
                 public static int nuevoTiempoError;
-                public static String limiteActivado = null;
+                
             //Tipo de Tablero 
                 //
     //Efectos
@@ -152,10 +152,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             
           
    //Barajas
-     Baraja barajaDefault;
-     Baraja baraja2;
+     Baraja barajaDefault = generarBaraja(24,"card", "Baraja1");
+     Baraja baraja2 = generarBaraja(24,"fruit", "Baraja2");
      public static Baraja barajaNormalActual;
      public static Baraja barajaCategoriaActual;
+     public static String imagenCarta = "fruit";
    ////////////////////////////////////////////////////////////////////////////////////         
     @FXML
     private ToggleGroup barajasCategoria;
@@ -237,13 +238,13 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 nuevoTiempoPartida = tiempoPartidaBox.getValue();
             } 
             
-            
             nuevoTiempoError = exposicionParErrorBox.getValue();
             //Efectos
             
             if(showCardsBox.isSelected())tiempoMostrarCartas = showCardsTime.getValue(); 
             //Barajas
-           
+            
+            enParametros = "si";
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
     }
 
@@ -463,6 +464,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
          if(pajarosNormal.isSelected()) {
             pajarosNormal.setSelected(false);
         } else pajarosNormal.setSelected(true);
+         imagenCarta = "card";
          barajaNormalActual = barajaDefault;
     }
 
@@ -471,6 +473,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(frutasNormal.isSelected()) {
             frutasNormal.setSelected(false);
         } else frutasNormal.setSelected(true);
+        imagenCarta = "fruit";
         barajaNormalActual = baraja2;
     }
 
@@ -479,6 +482,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja3Normal.isSelected()) {
             baraja3Normal.setSelected(false);
         } else baraja3Normal.setSelected(true);
+        imagenCarta = "card";
         barajaNormalActual = barajaDefault;
     }
 
@@ -487,6 +491,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja4Normal.isSelected()) {
             baraja4Normal.setSelected(false);
         } else baraja4Normal.setSelected(true);
+        imagenCarta = "fruit";
         barajaNormalActual = baraja2;
     }
     
@@ -495,6 +500,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(pajarosRotacion.isSelected()) {
             pajarosRotacion.setSelected(false);
         } else pajarosRotacion.setSelected(true);
+        imagenCarta = "card";
         barajaCategoriaActual = barajaDefault;
     
     }
@@ -504,6 +510,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(frutasRotacion.isSelected()) {
             frutasRotacion.setSelected(false);
         } else frutasRotacion.setSelected(true);
+        imagenCarta = "fruit";
         barajaCategoriaActual = baraja2;
     }
     
@@ -513,6 +520,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja3Rotacion.isSelected()) {
             baraja3Rotacion.setSelected(false);
         } else baraja3Rotacion.setSelected(true);
+        imagenCarta = "card";
         barajaCategoriaActual = barajaDefault;
     }
 
@@ -522,33 +530,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja4Rotacion.isSelected()) {
             baraja4Rotacion.setSelected(false);
         } else baraja4Rotacion.setSelected(true);
+        imagenCarta = "fruit";
         barajaCategoriaActual = baraja2;
     }
     
-    public Baraja makeBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
-        if (numCartas % 2 != 0) {
-            return null;
-        }
-        
-        List<Carta> baraja = new ArrayList<Carta>();
-        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
-        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
-
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < numCartas / 2; j++) {
-                File currentCard = new File(cardImages + (j + 1) + ".png");
-                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
-                Carta carta = new Carta(j, currentCardImage, deckCardImage);
-
-                // Add event to detect when a Carta is clicked
-                carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-                baraja.add(carta);
-            }
-        }
-        Baraja barajaCartas = new Baraja(nombreBaraja,baraja, deckCardImage);
-        return barajaCartas;
-    }
+    
 
    protected void defaultParameters(){
           largoBox.setValue(6);
