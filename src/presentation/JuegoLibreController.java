@@ -57,7 +57,7 @@ public class JuegoLibreController implements Initializable {
     public static int LONGITUD_TABLERO = 6;
     public static int ANCHURA_TABLERO = 4;
     public static int TURN_DELAY = 500;
-    public static final int NUM_CATEGORIAS = 2;
+    public static int NUM_CATEGORIAS = 2;
     public static int DURACION_PARTIDA = 60;
     public static int DURACION_TURNO = 5;
 
@@ -120,7 +120,9 @@ public class JuegoLibreController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         recibirParametros();
+        
         cancion = cancionActual;
         if (cancion == null) {
             cancion = "/music/Cancion1.mp3";
@@ -168,7 +170,7 @@ public class JuegoLibreController implements Initializable {
             }
         });
 
-        setTimers(DURACION_PARTIDA, DURACION_TURNO);
+        if(limiteActivado != null && limiteActivado != "") setTimers(DURACION_PARTIDA, DURACION_TURNO);
         /*
         setTimer(DURACION_PARTIDA, tiempoPartida);
         setTimer(DURACION_TURNO, tiempoTurno);
@@ -432,7 +434,7 @@ public class JuegoLibreController implements Initializable {
         if (audio.isPlaying()) {
             audio.stop();
         } else {
-            audio.play();
+            audio.play(0.3);
         }
     }
 
@@ -476,8 +478,10 @@ public class JuegoLibreController implements Initializable {
 
     public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
         audio.stop();
-        countdownPartida.stop();
-        countdownTurno.stop();
+        if(limiteActivado != null && limiteActivado != ""){
+            countdownPartida.stop();
+            countdownTurno.stop();
+        }
         tablero.setDisable(true);
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -516,12 +520,19 @@ public class JuegoLibreController implements Initializable {
     protected void recibirParametros(){
         //LONGITUD_TABLERO = nuevaLargura;
         //ANCHURA_TABLERO = nuevaAnchura;
+       
         DURACION_PARTIDA = nuevoTiempoPartida;
         DURACION_TURNO = nuevoTiempoTurno;
         TURN_DELAY = nuevoTiempoError*1000;
+        try{ 
         audioFail = new AudioClip(this.getClass().getResource(sonidoActualFallo).toString());
         audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
         audioFlip = new AudioClip(this.getClass().getResource(sonidoActualGiro).toString());
+         } catch(Exception e){
+             audioFail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
+             audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
+             audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
+         } 
         barajaActual = barajaNormalActual;
         barajaCategoria = barajaCategoriaActual;
     }

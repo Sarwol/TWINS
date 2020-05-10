@@ -139,7 +139,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 public static int nuevoTiempoTurno;
                 public static int nuevoTiempoPartida;
                 public static int nuevoTiempoError;
-                public static boolean limiteActivado;
+                public static String limiteActivado = null;
             //Tipo de Tablero 
                 //
     //Efectos
@@ -228,10 +228,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if (audio.isPlaying()) audio.stop();
             //Parámetros de partida
            
-            limiteActivado = limiteChekbox.isSelected();
+            if(limiteChekbox.isSelected()) limiteActivado = "activado";
+            else limiteActivado = "";
             if (cancionActual != null) sinMusica = false;
            
-            if(limiteActivado) {
+            if(limiteActivado == "activado") {
                 nuevoTiempoTurno = volteoCartaBox.getValue();
                 nuevoTiempoPartida = tiempoPartidaBox.getValue();
             } 
