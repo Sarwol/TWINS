@@ -38,7 +38,7 @@ import javafx.util.Duration;
 import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
-import static presentation.MusicaController.cancionActual;
+import static presentation.ParametrosPartidaController.*;
 import static presentation.PausaController.pauseMusic;
 import presentation.VentanaJuegoLibreController;
 
@@ -101,6 +101,14 @@ public class JuegoLibreController implements Initializable {
     protected AudioClip audio = null;
     // Animación de rotación
     public RotateTransition rotateAnimation;
+    //Variable que comprobará en JuegoLibre si se han inicializado los parámetros 
+    public static boolean enParametros;
+    //Audio de fallo de carta
+    public static AudioClip audioFail;
+    //Audio de Acierto
+     public static AudioClip audioOK;
+     //Audio de Giro
+     public static AudioClip audioFlip;
 
     /**
      * Initializes the controller class.
@@ -111,7 +119,7 @@ public class JuegoLibreController implements Initializable {
         if (cancion == null) {
             cancion = "/music/Cancion1.mp3";
         }
-        if (cancion != "") {
+        if (!sinMusica) {
             setAudio(cancion);
             audio.play(0.3);
         }

@@ -21,7 +21,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static presentation.JuegoLibreController.cancion;
-import static presentation.MusicaController.cancionActual;
+import static presentation.ParametrosPartidaController.*;
 
 /**
  * FXML Controller class
@@ -46,12 +46,12 @@ public class PausaController extends JuegoLibreController implements Initializab
         //audio.stop();
         pauseMusic = new AudioClip(this.getClass().getResource("/music/cancionPausa.mp3").toString());
         pauseMusic.play(0.07);
-        if(cancionActual != null /*&& cancionActual != ""*/) {
+        /*if(cancionActual != null) {
             setAudio(cancionActual);
             audio.stop();
         }
         
-        cancionActual = cancion;
+        cancionActual = cancion;*/
     }    
 
     @FXML
