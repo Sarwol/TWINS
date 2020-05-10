@@ -5,6 +5,7 @@
  */
 package presentation;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import logic.Baraja;
+import logic.Carta;
 
 /**
  * FXML Controller class
@@ -138,9 +142,9 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 public static boolean limiteActivado;
             //Tipo de Tablero 
                 //
-        //Efectos
-            protected List<String> sonidos = new ArrayList<String>();
-            public static int tiempoMostrarCartas;
+    //Efectos
+        protected List<String> sonidos = new ArrayList<String>();
+        public static int tiempoMostrarCartas;
             //Variables que setearán los sonidos en la partida
                 public static String sonidoActualAcierto;
                 public static String sonidoActualFallo;
@@ -148,14 +152,13 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             
           
    //Barajas
-     //Baraja barajaPartida;
-     //Baraja barajaRotacion; 
+     Baraja barajaDefault;
+     Baraja baraja2;
+     public static Baraja barajaNormalActual;
+     public static Baraja barajaCategoriaActual;
    ////////////////////////////////////////////////////////////////////////////////////         
-    
-    
-   
-    
-            
+    @FXML
+    private ToggleGroup barajasCategoria;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -166,6 +169,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         
             defaultBaraja.setSelected(true);
             pajarosRotacion.setSelected(true);
+            barajaNormalActual = barajaDefault;
+            barajaCategoriaActual = barajaDefault;
             
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Parámetros de la Partida (tamaño tablero)
@@ -246,7 +251,6 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private void setDefaultBarajas(ActionEvent event) {
         defaultBaraja.setSelected(true);
         pajarosRotacion.setSelected(true);
-        frutasRotacion.setSelected(true);
         if(baraja3Rotacion.isSelected()) baraja3Rotacion.setSelected(false);
         if(baraja4Rotacion.isSelected()) baraja4Rotacion.setSelected(false);
     }
@@ -458,6 +462,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
          if(pajarosNormal.isSelected()) {
             pajarosNormal.setSelected(false);
         } else pajarosNormal.setSelected(true);
+         barajaNormalActual = barajaDefault;
     }
 
     @FXML
@@ -465,6 +470,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(frutasNormal.isSelected()) {
             frutasNormal.setSelected(false);
         } else frutasNormal.setSelected(true);
+        barajaNormalActual = baraja2;
     }
 
     @FXML
@@ -472,6 +478,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja3Normal.isSelected()) {
             baraja3Normal.setSelected(false);
         } else baraja3Normal.setSelected(true);
+        barajaNormalActual = barajaDefault;
     }
 
     @FXML
@@ -479,6 +486,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja4Normal.isSelected()) {
             baraja4Normal.setSelected(false);
         } else baraja4Normal.setSelected(true);
+        barajaNormalActual = baraja2;
     }
     
     @FXML
@@ -486,6 +494,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(pajarosRotacion.isSelected()) {
             pajarosRotacion.setSelected(false);
         } else pajarosRotacion.setSelected(true);
+        barajaCategoriaActual = barajaDefault;
     
     }
 
@@ -494,6 +503,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(frutasRotacion.isSelected()) {
             frutasRotacion.setSelected(false);
         } else frutasRotacion.setSelected(true);
+        barajaCategoriaActual = baraja2;
     }
     
 
@@ -502,6 +512,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja3Rotacion.isSelected()) {
             baraja3Rotacion.setSelected(false);
         } else baraja3Rotacion.setSelected(true);
+        barajaCategoriaActual = barajaDefault;
     }
 
 
@@ -510,6 +521,32 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if(baraja4Rotacion.isSelected()) {
             baraja4Rotacion.setSelected(false);
         } else baraja4Rotacion.setSelected(true);
+        barajaCategoriaActual = baraja2;
+    }
+    
+    public Baraja makeBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
+        if (numCartas % 2 != 0) {
+            return null;
+        }
+        
+        List<Carta> baraja = new ArrayList<Carta>();
+        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
+        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
+        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < numCartas / 2; j++) {
+                File currentCard = new File(cardImages + (j + 1) + ".png");
+                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
+                Carta carta = new Carta(j, currentCardImage, deckCardImage);
+
+                // Add event to detect when a Carta is clicked
+                carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+                baraja.add(carta);
+            }
+        }
+        Baraja barajaCartas = new Baraja(nombreBaraja,baraja, deckCardImage);
+        return barajaCartas;
     }
 
    protected void defaultParameters(){

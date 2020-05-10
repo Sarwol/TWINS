@@ -35,6 +35,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import logic.Baraja;
 import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
@@ -109,6 +110,10 @@ public class JuegoLibreController implements Initializable {
      public static AudioClip audioOK;
      //Audio de Giro
      public static AudioClip audioFlip;
+     //Baraja que contendrá el tablero de la partida
+     public static Baraja barajaActual;
+     //Baraja que contendrá el tablero de la partida por Categoria
+     public static Baraja barajaCategoria;
 
     /**
      * Initializes the controller class.
@@ -517,5 +522,7 @@ public class JuegoLibreController implements Initializable {
         audioFail = new AudioClip(this.getClass().getResource(sonidoActualFallo).toString());
         audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
         audioFlip = new AudioClip(this.getClass().getResource(sonidoActualGiro).toString());
+        barajaActual = barajaNormalActual;
+        barajaCategoria = barajaCategoriaActual;
     }
 }
