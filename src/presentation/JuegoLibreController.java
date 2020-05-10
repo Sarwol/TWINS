@@ -53,12 +53,12 @@ import presentation.VentanaJuegoLibreController;
  */
 public class JuegoLibreController implements Initializable {
 
-    public static final int LONGITUD_TABLERO = 6;
-    public static final int ANCHURA_TABLERO = 4;
-    public static final int TURN_DELAY = 500;
+    public static int LONGITUD_TABLERO = 6;
+    public static int ANCHURA_TABLERO = 4;
+    public static int TURN_DELAY = 500;
     public static final int NUM_CATEGORIAS = 2;
-    public static final int DURACION_PARTIDA = 60;
-    public static final int DURACION_TURNO = 5;
+    public static int DURACION_PARTIDA = 60;
+    public static int DURACION_TURNO = 5;
 
     protected static String modo = VentanaJuegoLibreController.mode;
     private Stage winStage;
@@ -115,6 +115,7 @@ public class JuegoLibreController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        recibirParametros();
         cancion = cancionActual;
         if (cancion == null) {
             cancion = "/music/Cancion1.mp3";
@@ -285,8 +286,7 @@ public class JuegoLibreController implements Initializable {
                 carta1.setDisable(true);
                 carta2.setDisable(true);
                 puntuacion.sumarPuntos();
-                AudioClip ok = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
-                ok.play(0.1);
+                audioOK.play(0.1);
                 punt.setText(puntuacion.getPuntos() + "");
                 //setTimer(DURACION_TURNO, tiempoTurno);
             } else {
@@ -294,8 +294,7 @@ public class JuegoLibreController implements Initializable {
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
-                AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
-                fail.play(0.05);
+                audioFail.play(0.1);
             }
             // Reset turn countdown
             resetTurnCountdown();
@@ -398,6 +397,7 @@ public class JuegoLibreController implements Initializable {
         @Override
         public void handle(MouseEvent e) {
             Carta cartaElegida = (Carta) e.getSource();
+            audioFlip.play(0.1);
             cartaElegida.turn();
             
             // Plays animation
@@ -507,5 +507,15 @@ public class JuegoLibreController implements Initializable {
     
     void initWindow(Stage stage) {
         winStage = stage;
+    }
+    protected void recibirParametros(){
+        //LONGITUD_TABLERO = nuevaLargura;
+        //ANCHURA_TABLERO = nuevaAnchura;
+        DURACION_PARTIDA = nuevoTiempoPartida;
+        DURACION_TURNO = nuevoTiempoTurno;
+        TURN_DELAY = nuevoTiempoError*1000;
+        audioFail = new AudioClip(this.getClass().getResource(sonidoActualFallo).toString());
+        audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
+        audioFlip = new AudioClip(this.getClass().getResource(sonidoActualGiro).toString());
     }
 }
