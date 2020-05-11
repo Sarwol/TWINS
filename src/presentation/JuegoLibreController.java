@@ -121,7 +121,8 @@ public class JuegoLibreController implements Initializable {
      public String enParametros;
      //Objeto configuración con parámetros default;
      Configuracion defaultConfig = new Configuracion("/music/Cancion1.mp3", "/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
-     //Objeto configuracion que guardará los parámetros escogidos por el usuario
+     //String que marcará que baraja se inicia en partida estándar y partida por carta
+     String cartaBaraja;
     
     /**
      * Initializes the controller class.
@@ -183,11 +184,11 @@ public class JuegoLibreController implements Initializable {
             setTimers(DURACION_PARTIDA, DURACION_TURNO);
         
         
-        if(barajaCategoriaActual == null) {
-             nuevaBaraja = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, "fruit", "Baraja Default");
+        if(parametros == null) {
+             nuevaBaraja = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, defaultConfig.getCartaPartida(), "Baraja Default");
              barajaActual = nuevaBaraja;
            } else {
-             barajaActual = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, imagenCarta , "Baraja Default");
+             barajaActual = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, parametros.getCartaPartida() , "Baraja Default");
              barajaCategoria = barajaCategoriaActual;
         }
         
@@ -560,6 +561,7 @@ public class JuegoLibreController implements Initializable {
         DURACION_PARTIDA = nuevoTiempoPartida;
         DURACION_TURNO = nuevoTiempoTurno;
         TURN_DELAY = nuevoTiempoError*1000;
+        cartaBaraja = parametros.getCartaPartida();
         try{ 
         audioFail = new AudioClip(this.getClass().getResource(sonidoActualFallo).toString());
         audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
@@ -569,7 +571,7 @@ public class JuegoLibreController implements Initializable {
              audioOK = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoCorrecto()).toString());
              audioFlip = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoGiro()).toString());
          } 
-        
+      
     }
     protected void defaultData(){
         LONGITUD_TABLERO = defaultConfig.getLarguraTablero();
@@ -580,6 +582,7 @@ public class JuegoLibreController implements Initializable {
         audioFail = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoFallo()).toString());
         audioOK = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoCorrecto()).toString());
         audioFlip = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoGiro()).toString());
-       
+        cartaBaraja = defaultConfig.getCartaPartida();
+        
     }
 }

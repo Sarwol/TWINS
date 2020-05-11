@@ -260,6 +260,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             
             //if(showCardsBox.isSelected()) tiempoMostrarCartas = showCardsTime.getValue(); 
             //Barajas
+            parametros.setCartaPartida(imagenCarta);
             
             //enParametros = "si";
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
