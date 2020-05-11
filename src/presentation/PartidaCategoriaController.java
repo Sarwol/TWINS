@@ -86,7 +86,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 audioOK.play(0.1);
-                if (contador == 1 + 12 / NUM_CATEGORIAS) {
+                if (contador == 1 + ((ANCHURA_TABLERO*LONGITUD_TABLERO)/2) / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
                     categoriaLabel.setText(categoriaActual.toString());
                     //mostrarCategoria();
