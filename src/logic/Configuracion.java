@@ -20,14 +20,15 @@ public class Configuracion {
     private int tiempoTurno;
     private int tiempoPartida;
     private int tiempoVerError;
+    private int tiempoCartasInicio;
     private boolean limitePartida;
     private String cartaPartida;
     private boolean sinMusica;
-
+    private boolean mostrarCartasInicio;
    
     
-    public Configuracion(String song, String correctSound, String failSound, String flipSound,int anchura, int largura, int turno, int partida, int cartaError, 
-            boolean limite, String carta, boolean noMusic){
+    public Configuracion(String song, String correctSound, String failSound, String flipSound,int anchura, int largura, int turno, int partida, int cartaError,
+            int cartasPincipio,boolean limite, String carta, boolean noMusic, boolean cartasInicio){
            limitePartida = limite;
            cancionPartida = song;
            sonidoCorrecto = correctSound;
@@ -38,9 +39,27 @@ public class Configuracion {
            tiempoTurno = turno;
            tiempoPartida = partida;
            tiempoVerError = cartaError;
+           tiempoCartasInicio = cartasPincipio;
            cartaPartida = carta;
            sinMusica = noMusic;
+           mostrarCartasInicio = cartasInicio;
      }
+
+    public int getTiempoCartasInicio() {
+        return tiempoCartasInicio;
+    }
+
+    public void setTiempoCartasInicio(int tiempoCartasInicio) {
+        this.tiempoCartasInicio = tiempoCartasInicio;
+    }
+
+    public boolean isMostrarCartasInicio() {
+        return mostrarCartasInicio;
+    }
+
+    public void setMostrarCartasInicio(boolean mostrarCartasInicio) {
+        this.mostrarCartasInicio = mostrarCartasInicio;
+    }
     
     public boolean isSinMusica() {
         return sinMusica;

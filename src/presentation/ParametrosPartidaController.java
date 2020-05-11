@@ -147,7 +147,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 //
     //Efectos
         protected List<String> sonidos = new ArrayList<String>();
-        public static int tiempoMostrarCartas = 3;
+        public static int tiempoMostrarCartas = 2;
             //Variables que setearán los sonidos en la partida
                 public static String sonidoActualAcierto = "/music/correct.mp3" ;
                 public static String sonidoActualFallo = sonidoActualFallo = "/music/fail.mp3";
@@ -239,7 +239,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             if(barajaNormalActual.getCartas().size() >= nuevaLargura * nuevaAnchura){  
             
                 if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
-                else parametros.setLimitePartida(false);
+                else {parametros.setLimitePartida(false); limiteActivado = "";}
                 if (cancionActual != null) {
                     parametros.setSinMusica(false);
                     parametros.setCancionPartida(cancionActual);
@@ -252,7 +252,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 parametros.setSonidoCorrecto(sonidoActualAcierto);
                 parametros.setSonidoFallo(sonidoActualFallo);
                 parametros.setSonidoGiro(sonidoActualGiro);
-           
+                
+                if(parametros.isMostrarCartasInicio()){
+                    tiempoMostrarCartas = showCardsTime.getValue();
+                    parametros.setTiempoCartasInicio(tiempoMostrarCartas);
+                }
                 if(parametros.isLimitePartida()) {
                     nuevoTiempoTurno = volteoCartaBox.getValue();
                     parametros.setTiempoTurno(nuevoTiempoTurno);
@@ -384,8 +388,14 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     
     @FXML
     private void disableCardTime(ActionEvent event) {
-        if(showCardsBox.isSelected()) showCardsTime.setDisable(false); 
-        else showCardsTime.setDisable(true); 
+        if(showCardsBox.isSelected()) {
+            showCardsTime.setDisable(false);
+            parametros.setMostrarCartasInicio(true);
+        }
+        else {
+            showCardsTime.setDisable(true);
+            parametros.setMostrarCartasInicio(false);
+        } 
     }
     
      @FXML

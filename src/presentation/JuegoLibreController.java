@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -61,6 +62,7 @@ public class JuegoLibreController implements Initializable {
     public static int NUM_CATEGORIAS = 2;
     public static int DURACION_PARTIDA = 60;
     public static int DURACION_TURNO = 5;
+    public static int S_CARTAS_INICIO = 2;
 
     protected static String modo = VentanaJuegoLibreController.mode;
     private Stage winStage;
@@ -106,23 +108,24 @@ public class JuegoLibreController implements Initializable {
     //Audio de fallo de carta
     public static AudioClip audioFail;
     //Audio de Acierto
-     public static AudioClip audioOK;
-     //Audio de Giro
-     public static AudioClip audioFlip;
-     //Baraja que contendrá el tablero de la partida
-     public static Baraja barajaActual;
-     //Baraja que contendrá el tablero de la partida por Categoria
-     public static Baraja barajaCategoria;
-     //String para comprobar si se ha activado el límite de tiempo de la partida
-     public static String limiteActivado;
-     //Baraja default que, si la de Parámetros es null, instanciará el tablero
-     Baraja nuevaBaraja;
-     //Objeto configuración con parámetros obtenidos de la interfaz de Parámetros
-     public static Configuracion parametros = new Configuracion("/music/Cancion1.mp3","/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
-     //Objeto configuración con parámetros default
-     Configuracion defaultConfig = new Configuracion("/music/Cancion1.mp3", "/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
-     //String que marcará que baraja se inicia en partida estándar y partida por carta
-     String cartaBaraja;
+    public static AudioClip audioOK;
+    //Audio de Giro
+    public static AudioClip audioFlip;
+    //Baraja que contendrá el tablero de la partida
+    public static Baraja barajaActual;
+    //Baraja que contendrá el tablero de la partida por Categoria
+    public static Baraja barajaCategoria;
+    //String para comprobar si se ha activado el límite de tiempo de la partida
+    public static String limiteActivado;
+    public boolean mostrarCartasOn = false;
+    //Baraja default que, si la de Parámetros es null, instanciará el tablero
+    Baraja nuevaBaraja;
+    //Objeto configuración con parámetros obtenidos de la interfaz de Parámetros
+    public static Configuracion parametros = new Configuracion("/music/Cancion1.mp3","/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,2,true,"fruit",false,false);
+    //Objeto configuración con parámetros default
+    Configuracion defaultConfig = new Configuracion("/music/Cancion1.mp3", "/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,2,true,"fruit",false,false);
+    //String que marcará que baraja se inicia en partida estándar y partida por carta
+    String cartaBaraja;
     
     /**
      * Initializes the controller class.
@@ -180,6 +183,7 @@ public class JuegoLibreController implements Initializable {
             }
         });
 
+       
         if(parametros != null && parametros.isLimitePartida())
             setTimers(DURACION_PARTIDA, DURACION_TURNO);
         
@@ -196,9 +200,14 @@ public class JuegoLibreController implements Initializable {
         tablero.setFilas(ANCHURA_TABLERO);
         tablero.setColumnas(LONGITUD_TABLERO);
         tablero.setBaraja(barajaActual.getCartas());
+        if(mostrarCartasOn){
+            tablero.girarTodasCartas();
+            mostrarCartasPrincipio();
+        }
         tablero.barajarTablero();
         
         setAnimation();
+        
     }
     
     /**
@@ -371,6 +380,18 @@ public class JuegoLibreController implements Initializable {
         new Thread(waitTurnCards).start();
     }
 
+    /**
+     * Creates a new thread that will turn the cards back around.
+     */
+    public void mostrarCartasPrincipio() {
+        Platform.runLater(() -> {
+            try {
+                Thread.sleep(S_CARTAS_INICIO*1000);  
+                tablero.girarTodasCartas();  
+            } catch (InterruptedException ex) {}
+        });
+    }
+    
     /**
      * Checks whether the two cards make up a valid pair.
      *
@@ -562,6 +583,10 @@ public class JuegoLibreController implements Initializable {
         DURACION_TURNO = nuevoTiempoTurno;
         TURN_DELAY = nuevoTiempoError*1000;
         cartaBaraja = parametros.getCartaPartida();
+        if(parametros.isMostrarCartasInicio()){
+            mostrarCartasOn = true;
+            S_CARTAS_INICIO = parametros.getTiempoCartasInicio();
+        }
         try{ 
         audioFail = new AudioClip(this.getClass().getResource(sonidoActualFallo).toString());
         audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
@@ -583,6 +608,7 @@ public class JuegoLibreController implements Initializable {
         audioOK = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoCorrecto()).toString());
         audioFlip = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoGiro()).toString());
         cartaBaraja = defaultConfig.getCartaPartida();
+        
         
     }
 }

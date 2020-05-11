@@ -182,7 +182,7 @@
                         <ComboBox fx:id="visualFailBox" disable="true" layoutX="62.0" layoutY="283.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
                         <ComboBox fx:id="soundFailBox" layoutX="272.0" layoutY="283.0" onAction="#playFailSound" prefHeight="29.0" prefWidth="164.0" promptText="Seleccione sonido" />
                         <Button fx:id="saveButton3" layoutX="481.0" layoutY="294.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="88.0" text="Guardar" />
-                        <CheckBox fx:id="showCardsBox" disable="true" layoutX="389.0" layoutY="106.0" mnemonicParsing="false" onAction="#disableCardTime" prefHeight="26.0" prefWidth="200.0" text="Mostar cartas al comenzar" />
+                        <CheckBox fx:id="showCardsBox" layoutX="389.0" layoutY="106.0" mnemonicParsing="false" onAction="#disableCardTime" prefHeight="26.0" prefWidth="200.0" text="Mostar cartas al comenzar" />
                         <ComboBox fx:id="showCardsTime" disable="true" layoutX="454.0" layoutY="134.0" prefHeight="28.0" prefWidth="71.0" promptText="2" />
                         <Label layoutX="544.0" layoutY="139.0" text="seg." />
                      </children></AnchorPane>
