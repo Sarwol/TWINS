@@ -556,8 +556,8 @@ public class JuegoLibreController implements Initializable {
         winStage = stage;
     }
     protected void recibirParametros(){
-        //LONGITUD_TABLERO = nuevaLargura;
-        //ANCHURA_TABLERO = nuevaAnchura;
+        LONGITUD_TABLERO = nuevaLargura;
+        ANCHURA_TABLERO = nuevaAnchura;
         DURACION_PARTIDA = nuevoTiempoPartida;
         DURACION_TURNO = nuevoTiempoTurno;
         TURN_DELAY = nuevoTiempoError*1000;

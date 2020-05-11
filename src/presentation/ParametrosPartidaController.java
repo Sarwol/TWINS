@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -232,38 +233,51 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private void saveAction(ActionEvent event) {
         if (audio.isPlaying()) audio.stop();
+            nuevaLargura = largoBox.getValue();
+            nuevaAnchura = anchoBox.getValue();
             //Parámetros de partida
-               
+            if(barajaNormalActual.getCartas().size() >= nuevaLargura * nuevaAnchura){  
             
-            if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
-            else parametros.setLimitePartida(false);
-            if (cancionActual != null) {
-                parametros.setSinMusica(false);
-                parametros.setCancionPartida(cancionActual);
-            }
-          
+                if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
+                else parametros.setLimitePartida(false);
+                if (cancionActual != null) {
+                    parametros.setSinMusica(false);
+                    parametros.setCancionPartida(cancionActual);
+                }
+                nuevaLargura = largoBox.getValue();
+                nuevaAnchura = anchoBox.getValue();
+                parametros.setAnchuraTablero(nuevaAnchura);
+                parametros.setLarguraTablero(nuevaLargura);
             
-            parametros.setSonidoCorrecto(sonidoActualAcierto);
-            parametros.setSonidoFallo(sonidoActualFallo);
-            parametros.setSonidoGiro(sonidoActualGiro);
+                parametros.setSonidoCorrecto(sonidoActualAcierto);
+                parametros.setSonidoFallo(sonidoActualFallo);
+                parametros.setSonidoGiro(sonidoActualGiro);
            
-            if(parametros.isLimitePartida()) {
-                nuevoTiempoTurno = volteoCartaBox.getValue();
-                parametros.setTiempoTurno(nuevoTiempoTurno);
-                nuevoTiempoPartida = tiempoPartidaBox.getValue();
-                parametros.setTiempoPartida(nuevoTiempoPartida);
-            } 
+                if(parametros.isLimitePartida()) {
+                    nuevoTiempoTurno = volteoCartaBox.getValue();
+                    parametros.setTiempoTurno(nuevoTiempoTurno);
+                    nuevoTiempoPartida = tiempoPartidaBox.getValue();
+                    parametros.setTiempoPartida(nuevoTiempoPartida);
+                } 
              
-            nuevoTiempoError = exposicionParErrorBox.getValue();
-            parametros.setTiempoVerError(nuevoTiempoError);
-            //Efectos
+                nuevoTiempoError = exposicionParErrorBox.getValue();
+                parametros.setTiempoVerError(nuevoTiempoError);
+                //Efectos
             
-            //if(showCardsBox.isSelected()) tiempoMostrarCartas = showCardsTime.getValue(); 
-            //Barajas
-            parametros.setCartaPartida(imagenCarta);
+                //if(showCardsBox.isSelected()) tiempoMostrarCartas = showCardsTime.getValue(); 
+                //Barajas
+                parametros.setCartaPartida(imagenCarta);
             
-            //enParametros = "si";
-            ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+                ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+            
+              } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Atención");
+                alert.setHeaderText("Baraja incompatible");
+                alert.setContentText("La baraja que ha seleccionado es más pequeña que "
+                        + "el tablero que ha escogido. Por favor, cambie alguna de las dos cosas");
+                alert.showAndWait();  
+            }
     }
 
     //Botones de restablecer a Valores Predeterminados
