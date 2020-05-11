@@ -180,7 +180,7 @@ public class JuegoLibreController implements Initializable {
             }
         });
 
-        if(limiteActivado != "") 
+        if(parametros != null && parametros.isLimitePartida())
             setTimers(DURACION_PARTIDA, DURACION_TURNO);
         
         
