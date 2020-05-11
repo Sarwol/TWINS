@@ -122,7 +122,7 @@ public class JuegoLibreController implements Initializable {
      //Objeto configuración con parámetros default;
      Configuracion defaultConfig = new Configuracion("/music/Cancion1.mp3", "/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
      //Objeto configuracion que guardará los parámetros escogidos por el usuario
-     public static Configuracion parametros;
+    
     /**
      * Initializes the controller class.
      */

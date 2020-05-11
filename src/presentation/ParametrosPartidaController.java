@@ -30,6 +30,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import logic.Baraja;
 import logic.Carta;
+import logic.Configuracion;
 
 /**
  * FXML Controller class
@@ -123,6 +124,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private ComboBox<Integer> showCardsTime;
     
+    public static Configuracion parametros = new Configuracion("/music/Cancion1.mp3","/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
     
      //Música de la Partida   
         protected List<String> gameSongList = new ArrayList<String>();
@@ -134,21 +136,21 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         //Parámetros
             protected List<Integer> tamañoTablero = new ArrayList<Integer>();
             //Parámetros que actualizarán los datos de la siguiente partida
-                public static int nuevaLargura;
-                public static int nuevaAnchura;
-                public static int nuevoTiempoTurno;
-                public static int nuevoTiempoPartida;
-                public static int nuevoTiempoError;
+                public static int nuevaLargura = 6;
+                public static int nuevaAnchura = 4;
+                public static int nuevoTiempoTurno = 5;
+                public static int nuevoTiempoPartida = 60;
+                public static int nuevoTiempoError = 2;
                 
             //Tipo de Tablero 
                 //
     //Efectos
         protected List<String> sonidos = new ArrayList<String>();
-        public static int tiempoMostrarCartas;
+        public static int tiempoMostrarCartas = 3;
             //Variables que setearán los sonidos en la partida
-                public static String sonidoActualAcierto;
-                public static String sonidoActualFallo;
-                public static String sonidoActualGiro;
+                public static String sonidoActualAcierto = "/music/correct.mp3" ;
+                public static String sonidoActualFallo = sonidoActualFallo = "/music/fail.mp3";
+                public static String sonidoActualGiro = sonidoActualGiro = "/music/flip.wav";
             
           
    //Barajas
@@ -205,12 +207,15 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 setSonido("Acierto 1","Acierto 2", "Acierto 3");
                 ObservableList<String> itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundOKBox.setItems(itemsSonidos);
+                sonidoActualAcierto = "/music/correct.mp3";
                 setSonido("Giro 1", "Giro 2", "Giro 3");
                 itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundFlipBox.setItems(itemsSonidos);
+                sonidoActualGiro = "/music/flip.wav";
                 setSonido("Fallo 1","Fallo 2", "Fallo 3");
                 itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundFailBox.setItems(itemsSonidos);
+                sonidoActualFallo = "/music/fail.mp3";
         //A falta de añadir los Efectos Visuales
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,23 +233,35 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private void saveAction(ActionEvent event) {
         if (audio.isPlaying()) audio.stop();
             //Parámetros de partida
-           
-            if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
-            else limiteActivado = "";
-            if (cancionActual != null) sinMusica = false;
-           
-            if(limiteActivado == "activado") {
-                nuevoTiempoTurno = volteoCartaBox.getValue();
-                nuevoTiempoPartida = tiempoPartidaBox.getValue();
-            } 
+               
             
+            if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
+            else parametros.setLimitePartida(false);
+            if (cancionActual != null) {
+                parametros.setSinMusica(false);
+                parametros.setCancionPartida(cancionActual);
+            }
+          
+            
+            parametros.setSonidoCorrecto(sonidoActualAcierto);
+            parametros.setSonidoFallo(sonidoActualFallo);
+            parametros.setSonidoGiro(sonidoActualGiro);
+           
+            if(parametros.isLimitePartida()) {
+                nuevoTiempoTurno = volteoCartaBox.getValue();
+                parametros.setTiempoTurno(nuevoTiempoTurno);
+                nuevoTiempoPartida = tiempoPartidaBox.getValue();
+                parametros.setTiempoPartida(nuevoTiempoPartida);
+            } 
+             
             nuevoTiempoError = exposicionParErrorBox.getValue();
+            parametros.setTiempoVerError(nuevoTiempoError);
             //Efectos
             
-            if(showCardsBox.isSelected())tiempoMostrarCartas = showCardsTime.getValue(); 
+            //if(showCardsBox.isSelected()) tiempoMostrarCartas = showCardsTime.getValue(); 
             //Barajas
             
-            enParametros = "si";
+            //enParametros = "si";
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
     }
 
@@ -299,6 +316,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             case 0:
                 cancionActual = null;
                 sinMusica = true;
+                parametros.setSinMusica(sinMusica);
                 break;
             case 1:
                 cancionActual = "/music/Cancion1.mp3";
@@ -547,6 +565,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
           soundFailBox.setValue("Fallo 1");
           soundFlipBox.setValue("Giro 1");
           normal.setSelected(true);
+          limiteChekbox.setSelected(true);
     
     } 
 
