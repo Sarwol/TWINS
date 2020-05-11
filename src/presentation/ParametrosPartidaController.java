@@ -170,7 +170,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         defaultParameters();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Barajas
-        
+            
             defaultBaraja.setSelected(true);
             pajarosRotacion.setSelected(true);
             barajaNormalActual = barajaDefault;

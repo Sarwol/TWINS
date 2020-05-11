@@ -90,6 +90,22 @@
                         </ImageView>
                         <Line endX="100.0" layoutX="132.0" layoutY="30.0" startX="-100.0" />
                         <Line endX="100.0" layoutX="132.0" layoutY="161.0" startX="-100.0" />
+                        <Label layoutX="58.0" layoutY="71.0" onMouseClicked="#pajarosNormal1" prefHeight="18.0" prefWidth="68.0" text="PAJAROS" />
+                        <Label layoutX="201.0" layoutY="72.0" onMouseClicked="#frutasNormal2" prefHeight="18.0" prefWidth="63.0" text="FRUTAS" />
+                        <Label layoutX="339.0" layoutY="72.0" onMouseClicked="#barajaNormal3" prefHeight="18.0" prefWidth="68.0" text="PAJAROS" />
+                        <Label layoutX="486.0" layoutY="72.0" onMouseClicked="#barajaNormal4" prefHeight="18.0" prefWidth="63.0" text="FRUTAS" />
+                        <Label layoutX="59.0" layoutY="189.0" onMouseClicked="#pajarosRotacion1" text="PAJAROS" />
+                        <Label layoutX="368.0" layoutY="213.0" onMouseClicked="#barajaRotacion3" text="Y" />
+                        <Label layoutX="64.0" layoutY="237.0" onMouseClicked="#pajarosRotacion1" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
+                        <Label layoutX="203.0" layoutY="237.0" onMouseClicked="#frutasRotacion2" text="PAJAROS" />
+                        <Label layoutX="205.0" layoutY="189.0" onMouseClicked="#frutasRotacion2" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
+                        <Label layoutX="349.0" layoutY="237.0" onMouseClicked="#barajaRotacion3" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
+                        <Label layoutX="343.0" layoutY="189.0" onMouseClicked="#barajaRotacion3" text="PAJAROS" />
+                        <Label layoutX="490.0" layoutY="189.0" onMouseClicked="#barajaRotacion4" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
+                        <Label layoutX="226.0" layoutY="213.0" onMouseClicked="#frutasNormal2" text="Y" />
+                        <Label layoutX="84.0" layoutY="213.0" onMouseClicked="#pajarosRotacion1" text="Y" />
+                        <Label layoutX="489.0" layoutY="237.0" onMouseClicked="#barajaRotacion4" text="PAJAROS" />
+                        <Label layoutX="513.0" layoutY="213.0" onMouseClicked="#barajaRotacion4" text="Y" />
                      </children></AnchorPane>
                </content>
             </Tab>
