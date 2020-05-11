@@ -229,7 +229,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         if (audio.isPlaying()) audio.stop();
             //Parámetros de partida
            
-            if(limiteChekbox.isSelected()) limiteActivado = "activado";
+            if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
             else limiteActivado = "";
             if (cancionActual != null) sinMusica = false;
            

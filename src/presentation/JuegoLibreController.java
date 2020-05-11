@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import logic.Baraja;
 import logic.Carta;
+import logic.Configuracion;
 import logic.Puntuacion;
 import logic.Tablero;
 import static presentation.ParametrosPartidaController.*;
@@ -118,13 +119,16 @@ public class JuegoLibreController implements Initializable {
      Baraja nuevaBaraja;
      //Variable que comprobará en JuegoLibre si se han inicializado los parámetros 
      public String enParametros;
-
+     //Objeto configuración con parámetros default;
+     Configuracion defaultConfig = new Configuracion("/music/Cancion1.mp3", "/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
+     //Objeto configuracion que guardará los parámetros escogidos por el usuario
+     public static Configuracion parametros;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(barajaNormalActual == null)
+        if(parametros == null)
             defaultData(); 
         else recibirParametros();
         
@@ -561,21 +565,21 @@ public class JuegoLibreController implements Initializable {
         audioOK = new AudioClip(this.getClass().getResource(sonidoActualAcierto).toString());
         audioFlip = new AudioClip(this.getClass().getResource(sonidoActualGiro).toString());
          } catch(Exception e){
-             audioFail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
-             audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
-             audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
+             audioFail = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoFallo()).toString());
+             audioOK = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoCorrecto()).toString());
+             audioFlip = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoGiro()).toString());
          } 
         
     }
     protected void defaultData(){
-        LONGITUD_TABLERO = 6;
-        ANCHURA_TABLERO = 4;
-        DURACION_PARTIDA = 60;
-        DURACION_TURNO = 5;
-        TURN_DELAY = 1000;
-        audioFail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
-        audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
-        audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
+        LONGITUD_TABLERO = defaultConfig.getLarguraTablero();
+        ANCHURA_TABLERO = defaultConfig.getAnchuraTablero();
+        DURACION_PARTIDA = defaultConfig.getTiempoPartida();
+        DURACION_TURNO = defaultConfig.getTiempoTurno();
+        TURN_DELAY = defaultConfig.getTiempoVerError();
+        audioFail = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoFallo()).toString());
+        audioOK = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoCorrecto()).toString());
+        audioFlip = new AudioClip(this.getClass().getResource(defaultConfig.getSonidoGiro()).toString());
        
     }
 }
