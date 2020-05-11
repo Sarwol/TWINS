@@ -85,8 +85,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
-                AudioClip ok = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
-                ok.play(0.1);
+                audioOK.play(0.1);
                 if (contador == 1 + 12 / NUM_CATEGORIAS) {
                     categoriaActual = Categoria.PAJAROS;
                     categoriaLabel.setText(categoriaActual.toString());
@@ -97,8 +96,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
-                AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
-                fail.play(0.05);
+                audioFail.play(0.1);
             }
             resetTurnCountdown();
 
