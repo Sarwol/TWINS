@@ -7,14 +7,6 @@ package presentation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.RotateTransition;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.geometry.Point3D;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.util.Duration;
-
 
 
 /**

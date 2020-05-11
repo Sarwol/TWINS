@@ -48,6 +48,7 @@ public class DerrotaController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+        //System.out.println("RELOADED FXML: " + modo);
     }
     
     @FXML

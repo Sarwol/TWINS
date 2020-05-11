@@ -46,20 +46,21 @@ public class MenuPrincipalController implements Initializable {
     public MediaPlayer player;
     public static AudioClip musicaInicial;
     private Stage winStage;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         //player = new MediaPlayer(cargarCancion("src/music/HOME-Resonance.mp3"));
         //player.setAutoPlay(true);
         //player.play();
         //audio = new AudioClip((this.getClass().getResource("src/music/HOME-Resonance.mp3").toString()));
         musicaInicial = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
         musicaInicial.play(0.3);
-    }    
+    }
 
     @FXML
     private void abrirJuegoLibre(ActionEvent event) throws IOException {
@@ -70,6 +71,8 @@ public class MenuPrincipalController implements Initializable {
         Stage thisStage = (Stage) salirButton.getScene().getWindow();
         ventanaJuegoLibreController.initVentana(winStage, thisStage);
         Scene scene = new Scene(root);
+        
+        // winStage is the stage of VentanaJuegoLibre
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
         winStage.initModality(Modality.APPLICATION_MODAL);
@@ -77,7 +80,22 @@ public class MenuPrincipalController implements Initializable {
     }
 
     @FXML
-    private void abrirNiveles(ActionEvent event) {
+    private void abrirNiveles(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("JuegoNiveles.fxml"));
+        Parent root = (Parent) myLoader.load();
+        JuegoNivelesController juegoNivelesController = myLoader.<JuegoNivelesController>getController();
+        Stage winStage = new Stage();
+        Stage thisStage = (Stage) salirButton.getScene().getWindow();
+        juegoNivelesController.initWindow(winStage);
+        Scene scene = new Scene(root);
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+        // From VentanaJuegoLibre
+        musicaInicial.stop();
+        thisStage.close();
+
     }
 
     @FXML
@@ -87,13 +105,13 @@ public class MenuPrincipalController implements Initializable {
     @FXML
     private void salir(ActionEvent event) {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
-         //System.exit(0);
+        //System.exit(0);
     }
-    
-    public Media cargarCancion(String cancion){
+
+    public Media cargarCancion(String cancion) {
         return new Media(new File(cancion).toURI().toString());
     }
-    
+
     /*public void stopMediaPlayer(){
         player.stop();
         player.setOnPaused(() -> System.out.println("pausado"));
@@ -104,16 +122,15 @@ public class MenuPrincipalController implements Initializable {
         player.setAutoPlay(true);
         player.play();
     }
-*/
-    
+     */
     public void play() {
         musicaInicial.play();
     }
-    
-    public void stop(){
+
+    public void stop() {
         musicaInicial.stop();
     }
-    
+
     void initWindow(Stage stage) {
         winStage = stage;
     }

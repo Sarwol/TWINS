@@ -5,8 +5,6 @@
  */
 package logic;
 
-import java.util.Objects;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
