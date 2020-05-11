@@ -125,7 +125,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private ComboBox<Integer> showCardsTime;
     
-    public static Configuracion parametros = new Configuracion("/music/Cancion1.mp3","/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
+   
     
      //Música de la Partida   
         protected List<String> gameSongList = new ArrayList<String>();

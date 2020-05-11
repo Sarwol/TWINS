@@ -117,9 +117,9 @@ public class JuegoLibreController implements Initializable {
      public static String limiteActivado;
      //Baraja default que, si la de Parámetros es null, instanciará el tablero
      Baraja nuevaBaraja;
-     //Variable que comprobará en JuegoLibre si se han inicializado los parámetros 
-     public String enParametros;
-     //Objeto configuración con parámetros default;
+     //Objeto configuración con parámetros obtenidos de la interfaz de Parámetros
+     public static Configuracion parametros = new Configuracion("/music/Cancion1.mp3","/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
+     //Objeto configuración con parámetros default
      Configuracion defaultConfig = new Configuracion("/music/Cancion1.mp3", "/music/correct.mp3","/music/fail.mp3","/music/flip.wav",4,6,5,60,2,true,"fruit",false);
      //String que marcará que baraja se inicia en partida estándar y partida por carta
      String cartaBaraja;
