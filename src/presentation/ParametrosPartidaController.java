@@ -26,6 +26,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -40,6 +41,22 @@ import logic.Configuracion;
  */
 public class ParametrosPartidaController extends JuegoLibreController implements Initializable {
     
+    @FXML
+    private ImageView normal1; 
+    @FXML
+    private ImageView normal2;
+    @FXML
+    private ImageView normal3;
+    @FXML
+    private ImageView normal4;
+    @FXML
+    private ImageView categ1;
+    @FXML
+    private ImageView categ2;
+    @FXML
+    private ImageView categ3;
+    @FXML
+    private ImageView categ4;
     @FXML
     private Button saveButton;
     @FXML
@@ -124,6 +141,9 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private CheckBox showCardsBox;
     @FXML
     private ComboBox<Integer> showCardsTime;
+    @FXML
+    private ToggleGroup barajasCategoria;
+    
     
    
     
@@ -161,8 +181,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
      public static Baraja barajaCategoriaActual;
      public static String imagenCarta = "fruit";
    ////////////////////////////////////////////////////////////////////////////////////         
-    @FXML
-    private ToggleGroup barajasCategoria;
+   
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -170,7 +190,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         defaultParameters();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Barajas
-            
+            setearImagenCartas();
             defaultBaraja.setSelected(true);
             pajarosRotacion.setSelected(true);
             barajaNormalActual = barajaDefault;
@@ -593,5 +613,24 @@ public class ParametrosPartidaController extends JuegoLibreController implements
           limiteChekbox.setSelected(true);
     
     } 
+   
+   protected void setearImagenCartas(){
+       File currentCard = new File("./images/card1.png");
+       Image image = new Image(currentCard.toURI().toString());
+       normal1.setImage(image);
+       categ1.setImage(image);
+       currentCard = new File("./images/card2.png");
+       image = new Image(currentCard.toURI().toString());
+       normal3.setImage(image);
+       categ3.setImage(image);
+       currentCard = new File("./images/fruit1.png");
+       image = new Image(currentCard.toURI().toString());
+       normal2.setImage(image);
+       categ2.setImage(image);
+       currentCard = new File("./images/fruit2.png");
+       image = new Image(currentCard.toURI().toString());
+       normal4.setImage(image);
+       categ4.setImage(image);
+    }
 
 }

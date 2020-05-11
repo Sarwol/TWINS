@@ -41,22 +41,22 @@
                         <RadioButton fx:id="baraja3Normal" layoutX="300.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
                         <RadioButton fx:id="defaultBaraja" layoutX="254.0" layoutY="10.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" text="Baraja predeterminada" toggleGroup="$seleccionBaraja" />
                         <RadioButton fx:id="baraja4Normal" layoutX="431.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="43.0" onMouseClicked="#pajarosNormal1" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal1" fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="43.0" onMouseClicked="#pajarosNormal1" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="71.0" fitWidth="68.0" layoutX="196.0" layoutY="43.0" onMouseClicked="#frutasNormal2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal2" fitHeight="71.0" fitWidth="68.0" layoutX="196.0" layoutY="43.0" onMouseClicked="#frutasNormal2" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="67.0" layoutX="339.0" layoutY="41.0" onMouseClicked="#barajaNormal3" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal3" fitHeight="80.0" fitWidth="67.0" layoutX="339.0" layoutY="41.0" onMouseClicked="#barajaNormal3" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="77.0" fitWidth="72.0" layoutX="481.0" layoutY="43.0" onMouseClicked="#barajaNormal4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal4" fitHeight="77.0" fitWidth="72.0" layoutX="481.0" layoutY="43.0" onMouseClicked="#barajaNormal4" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit4.png" />
                            </image>
@@ -68,44 +68,28 @@
                         <RadioButton fx:id="frutasRotacion" layoutX="152.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
                         <RadioButton fx:id="baraja3Rotacion" layoutX="300.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
                         <RadioButton fx:id="baraja4Rotacion" layoutX="431.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="185.0" onMouseClicked="#pajarosRotacion1" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ1" fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="185.0" onMouseClicked="#pajarosRotacion1" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="195.0" layoutY="185.0" onMouseClicked="#frutasRotacion2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ2" fitHeight="78.0" fitWidth="75.0" layoutX="195.0" layoutY="185.0" onMouseClicked="#frutasRotacion2" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="339.0" layoutY="185.0" onMouseClicked="#barajaRotacion3" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ3" fitHeight="78.0" fitWidth="75.0" layoutX="339.0" layoutY="185.0" onMouseClicked="#barajaRotacion3" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="480.0" layoutY="185.0" onMouseClicked="#barajaRotacion4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ4" fitHeight="78.0" fitWidth="75.0" layoutX="480.0" layoutY="185.0" onMouseClicked="#barajaRotacion4" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit4.png" />
                            </image>
                         </ImageView>
                         <Line endX="100.0" layoutX="132.0" layoutY="30.0" startX="-100.0" />
                         <Line endX="100.0" layoutX="132.0" layoutY="161.0" startX="-100.0" />
-                        <Label layoutX="58.0" layoutY="71.0" onMouseClicked="#pajarosNormal1" prefHeight="18.0" prefWidth="68.0" text="PAJAROS" />
-                        <Label layoutX="201.0" layoutY="72.0" onMouseClicked="#frutasNormal2" prefHeight="18.0" prefWidth="63.0" text="FRUTAS" />
-                        <Label layoutX="339.0" layoutY="72.0" onMouseClicked="#barajaNormal3" prefHeight="18.0" prefWidth="68.0" text="PAJAROS" />
-                        <Label layoutX="486.0" layoutY="72.0" onMouseClicked="#barajaNormal4" prefHeight="18.0" prefWidth="63.0" text="FRUTAS" />
-                        <Label layoutX="59.0" layoutY="189.0" onMouseClicked="#pajarosRotacion1" text="PAJAROS" />
-                        <Label layoutX="368.0" layoutY="213.0" onMouseClicked="#barajaRotacion3" text="Y" />
-                        <Label layoutX="64.0" layoutY="237.0" onMouseClicked="#pajarosRotacion1" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
-                        <Label layoutX="203.0" layoutY="237.0" onMouseClicked="#frutasRotacion2" text="PAJAROS" />
-                        <Label layoutX="205.0" layoutY="189.0" onMouseClicked="#frutasRotacion2" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
-                        <Label layoutX="349.0" layoutY="237.0" onMouseClicked="#barajaRotacion3" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
-                        <Label layoutX="343.0" layoutY="189.0" onMouseClicked="#barajaRotacion3" text="PAJAROS" />
-                        <Label layoutX="490.0" layoutY="189.0" onMouseClicked="#barajaRotacion4" prefHeight="18.0" prefWidth="56.0" text="FRUTAS" />
-                        <Label layoutX="226.0" layoutY="213.0" onMouseClicked="#frutasNormal2" text="Y" />
-                        <Label layoutX="84.0" layoutY="213.0" onMouseClicked="#pajarosRotacion1" text="Y" />
-                        <Label layoutX="489.0" layoutY="237.0" onMouseClicked="#barajaRotacion4" text="PAJAROS" />
-                        <Label layoutX="513.0" layoutY="213.0" onMouseClicked="#barajaRotacion4" text="Y" />
                      </children></AnchorPane>
                </content>
             </Tab>
