@@ -74,20 +74,20 @@ public class NuevaBarajaController implements Initializable {
         String nombre = nombreField.getText();
         List<Carta> cartas = new ArrayList<Carta>();
         nuevaBaraja = new Baraja(nombre,cartas,reverso);
-         //nuevaBaraja.setCategorias(categorias);
-	        cancelar(event);
+        nuevaBaraja.setCategorias(listaCategorias.getItems());
+	cancelar(event);
     }
 
     @FXML
-	    private void cancelar(ActionEvent event) {
-	        ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
-	    }
+    private void cancelar(ActionEvent event) {
+	((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+    }
 
     @FXML
     private void añadirCategoria(ActionEvent event) {
-        //Categoria nueva = new Categoria(categoriaField.getText());
-        //categoriaObservableList.add(nueva);
-        //listaCategorias.setItems(categoriaObservableList);
+        Categoria nueva = new Categoria(categoriaField.getText());
+        categoriaObservableList.add(nueva);
+        listaCategorias.setItems(categoriaObservableList);
     }
 
     @FXML

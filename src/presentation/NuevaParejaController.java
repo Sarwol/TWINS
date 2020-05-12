@@ -63,6 +63,10 @@ public class NuevaParejaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cartaNueva = null;
+ 
+        
+        
+        
 //        barajaSeleccionada.setCategorias(Arrays.asList(
 //                new Categoria("FRUTAS"),
 //                new Categoria("PAJAROS"),

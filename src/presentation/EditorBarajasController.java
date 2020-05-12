@@ -147,7 +147,7 @@ public class EditorBarajasController implements Initializable {
             cartasObservableList.add(cartaNueva); 
             barajaActual.añadirCarta(cartaNueva);
             }
-        }
+        
         //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
         //Utilizando el método devolverCarta() de NuevaCartaController
         //cartaNueva = (el controlador).devolverCarta();
@@ -284,6 +284,8 @@ public class EditorBarajasController implements Initializable {
                 setGraphic(null);
             } else {
                 ImageView imagenCarta = new ImageView(item.getImagenCarta());
+                imagenCarta.setFitHeight(50);
+                imagenCarta.setFitWidth(50);
                 setGraphic(imagenCarta);
             }
         }
