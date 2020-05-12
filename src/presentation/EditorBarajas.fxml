@@ -16,7 +16,7 @@
       <ListView fx:id="listaBarajas" layoutX="38.0" layoutY="157.0" prefHeight="147.0" prefWidth="208.0" />
       <ImageView fx:id="imagenReverso" fitHeight="72.0" fitWidth="70.0" layoutX="38.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="nuevoReverso" layoutX="151.0" layoutY="100.0" mnemonicParsing="false" onAction="#nuevaImagenReverso" prefHeight="25.0" prefWidth="94.0" text="Nuevo reverso" />
-      <Button layoutX="456.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Aceptar" />
+      <Button fx:id="aceptarButton" layoutX="456.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Aceptar" />
       <Line endX="421.33331298828125" layoutX="138.0" layoutY="348.0" startX="-110.20712280273438" startY="0.040435791015625" />
       <Line endX="5.66668701171875" endY="-335.66668701171875" layoutX="257.0" layoutY="374.0" startX="5.66668701171875" startY="-26.5" />
       <Line endX="100.0" layoutX="162.0" layoutY="38.0" startX="-134.20712280273438" />

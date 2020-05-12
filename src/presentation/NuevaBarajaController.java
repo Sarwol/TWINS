@@ -17,12 +17,14 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
 import logic.Carta;
@@ -72,12 +74,14 @@ public class NuevaBarajaController implements Initializable {
         String nombre = nombreField.getText();
         List<Carta> cartas = new ArrayList<Carta>();
         nuevaBaraja = new Baraja(nombre,cartas,reverso);
-        nuevaBaraja.setCategorias(categorias);
+         //nuevaBaraja.setCategorias(categorias);
+	        cancelar(event);
     }
 
     @FXML
-    private void cancelar(ActionEvent event) {
-    }
+	    private void cancelar(ActionEvent event) {
+	        ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+	    }
 
     @FXML
     private void añadirCategoria(ActionEvent event) {
