@@ -5,8 +5,47 @@
  */
 package logic;
 
+import java.util.Objects;
+
 /**
  *
  * @author Jesús Yoel
  */
-public enum Categoria { PAJAROS, FRUTAS }
+public class Categoria{
+    
+    private final String name;
+    
+    public Categoria(String name){
+        this.name = name;
+    }
+    
+    public String getName(){
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+   
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Categoria other = (Categoria) obj;
+        if (!Objects.equals(this.name.toLowerCase(), other.name.toLowerCase())) {
+            return false;
+        }
+        return true;
+    }
+    
+}
+
+

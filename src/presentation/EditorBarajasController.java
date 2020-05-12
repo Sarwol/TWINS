@@ -10,11 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -27,10 +26,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -38,6 +36,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
 import logic.Carta;
+import logic.Categoria;
 
 /**
  * FXML Controller class
@@ -46,6 +45,8 @@ import logic.Carta;
  */
 public class EditorBarajasController implements Initializable {
 
+    @FXML
+    private Button aceptarButton;
     private TilePane cartasPane;
     @FXML
     private Button AñadirParejaButton;
@@ -70,48 +71,85 @@ public class EditorBarajasController implements Initializable {
     private List<Carta> cartas;
     private Carta cartaNueva;
     private Baraja barajaNueva;
-    
-    Baraja baraja1 = new Baraja();
-    Carta carta = new Carta();
-    
+
+    Baraja barajaActual;
+
+    //prueba
+    Baraja prueba;
+
     private Stage winStage;
     private Stage parentStage;
-            
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //prueba
+        List<Carta> pruebaCartas = new ArrayList<Carta>();
+        prueba = new Baraja();
+        prueba.setCategorias(Arrays.asList(
+                new Categoria("FRUTAS"),
+                new Categoria("PAJAROS"),
+                new Categoria("COCHES")
+        ));
+        prueba.setNombre("prueba");
+        
         cartas = new ArrayList<Carta>();
         barajas = new ArrayList<Baraja>();
+
+        barajas.add(prueba);
         
-        //PRUEBA
-        baraja1.setNombre("hola");
-        barajas.add(baraja1);
-        //
-       
+        barajaNueva = null;
+        barajaActual = null;
+        cartaNueva = null;
+
         barajasObservableList = FXCollections.observableList(barajas);
         listaBarajas.setItems(barajasObservableList);
-        cartasListView.setCellFactory(c-> new CartaListCell());
-        listaBarajas.setCellFactory(c-> new BarajaListCell());
+        cartasListView.setCellFactory(c -> new CartaListCell());
+        listaBarajas.setCellFactory(c -> new BarajaListCell());
+        // Populate card list when clicking a deck
         listaBarajas.getSelectionModel().selectedIndexProperty().addListener((obs, oldSelection, newSelection) -> {
-           cartas = barajaSeleccionada().getCartas();
-           cartasObservableList = FXCollections.observableList(cartas);
-           cartasListView.setItems(cartasObservableList);
-           imagenReverso.setImage(barajaSeleccionada().getImagenReverso());
-           });
-    }    
+            barajaActual = barajaSeleccionada();
+            cartas = barajaActual.getCartas();
+            cartasObservableList = FXCollections.observableList(cartas);
+            cartasListView.setItems(cartasObservableList);
+            imagenReverso.setImage(barajaSeleccionada().getImagenReverso());
+        });
+
+        // Button bindings
+        // Deck must be selected to be removed
+        eliminarBarajaButton.disableProperty().bind(Bindings.greaterThanOrEqual(-1, listaBarajas.getSelectionModel().selectedIndexProperty()));
+        // Deck must be selected to add card
+        AñadirParejaButton.disableProperty().bind(Bindings.greaterThanOrEqual(-1, listaBarajas.getSelectionModel().selectedIndexProperty()));
+        // Card must be selected to be removed
+        deleteParejaButton.disableProperty().bind(Bindings.greaterThanOrEqual(-1, cartasListView.getSelectionModel().selectedIndexProperty()));
+        // Deck must be selected to add deck image
+        nuevoReverso.disableProperty().bind(Bindings.greaterThanOrEqual(-1, listaBarajas.getSelectionModel().selectedIndexProperty()));
+
+    }
 
     @FXML
     private void abrirNuevaPareja(ActionEvent event) throws IOException {
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("NuevaPareja.fxml"));
-        Parent root = (Parent) myLoader.load();
-        NuevaParejaController nuevaParejaController = myLoader.<NuevaParejaController>getController();
-        Stage winStage = new Stage();
-        Stage thisStage = (Stage) deleteParejaButton.getScene().getWindow();
-        nuevaParejaController.initWindow(winStage, thisStage);
+
+        FXMLLoader cargador = crearCargador("/presentation/NuevaPareja.fxml");
+        Parent root = cargador.load();
+        NuevaParejaController controladorPareja = cargador.<NuevaParejaController>getController();
+        controladorPareja.inicializarBaraja(barajaActual);
         Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.showAndWait();
+        //abrirVentana(cargador);
+      
+        cartaNueva = controladorPareja.devolverCarta(cartaNueva);
+        if (cartaNueva != null) {
+            System.out.println("CARTA BUENA");
+            cartasObservableList.add(cartaNueva); 
+            barajaActual.añadirCarta(cartaNueva);
+            }
+
         
         // winStage is the stage of VentanaJuegoLibre
         winStage.setScene(scene);
@@ -129,12 +167,23 @@ public class EditorBarajasController implements Initializable {
     @FXML
     private void eliminarPareja(ActionEvent event) {
         int posicionCarta = cartasListView.getSelectionModel().getSelectedIndex();
-        eliminarSeleccionado(posicionCarta, cartasObservableList);     
+        eliminarSeleccionado(posicionCarta, cartasObservableList);
     }
 
     @FXML
-    private void abrirNuevaBaraja(ActionEvent event) {
-        
+    private void abrirNuevaBaraja(ActionEvent event) throws IOException {
+        FXMLLoader cargador = crearCargador("/presentation/NuevaBaraja.fxml");
+        Parent root = cargador.load();
+        NuevaBarajaController controladorBaraja = cargador.<NuevaBarajaController>getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.showAndWait();
+        //abrirVentana(cargador);
+        barajaNueva = controladorBaraja.devolverBaraja();
+        if (barajaNueva != null) {
+            barajasObservableList.add(barajaNueva);
+        }
         //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
         //Utilizando el método devolverBaraja() de NuevaBarajaController
         //barajaNueva = (el controlador).devolverBaraja();
@@ -147,52 +196,70 @@ public class EditorBarajasController implements Initializable {
         int posicionBaraja = listaBarajas.getSelectionModel().getSelectedIndex();
         eliminarSeleccionado(posicionBaraja, barajasObservableList);
     }
-    
+
     @FXML
     private void nuevaImagenReverso(ActionEvent event) {
         Image reverso = uploadImage();
         imagenReverso.setImage(reverso);
-        barajaSeleccionada().setImagenReverso(reverso);
+        barajaActual.setImagenReverso(reverso);
     }
-    
-    public void eliminarSeleccionado(int posicion, ObservableList list){
-           if (posicion>=0) {
-                list.remove(posicion);
-           }
+
+    public void eliminarSeleccionado(int posicion, ObservableList list) {
+        if (posicion >= 0) {
+            list.remove(posicion);
+        }
     }
-    
-    public void cargarCartas(Baraja baraja){
+
+    public void cargarCartas(Baraja baraja) {
         cartas = baraja.getCartas();
-        
+
     }
-    
-    public Baraja barajaSeleccionada(){
+
+    public Baraja barajaSeleccionada() {
         return listaBarajas.getSelectionModel().getSelectedItem();
     }
     
-    public Image uploadImage(){
+    public Baraja devolverBaraja(Baraja barajaActual){
+        barajaActual = this.barajaActual;
+        return barajaActual;
+    }
+
+    public Image uploadImage() {
         Image image = null;
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
         fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
-              
-            //Show open file dialog
-            File file = fileChooser.showOpenDialog(null);
-                       
-            try {
-                BufferedImage bufferedImage = ImageIO.read(file);
-                image = SwingFXUtils.toFXImage(bufferedImage, null); 
-            } catch (Exception e){
-            }  
-            return image;   
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file);
+            image = SwingFXUtils.toFXImage(bufferedImage, null);
+        } catch (Exception e) {
+        }
+        return image;
     }
-    
+
     public void añadirPareja(Image image) {
         ImageView imageView = new ImageView(image);
         cartasPane.getChildren().add(imageView);
     }
-    public void cargarBarajas(){
+
+    public void abrirVentana(FXMLLoader cargador) throws IOException {
+        Parent root = cargador.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    public FXMLLoader crearCargador(String fxml) {
+        return new FXMLLoader(getClass().getResource(fxml));
+    }
+
+    public void cargarBarajas() {
         barajasObservableList = FXCollections.observableList(barajas);
         listaBarajas.setItems(barajasObservableList);
     }
@@ -201,32 +268,34 @@ public class EditorBarajasController implements Initializable {
         winStage = stage;
         parentStage = pStage;
     }
-    
-    class BarajaListCell extends ListCell<Baraja>
-        {
+
+    class BarajaListCell extends ListCell<Baraja> {
+
         @Override
-            protected void updateItem(Baraja item, boolean empty)
-            { 
-                super.updateItem(item, empty); // Obligatoria esta llamada
-                if (item==null || empty) setText(null);
-                else setText(item.getNombre());
+        protected void updateItem(Baraja item, boolean empty) {
+            super.updateItem(item, empty); // Obligatoria esta llamada
+            if (item == null || empty) {
+                setText(null);
+            } else {
+                setText(item.getNombre());
             }
-            }
-    
-    class CartaListCell extends ListCell<Carta>
-        {
+        }
+    }
+
+    class CartaListCell extends ListCell<Carta> {
+
         @Override
-            protected void updateItem(Carta item, boolean empty)
-            { 
-                super.updateItem(item, empty); // Obligatoria esta llamada
-                if (item==null || empty){
-                    setText(null);
-                    setGraphic(null);
-                }
-                else {
-                    ImageView imagenCarta = new ImageView(item.getImagenCarta());
-                    setGraphic(imagenCarta);
-                }
+        protected void updateItem(Carta item, boolean empty) {
+            super.updateItem(item, empty); // Obligatoria esta llamada
+            if (item == null || empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                ImageView imagenCarta = new ImageView(item.getImagenCarta());
+                imagenCarta.setFitHeight(50);
+                imagenCarta.setFitWidth(50);
+                setGraphic(imagenCarta);
             }
-            }
+        }
+    }
 }

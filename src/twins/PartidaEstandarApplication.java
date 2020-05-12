@@ -30,7 +30,6 @@ public class PartidaEstandarApplication extends Application{
         stage.setScene(scene);
         stage.show();*/
         Parent root = FXMLLoader.load(getClass().getResource("/presentation/MenuPrincipal.fxml"));
-        
         Scene scene = new Scene(root);
         scene.getStylesheets().addAll(this.getClass().getResource("/css/menuprincipal.css").toExternalForm());
 

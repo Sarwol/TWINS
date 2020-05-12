@@ -25,10 +25,23 @@ public class Baraja implements Iterable<Carta> {
     private List<Categoria> categorias;
 
     public Baraja() {
+        this.nombre = "";
+        this.cartas = new ArrayList<>();
+        this.imagenReverso = null;
+        this.categorias = new ArrayList<>();
     }
 
     public Baraja(String nombre, List<Carta> cartas, Image imagenReverso) {
-        super();
+        this.nombre = nombre;
+        this.cartas = cartas;
+        this.imagenReverso = imagenReverso;
+        this.categorias = new ArrayList<>();
+    }
+    
+    
+
+    public Baraja(String nombre, List<Carta> cartas, Image imagenReverso, List<Categoria> categorias) {
+//        super();
         this.nombre = nombre;
         this.cartas = cartas;
         this.imagenReverso = imagenReverso;

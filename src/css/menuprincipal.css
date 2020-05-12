@@ -83,8 +83,13 @@
     }
     
     #juegoLibreLabel{
-        -fx-font-family: "Road rage";
+        -fx-font-family: "Road Rage";
         -fx-text-fill: white;
-        
-         
     }
+        
+    #atrasButton{
+        -fx-background-position: left;
+        -fx-background-size: 50px;
+        -fx-background-image: url("/buttons/flechaHover.png");
+    }     
+    
