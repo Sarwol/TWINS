@@ -203,6 +203,7 @@ public class JuegoLibreController implements Initializable {
         if(mostrarCartasOn){
             tablero.girarTodasCartas();
             mostrarCartasPrincipio();
+            tablero.setDisable(true);
         }
         tablero.barajarTablero();
         
@@ -387,7 +388,8 @@ public class JuegoLibreController implements Initializable {
         Platform.runLater(() -> {
             try {
                 Thread.sleep(S_CARTAS_INICIO*1000);  
-                tablero.girarTodasCartas();  
+                tablero.girarTodasCartas();
+                tablero.setDisable(false);
             } catch (InterruptedException ex) {}
         });
     }
