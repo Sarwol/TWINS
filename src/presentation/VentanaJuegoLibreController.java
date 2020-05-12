@@ -61,7 +61,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Parent root = (Parent) myLoader.load();
         PartidaEstandarController partidaEstController = myLoader.<PartidaEstandarController>getController();
         Stage winStage = new Stage();
-        partidaEstController.initWindow(winStage);
+        partidaEstController.initWindow(winStage, mode);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         thisStage.close();
         parentStage.close();
@@ -106,7 +106,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Parent root = (Parent) myLoader.load();
         PartidaCategoriaController partidaCatController = myLoader.<PartidaCategoriaController>getController();
         Stage winStage = new Stage();
-        partidaCatController.initWindow(winStage);
+        partidaCatController.initWindow(winStage, mode);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         thisStage.close();
         parentStage.close();
@@ -128,7 +128,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Parent root = (Parent) myLoader.load();
         PartidaPorCartaController partidaCartController = myLoader.<PartidaPorCartaController>getController();
         Stage winStage = new Stage();
-        partidaCartController.initWindow(winStage);
+        partidaCartController.initWindow(winStage, mode);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         thisStage.close();
         parentStage.close();

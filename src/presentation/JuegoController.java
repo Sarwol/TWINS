@@ -42,7 +42,6 @@ import logic.Tablero;
 //import static presentation.ParametrosPartidaController.barajaCategoriaActual;
 //import static presentation.ParametrosPartidaController.imagenCarta;
 //import static presentation.ParametrosPartidaController.*;
-import static presentation.PausaController.pauseMusic;
 
 /**
  * FXML Controller class
@@ -504,10 +503,14 @@ public class JuegoController implements Initializable {
         thisStage.close();
     }
 
+    /**
+     * Pass the parameters needed when starting this stage
+     * @param stage a reference to this stage
+     */
     void initWindow(Stage stage) {
         winStage = stage;
     }
-
+    
     protected void defaultData() {
         LONGITUD_TABLERO = 6;
         ANCHURA_TABLERO = 4;

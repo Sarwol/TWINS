@@ -5,23 +5,49 @@
  */
 package logic;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import logic.Carta;
 
 /**
  *
  * @author davit
  */
-public class Baraja {
+public class Baraja implements Iterable<Carta> {
     
     private String nombre;
     private List<Carta> cartas;
     private Image imagenReverso;
+    private List<Categoria> categorias;
+
+    public Baraja() {
+    }
 
     public Baraja(String nombre, List<Carta> cartas, Image imagenReverso) {
+        super();
         this.nombre = nombre;
         this.cartas = cartas;
         this.imagenReverso = imagenReverso;
+        this.categorias = categorias;
+    }
+    
+    
+    @Override
+    public Iterator<Carta> iterator() {
+        return this.cartas.iterator();
+    }
+    
+    
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
     /**
@@ -93,4 +119,16 @@ public class Baraja {
     public boolean esVacia(){
         return getNumeroCartas() == 0;
     }
+    
+    public List<Image> listarImagenesCartas(){
+        List<Image> imagenesCarta = new ArrayList<Image>();
+        for (Iterator<Carta> it = cartas.iterator(); it.hasNext();) {
+            Carta carta = it.next();
+            Image image = carta.getImagenCarta();
+            imagenesCarta.add(image);
+        }
+         return imagenesCarta;
+    }
+
+    
 }
