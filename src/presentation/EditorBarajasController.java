@@ -31,6 +31,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
@@ -131,6 +132,7 @@ public class EditorBarajasController implements Initializable {
 
     @FXML
     private void abrirNuevaPareja(ActionEvent event) throws IOException {
+
         FXMLLoader cargador = crearCargador("/presentation/NuevaPareja.fxml");
         Parent root = cargador.load();
         NuevaParejaController controladorPareja = cargador.<NuevaParejaController>getController();
@@ -147,7 +149,13 @@ public class EditorBarajasController implements Initializable {
             cartasObservableList.add(cartaNueva); 
             barajaActual.añadirCarta(cartaNueva);
             }
+
         
+        // winStage is the stage of VentanaJuegoLibre
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
         //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
         //Utilizando el método devolverCarta() de NuevaCartaController
         //cartaNueva = (el controlador).devolverCarta();

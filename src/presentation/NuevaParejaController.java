@@ -56,6 +56,10 @@ public class NuevaParejaController implements Initializable {
     private Baraja barajaSeleccionada = new Baraja();
     private Carta cartaNueva;
 
+    private Stage winStage;
+    private Stage parentStage;
+
+
     /**
      * Initializes the controller class.
      */
@@ -63,6 +67,7 @@ public class NuevaParejaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cartaNueva = null;
+
  
         
         
@@ -77,6 +82,7 @@ public class NuevaParejaController implements Initializable {
 //        categoriasObservableList = FXCollections.observableList(barajaCategorias);
 //        categoriaComboBox.setItems(categoriasObservableList);
     }
+
 
     @FXML
     private void subirImagen(ActionEvent event) {
@@ -129,6 +135,7 @@ public class NuevaParejaController implements Initializable {
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
     }
+  
     
     public void abrirVentana(FXMLLoader cargador) throws IOException {
         Pane root = cargador.load();
@@ -146,5 +153,6 @@ public class NuevaParejaController implements Initializable {
         barajaCategorias = baraja.getCategorias();
         categoriasObservableList = FXCollections.observableList(barajaCategorias);
         categoriaComboBox.setItems(categoriasObservableList);
+
     }
 }
