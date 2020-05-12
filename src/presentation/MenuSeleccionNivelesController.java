@@ -56,15 +56,24 @@ public class MenuSeleccionNivelesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        b2.setDisable(true);
+        b3.setDisable(true);
+        b4.setDisable(true);
+        b5.setDisable(true);
+        b6.setDisable(true);
+        b7.setDisable(true);
+        b8.setDisable(true);
+        b9.setDisable(true);
+        b10.setDisable(true);
     }    
 
-    private void openLevel() throws IOException {
+    private void openLevel(Button b) throws IOException {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("JuegoNiveles.fxml"));
         Parent root = (Parent) myLoader.load();
         JuegoNivelesController juegoNivelesController = myLoader.<JuegoNivelesController>getController();
         Stage winStage = new Stage();
         Stage thisStage = (Stage) b1.getScene().getWindow();
-        juegoNivelesController.initWindow(winStage);
+        juegoNivelesController.initWindow(winStage, b);
         Scene scene = new Scene(root);
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
@@ -72,7 +81,7 @@ public class MenuSeleccionNivelesController implements Initializable {
         winStage.show();
         // From VentanaJuegoLibre
         musicaInicial.stop();
-        thisStage.close();
+        //thisStage.close();
         parentStage.close();
         
     }
@@ -80,7 +89,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel1_onClick(ActionEvent event) {
         nivel = "nivel1.ser";
         try {
-            openLevel();
+            openLevel(b2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +99,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel2_onClick(ActionEvent event) {
         nivel = "nivel2.ser";
         try {
-            openLevel();
+            openLevel(b3);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,7 +109,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel3_onClick(ActionEvent event) {
         nivel = "nivel3.ser";
         try {
-            openLevel();
+            openLevel(b4);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +119,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel4_onClick(ActionEvent event) {
         nivel = "nivel4.ser";
         try {
-            openLevel();
+            openLevel(b5);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +129,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel5_onClick(ActionEvent event) {
         nivel = "nivel5.ser";
         try {
-            openLevel();
+            openLevel(b6);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,7 +139,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel6_onClick(ActionEvent event) {
         nivel = "nivel6.ser";
         try {
-            openLevel();
+            openLevel(b7);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,7 +149,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel7_onClick(ActionEvent event) {
         nivel = "nivel7.ser";
         try {
-            openLevel();
+            openLevel(b8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,7 +159,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel8_onClick(ActionEvent event) {
         nivel = "nivel8.ser";
         try {
-            openLevel();
+            openLevel(b9);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,7 +169,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel9_onClick(ActionEvent event) {
         nivel = "nivel9.ser";
         try {
-            openLevel();
+            openLevel(b10);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -170,7 +179,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private void selectLevel10_onClick(ActionEvent event) {
         nivel = "nivel10.ser";
         try {
-            openLevel();
+            openLevel(null);
         } catch (IOException e) {
             e.printStackTrace();
         }

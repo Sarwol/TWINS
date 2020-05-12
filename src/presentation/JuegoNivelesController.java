@@ -17,8 +17,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.Carta;
 import logic.Nivel;
@@ -40,6 +45,9 @@ public class JuegoNivelesController extends JuegoController {
     private int currentLevel;
     // Min amount of points required to win
     private int minPoints;
+    private Stage winStage;
+    // Para activar el siguiente nivel si se gana el anterior
+    private Button nextLevel;
 
     
     @FXML
@@ -165,5 +173,33 @@ public class JuegoNivelesController extends JuegoController {
         
         return allCardsFound && minScoreReached;
     }    
+
+    @Override
+    public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
+        audio.stop();
+
+        countdownPartida.stop();
+        countdownTurno.stop();
+        
+        if (nextLevel != null) nextLevel.setDisable(false);
+        tablero.setDisable(true);
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("VictoriaNiveles.fxml"));
+        Parent root = (Parent) myLoader.load();
+        VictoriaNivelesController victoriaController = myLoader.<VictoriaNivelesController>getController();
+        Stage victoriaWinStage = new Stage();
+        victoriaController.initVictoriaWindow(victoriaWinStage, punt, temp, m);
+        Scene scene = new Scene(root);
+        victoriaWinStage.setScene(scene);
+        victoriaWinStage.initModality(Modality.APPLICATION_MODAL);
+        victoriaWinStage.show();
+        //stopAudio(cancion);
+        Stage thisStage = (Stage) tablero.getScene().getWindow();
+        thisStage.close();
+    }
+    
+    void initWindow(Stage winStage, Button b) {
+        this.winStage = winStage;
+        this.nextLevel = b;
+    }
     
 }

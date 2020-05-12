@@ -54,7 +54,7 @@ import logic.Tablero;
  *
  * @author Dani
  */
-public class JuegoController implements Initializable {
+public abstract class JuegoController implements Initializable {
 
     public static int LONGITUD_TABLERO = 6;
     public static int ANCHURA_TABLERO = 4;
@@ -222,7 +222,7 @@ public class JuegoController implements Initializable {
                         e.printStackTrace();
                     }
                 }
-                tiempoPartida.setText((tiempoActualPartida--) + "");
+                tiempoPartida.setText((tiempoActualPartida--)/60 + ":" + (tiempoActualPartida--)%60);
                 //System.out.println("UPDATED GAME TIME");
             }
         }));
@@ -476,27 +476,8 @@ public class JuegoController implements Initializable {
         }
         return allCardsFound;
     }
-
-    public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
-        audio.stop();
-       
-            countdownPartida.stop();
-            countdownTurno.stop();
-        
-        tablero.setDisable(true);
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));
-        Parent root = (Parent) myLoader.load();
-        VictoriaController victoriaController = myLoader.<VictoriaController>getController();
-        Stage victoriaWinStage = new Stage();
-        victoriaController.initVictoriaWindow(victoriaWinStage, punt, temp, m);
-        Scene scene = new Scene(root);
-        victoriaWinStage.setScene(scene);
-        victoriaWinStage.initModality(Modality.APPLICATION_MODAL);
-        victoriaWinStage.show();
-        //stopAudio(cancion);
-        Stage thisStage = (Stage) tablero.getScene().getWindow();
-        thisStage.close();
-    }
+    
+    public abstract void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException;
 
     public void saltarADerrota(String m) throws IOException {
         audio.stop();

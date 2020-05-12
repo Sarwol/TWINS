@@ -19,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import logic.Puntuacion;
 
 /**
@@ -27,18 +26,18 @@ import logic.Puntuacion;
  *
  * @author User
  */
-public class VictoriaController implements Initializable {
-    
+public class VictoriaNivelesController implements Initializable {
+
     @FXML
-    protected Button resetBtn;
-    
+    private Button resetBtn;
     @FXML
-    protected Label puntu;
-    
-    protected Label tempo;
+    private Label puntu;
+    @FXML
+    private Button nextBtn;
     
     private Stage winStage;
     private String modo;
+
     /**
      * Initializes the controller class.
      */
@@ -57,29 +56,22 @@ public class VictoriaController implements Initializable {
         window.setScene(scene);
         window.show();
     }
-    
+
     @FXML
-    private void exit_onClick(ActionEvent event) throws IOException{
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPrincipal.fxml"));
-        Parent root = (Parent) myLoader.load();
-        MenuPrincipalController menuPrincipalController = myLoader.<MenuPrincipalController>getController();
-        Stage winStage = new Stage();
-        menuPrincipalController.initWindow(winStage);
-        Scene scene = new Scene(root);
-        winStage.setScene(scene);
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-        winStage.setTitle("TWINS");
-        //stopAudio(cancion);
+    private void exit_onClick(ActionEvent event) throws IOException {
         Stage thisStage = (Stage) puntu.getScene().getWindow();
         thisStage.close();
     }
-    
+
+    @FXML
+    private void nextLevel_onClick(ActionEvent event) {
+    }
+
     void initVictoriaWindow(Stage stage, Puntuacion p, int t, String m) {
         winStage = stage;
         puntu.setText(p.getPuntos() + "");
         //tempo.setText(t + "");
         modo = m;
     }
-
+    
 }
