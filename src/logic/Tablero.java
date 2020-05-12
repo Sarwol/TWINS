@@ -102,4 +102,10 @@ public class Tablero extends GridPane {
     public void setBaraja(List<Carta> baraja) {
         this.baraja = baraja;
     }
+    
+    public void girarTodasCartas(){
+        for(int i =0; i < baraja.size();i++){
+            baraja.get(i).turn();
+        }
+    }
 }

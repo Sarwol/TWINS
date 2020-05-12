@@ -41,22 +41,22 @@
                         <RadioButton fx:id="baraja3Normal" layoutX="300.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
                         <RadioButton fx:id="defaultBaraja" layoutX="254.0" layoutY="10.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" text="Baraja predeterminada" toggleGroup="$seleccionBaraja" />
                         <RadioButton fx:id="baraja4Normal" layoutX="431.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="43.0" onMouseClicked="#pajarosNormal1" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal1" fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="43.0" onMouseClicked="#pajarosNormal1" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="71.0" fitWidth="68.0" layoutX="196.0" layoutY="43.0" onMouseClicked="#frutasNormal2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal2" fitHeight="71.0" fitWidth="68.0" layoutX="196.0" layoutY="43.0" onMouseClicked="#frutasNormal2" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="67.0" layoutX="339.0" layoutY="41.0" onMouseClicked="#barajaNormal3" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal3" fitHeight="80.0" fitWidth="67.0" layoutX="339.0" layoutY="41.0" onMouseClicked="#barajaNormal3" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="77.0" fitWidth="72.0" layoutX="481.0" layoutY="43.0" onMouseClicked="#barajaNormal4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="normal4" fitHeight="77.0" fitWidth="72.0" layoutX="481.0" layoutY="43.0" onMouseClicked="#barajaNormal4" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit4.png" />
                            </image>
@@ -68,22 +68,22 @@
                         <RadioButton fx:id="frutasRotacion" layoutX="152.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
                         <RadioButton fx:id="baraja3Rotacion" layoutX="300.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
                         <RadioButton fx:id="baraja4Rotacion" layoutX="431.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="185.0" onMouseClicked="#pajarosRotacion1" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ1" fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="185.0" onMouseClicked="#pajarosRotacion1" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="195.0" layoutY="185.0" onMouseClicked="#frutasRotacion2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ2" fitHeight="78.0" fitWidth="75.0" layoutX="195.0" layoutY="185.0" onMouseClicked="#frutasRotacion2" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="339.0" layoutY="185.0" onMouseClicked="#barajaRotacion3" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ3" fitHeight="78.0" fitWidth="75.0" layoutX="339.0" layoutY="185.0" onMouseClicked="#barajaRotacion3" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/card2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="480.0" layoutY="185.0" onMouseClicked="#barajaRotacion4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="categ4" fitHeight="78.0" fitWidth="75.0" layoutX="480.0" layoutY="185.0" onMouseClicked="#barajaRotacion4" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/fruit4.png" />
                            </image>
@@ -159,11 +159,11 @@
                         <Label layoutX="61.0" layoutY="247.0" prefHeight="18.0" prefWidth="96.0" text="Efecto visual" />
                         <Label layoutX="272.0" layoutY="139.0" prefHeight="18.0" prefWidth="85.0" text="Efecto sonoro" />
                         <Label layoutX="272.0" layoutY="247.0" prefHeight="18.0" prefWidth="85.0" text="Efecto sonoro" />
-                        <ComboBox fx:id="visualOKBox" layoutX="62.0" layoutY="56.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
+                        <ComboBox fx:id="visualOKBox" disable="true" layoutX="62.0" layoutY="56.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
                         <ComboBox fx:id="soundOKBox" layoutX="272.0" layoutY="56.0" onAction="#playOKSound" prefHeight="29.0" prefWidth="164.0" promptText="Seleccione sonido" />
-                        <ComboBox fx:id="visualFlipBox" layoutX="62.0" layoutY="164.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
+                        <ComboBox fx:id="visualFlipBox" disable="true" layoutX="62.0" layoutY="164.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
                         <ComboBox fx:id="soundFlipBox" layoutX="272.0" layoutY="164.0" onAction="#playFlipSound" prefHeight="29.0" prefWidth="164.0" promptText="Seleccione sonido" />
-                        <ComboBox fx:id="visualFailBox" layoutX="62.0" layoutY="283.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
+                        <ComboBox fx:id="visualFailBox" disable="true" layoutX="62.0" layoutY="283.0" prefHeight="29.0" prefWidth="154.0" promptText="Seleccione efecto" />
                         <ComboBox fx:id="soundFailBox" layoutX="272.0" layoutY="283.0" onAction="#playFailSound" prefHeight="29.0" prefWidth="164.0" promptText="Seleccione sonido" />
                         <Button fx:id="saveButton3" layoutX="481.0" layoutY="294.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="88.0" text="Guardar" />
                         <CheckBox fx:id="showCardsBox" layoutX="389.0" layoutY="106.0" mnemonicParsing="false" onAction="#disableCardTime" prefHeight="26.0" prefWidth="200.0" text="Mostar cartas al comenzar" />

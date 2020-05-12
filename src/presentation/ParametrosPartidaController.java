@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -25,11 +26,13 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import logic.Baraja;
 import logic.Carta;
+import logic.Configuracion;
 
 /**
  * FXML Controller class
@@ -38,6 +41,22 @@ import logic.Carta;
  */
 public class ParametrosPartidaController extends JuegoLibreController implements Initializable {
     
+    @FXML
+    private ImageView normal1; 
+    @FXML
+    private ImageView normal2;
+    @FXML
+    private ImageView normal3;
+    @FXML
+    private ImageView normal4;
+    @FXML
+    private ImageView categ1;
+    @FXML
+    private ImageView categ2;
+    @FXML
+    private ImageView categ3;
+    @FXML
+    private ImageView categ4;
     @FXML
     private Button saveButton;
     @FXML
@@ -122,7 +141,11 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     private CheckBox showCardsBox;
     @FXML
     private ComboBox<Integer> showCardsTime;
+    @FXML
+    private ToggleGroup barajasCategoria;
     
+    
+   
     
      //Música de la Partida   
         protected List<String> gameSongList = new ArrayList<String>();
@@ -134,21 +157,21 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         //Parámetros
             protected List<Integer> tamañoTablero = new ArrayList<Integer>();
             //Parámetros que actualizarán los datos de la siguiente partida
-                public static int nuevaLargura;
-                public static int nuevaAnchura;
-                public static int nuevoTiempoTurno;
-                public static int nuevoTiempoPartida;
-                public static int nuevoTiempoError;
+                public static int nuevaLargura = 6;
+                public static int nuevaAnchura = 4;
+                public static int nuevoTiempoTurno = 5;
+                public static int nuevoTiempoPartida = 60;
+                public static int nuevoTiempoError = 2;
                 
             //Tipo de Tablero 
                 //
     //Efectos
         protected List<String> sonidos = new ArrayList<String>();
-        public static int tiempoMostrarCartas;
+        public static int tiempoMostrarCartas = 2;
             //Variables que setearán los sonidos en la partida
-                public static String sonidoActualAcierto;
-                public static String sonidoActualFallo;
-                public static String sonidoActualGiro;
+                public static String sonidoActualAcierto = "/music/correct.mp3" ;
+                public static String sonidoActualFallo = sonidoActualFallo = "/music/fail.mp3";
+                public static String sonidoActualGiro = sonidoActualGiro = "/music/flip.wav";
             
           
    //Barajas
@@ -158,8 +181,8 @@ public class ParametrosPartidaController extends JuegoLibreController implements
      public static Baraja barajaCategoriaActual;
      public static String imagenCarta = "fruit";
    ////////////////////////////////////////////////////////////////////////////////////         
-    @FXML
-    private ToggleGroup barajasCategoria;
+   
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -167,7 +190,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
         defaultParameters();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Barajas
-        
+            setearImagenCartas();
             defaultBaraja.setSelected(true);
             pajarosRotacion.setSelected(true);
             barajaNormalActual = barajaDefault;
@@ -205,12 +228,15 @@ public class ParametrosPartidaController extends JuegoLibreController implements
                 setSonido("Acierto 1","Acierto 2", "Acierto 3");
                 ObservableList<String> itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundOKBox.setItems(itemsSonidos);
+                sonidoActualAcierto = "/music/correct.mp3";
                 setSonido("Giro 1", "Giro 2", "Giro 3");
                 itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundFlipBox.setItems(itemsSonidos);
+                sonidoActualGiro = "/music/flip.wav";
                 setSonido("Fallo 1","Fallo 2", "Fallo 3");
                 itemsSonidos = FXCollections.observableArrayList(sonidos);
                 soundFailBox.setItems(itemsSonidos);
+                sonidoActualFallo = "/music/fail.mp3";
         //A falta de añadir los Efectos Visuales
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,25 +253,55 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     @FXML
     private void saveAction(ActionEvent event) {
         if (audio.isPlaying()) audio.stop();
+            nuevaLargura = largoBox.getValue();
+            nuevaAnchura = anchoBox.getValue();
             //Parámetros de partida
-           
-            if(limiteChekbox.isSelected()) limiteActivado = "activado";
-            else limiteActivado = "";
-            if (cancionActual != null) sinMusica = false;
-           
-            if(limiteActivado == "activado") {
-                nuevoTiempoTurno = volteoCartaBox.getValue();
-                nuevoTiempoPartida = tiempoPartidaBox.getValue();
-            } 
+            if(barajaNormalActual.getCartas().size() >= nuevaLargura * nuevaAnchura){  
             
-            nuevoTiempoError = exposicionParErrorBox.getValue();
-            //Efectos
+                if(limiteChekbox.isSelected()) parametros.setLimitePartida(true);
+                else {parametros.setLimitePartida(false); limiteActivado = "";}
+                if (cancionActual != null) {
+                    parametros.setSinMusica(false);
+                    parametros.setCancionPartida(cancionActual);
+                }
+                nuevaLargura = largoBox.getValue();
+                nuevaAnchura = anchoBox.getValue();
+                parametros.setAnchuraTablero(nuevaAnchura);
+                parametros.setLarguraTablero(nuevaLargura);
             
-            if(showCardsBox.isSelected())tiempoMostrarCartas = showCardsTime.getValue(); 
-            //Barajas
+                parametros.setSonidoCorrecto(sonidoActualAcierto);
+                parametros.setSonidoFallo(sonidoActualFallo);
+                parametros.setSonidoGiro(sonidoActualGiro);
+                
+                if(parametros.isMostrarCartasInicio()){
+                    tiempoMostrarCartas = showCardsTime.getValue();
+                    parametros.setTiempoCartasInicio(tiempoMostrarCartas);
+                }
+                if(parametros.isLimitePartida()) {
+                    nuevoTiempoTurno = volteoCartaBox.getValue();
+                    parametros.setTiempoTurno(nuevoTiempoTurno);
+                    nuevoTiempoPartida = tiempoPartidaBox.getValue();
+                    parametros.setTiempoPartida(nuevoTiempoPartida);
+                } 
+             
+                nuevoTiempoError = exposicionParErrorBox.getValue();
+                parametros.setTiempoVerError(nuevoTiempoError);
+                //Efectos
             
-            enParametros = "si";
-            ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+                //if(showCardsBox.isSelected()) tiempoMostrarCartas = showCardsTime.getValue(); 
+                //Barajas
+                parametros.setCartaPartida(imagenCarta);
+            
+                ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+            
+              } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Atención");
+                alert.setHeaderText("Baraja incompatible");
+                alert.setContentText("La baraja que ha seleccionado es más pequeña que "
+                        + "el tablero que ha escogido. Por favor, cambie alguna de las dos cosas");
+                alert.showAndWait();  
+            }
     }
 
     //Botones de restablecer a Valores Predeterminados
@@ -299,6 +355,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
             case 0:
                 cancionActual = null;
                 sinMusica = true;
+                parametros.setSinMusica(sinMusica);
                 break;
             case 1:
                 cancionActual = "/music/Cancion1.mp3";
@@ -351,8 +408,14 @@ public class ParametrosPartidaController extends JuegoLibreController implements
     
     @FXML
     private void disableCardTime(ActionEvent event) {
-        if(showCardsBox.isSelected()) showCardsTime.setDisable(false); 
-        else showCardsTime.setDisable(true); 
+        if(showCardsBox.isSelected()) {
+            showCardsTime.setDisable(false);
+            parametros.setMostrarCartasInicio(true);
+        }
+        else {
+            showCardsTime.setDisable(true);
+            parametros.setMostrarCartasInicio(false);
+        } 
     }
     
      @FXML
@@ -547,7 +610,27 @@ public class ParametrosPartidaController extends JuegoLibreController implements
           soundFailBox.setValue("Fallo 1");
           soundFlipBox.setValue("Giro 1");
           normal.setSelected(true);
+          limiteChekbox.setSelected(true);
     
     } 
+   
+   protected void setearImagenCartas(){
+       File currentCard = new File("./images/card1.png");
+       Image image = new Image(currentCard.toURI().toString());
+       normal1.setImage(image);
+       categ1.setImage(image);
+       currentCard = new File("./images/card2.png");
+       image = new Image(currentCard.toURI().toString());
+       normal3.setImage(image);
+       categ3.setImage(image);
+       currentCard = new File("./images/fruit1.png");
+       image = new Image(currentCard.toURI().toString());
+       normal2.setImage(image);
+       categ2.setImage(image);
+       currentCard = new File("./images/fruit2.png");
+       image = new Image(currentCard.toURI().toString());
+       normal4.setImage(image);
+       categ4.setImage(image);
+    }
 
 }

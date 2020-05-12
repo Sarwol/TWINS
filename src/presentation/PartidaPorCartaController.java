@@ -99,14 +99,14 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 puntuacion.sumarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
+                audioOK.play(0.1);
                 //setTimer(DURACION_TURNO, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
                 setDelayedCardTurn();
-                AudioClip fail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
-                fail.play(0.1);
+                audioFail.play(0.1);
             }
             
             resetTurnCountdown();
