@@ -603,7 +603,7 @@ public class ParametrosPartidaController extends JuegoLibreController implements
           largoBox.setValue(6);
           anchoBox.setValue(4);
           volteoCartaBox.setValue(5);
-          exposicionParErrorBox.setValue(2);
+          exposicionParErrorBox.setValue(1);
           tiempoPartidaBox.setValue(60);
           showCardsTime.setValue(2);
           soundOKBox.setValue("Acierto 1");
