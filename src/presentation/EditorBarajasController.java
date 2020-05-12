@@ -75,7 +75,7 @@ public class EditorBarajasController implements Initializable {
 
     //prueba
     Baraja prueba;
-
+    // Para volver al menú principal
     private Stage winStage;
     private Stage parentStage;
 
@@ -195,7 +195,12 @@ public class EditorBarajasController implements Initializable {
         imagenReverso.setImage(reverso);
         barajaActual.setImagenReverso(reverso);
     }
-
+    
+    @FXML
+    private void volverAMenuPrincipal(ActionEvent event){
+        winStage.close();
+        
+    }
     public void eliminarSeleccionado(int posicion, ObservableList list) {
         if (posicion >= 0) {
             list.remove(posicion);

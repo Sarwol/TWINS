@@ -9,6 +9,7 @@ package presentation;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,9 @@ public class PausaController extends JuegoLibreController implements Initializab
     // Used to update the in-game song
     private AudioClip audio;
     ObservableList<Boolean> observPauseList;
+    // Used to stop the countdown when the game ends
+    private Timeline countdownPartida;
+    private Timeline countdownTurno;
     /**
      * Initializes the controller class.
      */
@@ -71,12 +75,17 @@ public class PausaController extends JuegoLibreController implements Initializab
         }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
+        countdownPartida.play();
+        countdownTurno.play();
        //} catch (Exception e){}
         winStage.hide(); 
     }
 
     @FXML
     private void exit_onClick(ActionEvent event) throws IOException {
+        // close timelines to avoid end screen
+        countdownPartida.stop();
+        countdownTurno.stop();
         parentStage.close();
         Stage thisStage = (Stage) resume.getScene().getWindow();
         thisStage.close();
@@ -118,12 +127,14 @@ public class PausaController extends JuegoLibreController implements Initializab
         winStage.show();
     }
 
-    void initPausaWindow(Stage stage, Stage pStage, String cancion, AudioClip audio, ObservableList<Boolean> observPauseList ) {
+    void initPausaWindow(Stage stage, Stage pStage, String cancion, AudioClip audio, ObservableList<Boolean> observPauseList, Timeline countdownPartida, Timeline countdownTurno ) {
         winStage = stage;
         parentStage = pStage;
         this.cancion = cancion;
         this.audio = audio;
         this.observPauseList = observPauseList;
+        this.countdownPartida = countdownPartida;
+        this.countdownTurno = countdownTurno;
     }
     
 }
