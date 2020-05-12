@@ -41,7 +41,6 @@ import logic.Puntuacion;
 import logic.Tablero;
 import static presentation.ParametrosPartidaController.*;
 import static presentation.PausaController.pauseMusic;
-import presentation.VentanaJuegoLibreController;
 
 /**
  * FXML Controller class
@@ -486,8 +485,9 @@ public class JuegoLibreController implements Initializable {
         winStage.setOnHidden(e -> {
             countdownTurno.play();
             countdownPartida.play();
+            audio.play();
         });
-        pausaController.initPausaWindow(winStage);
+        pausaController.initPausaWindow(winStage, cancion, audio, observPauseList);
         Scene scene = new Scene(root);
         winStage.setScene(scene);
         winStage.setTitle("Pausa");

@@ -9,18 +9,17 @@ package presentation;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static presentation.JuegoLibreController.cancion;
 import static presentation.ParametrosPartidaController.*;
 
 /**
@@ -36,7 +35,13 @@ public class PausaController extends JuegoLibreController implements Initializab
     @FXML
     private Button musicOptions;
     protected static AudioClip pauseMusic;
+    // Points to this stage
     private Stage winStage;
+    // Used to update the in-game song
+    private String cancion;
+    // Used to update the in-game song
+    private AudioClip audio;
+    ObservableList<Boolean> observPauseList;
     /**
      * Initializes the controller class.
      */
@@ -97,8 +102,11 @@ public class PausaController extends JuegoLibreController implements Initializab
         winStage.show();
     }
 
-    void initPausaWindow(Stage stage) {
+    void initPausaWindow(Stage stage, String cancion, AudioClip audio, ObservableList<Boolean> observPauseList ) {
         winStage = stage;
+        this.cancion = cancion;
+        this.audio = audio;
+        this.observPauseList = observPauseList;
     }
     
 }
