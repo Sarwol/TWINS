@@ -81,12 +81,13 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void abrirNiveles(ActionEvent event) throws IOException {
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("JuegoNiveles.fxml"));
+        /*
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuSeleccionNiveles.fxml"));
         Parent root = (Parent) myLoader.load();
-        JuegoNivelesController juegoNivelesController = myLoader.<JuegoNivelesController>getController();
+        MenuSeleccionNivelesController menuSeleccionNivelesController = myLoader.<MenuSeleccionNivelesController>getController();
         Stage winStage = new Stage();
         Stage thisStage = (Stage) salirButton.getScene().getWindow();
-        juegoNivelesController.initWindow(winStage);
+        menuSeleccionNivelesController.initWindow(winStage);
         Scene scene = new Scene(root);
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
@@ -95,6 +96,20 @@ public class MenuPrincipalController implements Initializable {
         // From VentanaJuegoLibre
         musicaInicial.stop();
         thisStage.close();
+        */
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuSeleccionNiveles.fxml"));
+        Parent root = (Parent) myLoader.load();
+        MenuSeleccionNivelesController menuSeleccionNivelesController = myLoader.<MenuSeleccionNivelesController>getController();
+        Stage winStage = new Stage();
+        Stage thisStage = (Stage) salirButton.getScene().getWindow();
+        menuSeleccionNivelesController.initWindow(winStage, thisStage);
+        Scene scene = new Scene(root);
+        
+        // winStage is the stage of VentanaJuegoLibre
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
 
     }
 

@@ -18,8 +18,8 @@ import java.io.ObjectInputStream;
  */
 public class LevelEditor {
     public static void main(String[] args){
-        Nivel nivel1 = new Nivel(1, 3, 2, 20, 10);
-        serialize(nivel1, "nivel1.ser");
+        Nivel nivel1 = new Nivel(10, 6, 4, 30, 80);
+        serialize(nivel1, "nivel10.ser");
         //("nivel1.ser");
     }
     

@@ -16,7 +16,10 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import logic.Carta;
 import logic.Nivel;
 import logic.Puntuacion;
@@ -38,6 +41,10 @@ public class JuegoNivelesController extends JuegoController {
     // Min amount of points required to win
     private int minPoints;
 
+    public String modo;
+    
+    @FXML
+    private Label minPointsLabel;
     /**
      * Initializes the controller class.
      */
@@ -48,7 +55,7 @@ public class JuegoNivelesController extends JuegoController {
         //super.initialize(url, rb);
         // loads the default parameters
         defaultData();
-        String [] selectedLevels = {"nivel1.ser"};
+        String [] selectedLevels = {MenuSeleccionNivelesController.nivel};
         niveles = loadLevels(selectedLevels);
         setUpLevel(0);
         // initial score
@@ -68,7 +75,9 @@ public class JuegoNivelesController extends JuegoController {
         //String [] levels = {"nivel1.ser"};
         //niveles = loadLevels(levels);
         //setupLevel(0);
-
+        // Loads label for minimum required points
+        minPointsLabel.setText(minPoints + "");
+        
     }
 
     /**
@@ -156,6 +165,6 @@ public class JuegoNivelesController extends JuegoController {
         }
         
         return allCardsFound && minScoreReached;
-    }
+    }    
     
 }
