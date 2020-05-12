@@ -41,7 +41,6 @@ public class JuegoNivelesController extends JuegoController {
     // Min amount of points required to win
     private int minPoints;
 
-    public String modo;
     
     @FXML
     private Label minPointsLabel;

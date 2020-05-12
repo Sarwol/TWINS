@@ -49,7 +49,7 @@ public class VictoriaController implements Initializable {
     @FXML
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
-        
+        //System.out.println(modo);
         Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

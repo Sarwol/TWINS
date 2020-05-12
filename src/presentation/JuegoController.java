@@ -7,6 +7,7 @@ package presentation;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -338,30 +339,39 @@ public class JuegoController implements Initializable {
      * @return baraja the deck with cards.
      */
     public Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
+        Baraja barajaCartas = null;
         if (numCartas % 2 != 0) {
-            System.out.println("*****************************************");
-            System.out.println("Uneven number of cards");
-            System.out.println("*****************************************");
-            return null;
-        }
-
-        List<Carta> baraja = new ArrayList<>();
-        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
-        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
-
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < numCartas / 2; j++) {
-                File currentCard = new File(cardImages + (j + 1) + ".png");
-                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
-                Carta carta = new Carta(j, currentCardImage, deckCardImage);
-
-                // Add event to detect when a Carta is clicked
-                carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-                baraja.add(carta);
+                System.out.println("*****************************************");
+                System.out.println("Uneven number of cards");
+                System.out.println("*****************************************");
+                return null;
             }
+        try {
+            
+
+            List<Carta> baraja = new ArrayList<>();
+//        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
+//        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
+            //System.out.println(this.getClass().getResource("/images/card.png"));
+            Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
+
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < numCartas / 2; j++) {
+                    //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));
+                    Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
+                    
+                    Carta carta = new Carta(j, currentCardImage, deckCardImage);
+
+                    // Add event to detect when a Carta is clicked
+                    carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+                    baraja.add(carta);
+                }
+            }
+            barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
+        } catch (URISyntaxException  e) {
+            e.printStackTrace();
         }
-        Baraja barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
+        if(barajaCartas == null){System.out.println("BARAJA IS NULL!!!!");}
         return barajaCartas;
 
         /*
@@ -384,7 +394,6 @@ public class JuegoController implements Initializable {
         }
         return baraja;*/
     }
-
     /*
     Turns the card around and adds it to the selected pair
      */
