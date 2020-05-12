@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,8 +9,11 @@
 <?import logic.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.PartidaCategoriaController">
-   <children>
-      <Button layoutX="534.0" layoutY="10.0" mnemonicParsing="false" onAction="#pause_onClick" text="Pausa" />
+    <stylesheets>
+        <URL value="@/css/partida.css" />
+    </stylesheets>
+    <children>
+      <Button fx:id="pauseBtn" layoutX="534.0" layoutY="10.0" mnemonicParsing="false" onAction="#pause_onClick" prefHeight="30.0" prefWidth="30.0" />
       <Tablero fx:id="tablero" layoutX="79.0" layoutY="84.0" prefHeight="236.0" prefWidth="441.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,13 +32,12 @@
       </Tablero>
       <Label fx:id="tiempoPartidaLabel" layoutX="206.0" layoutY="5.0" text="Tiempo Restante" />
       <Label fx:id="tiempoPartida" layoutX="236.0" layoutY="25.0" text="" />
-      <Label fx:id="minutos" layoutX="219.0" layoutY="25.0" text="00:" />
       <Label fx:id="tiempoTurnoLabel" layoutX="334.0" layoutY="05.0" text="Tiempo del Turno" />
       <Label fx:id="tiempoTurno" layoutX="374.0" layoutY="25.0" text="0" />
       <Label fx:id="categoriaActualLabel" layoutX="15.0" layoutY="5.0" text="Categoría Actual: " />
       <Label fx:id="categoriaLabel" layoutX="110.0" layoutY="5.0" text="" />
       <Label fx:id="puntos" layoutX="20.0" layoutY="30.0" text="Puntos" />
       <Label fx:id="punt" layoutX="25.0" layoutY="50.0" text="0" />
-      <Button layoutX="463.0" layoutY="10.0" mnemonicParsing="false" onAction="#mute_onClick" text="Silenciar" />
+      <Button fx:id="mute" layoutX="463.0" layoutY="10.0" mnemonicParsing="false" onAction="#mute_onClick" prefHeight="30.0" prefWidth="30.0" />
    </children>
 </AnchorPane>

@@ -37,6 +37,8 @@ public class PausaController extends JuegoLibreController implements Initializab
     protected static AudioClip pauseMusic;
     // Points to this stage
     private Stage winStage;
+    // Points to parent Stage
+    private Stage parentStage;
     // Used to update the in-game song
     private String cancion;
     // Used to update the in-game song
@@ -74,8 +76,22 @@ public class PausaController extends JuegoLibreController implements Initializab
     }
 
     @FXML
-    private void exit_onClick(ActionEvent event) {
-        System.exit(0);
+    private void exit_onClick(ActionEvent event) throws IOException {
+        parentStage.close();
+        Stage thisStage = (Stage) resume.getScene().getWindow();
+        thisStage.close();
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPrincipal.fxml"));
+        Parent root = (Parent) myLoader.load();
+        MenuPrincipalController menuPrincipalController = myLoader.<MenuPrincipalController>getController();
+        Stage wStage = new Stage();
+        menuPrincipalController.initWindow(winStage);
+        Scene scene = new Scene(root);
+        wStage.setScene(scene);
+        wStage.initModality(Modality.APPLICATION_MODAL);
+        wStage.show();
+        wStage.setTitle("TWINS");
+        //stopAudio(cancion);
+        
     }
 
     @FXML
@@ -102,8 +118,9 @@ public class PausaController extends JuegoLibreController implements Initializab
         winStage.show();
     }
 
-    void initPausaWindow(Stage stage, String cancion, AudioClip audio, ObservableList<Boolean> observPauseList ) {
+    void initPausaWindow(Stage stage, Stage pStage, String cancion, AudioClip audio, ObservableList<Boolean> observPauseList ) {
         winStage = stage;
+        parentStage = pStage;
         this.cancion = cancion;
         this.audio = audio;
         this.observPauseList = observPauseList;

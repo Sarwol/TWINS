@@ -452,7 +452,9 @@ public class JuegoController implements Initializable {
             countdownPartida.play();
             audio.play();
         });
-        pausaController.initPausaWindow(pausaWinStage, cancion, audio, observPauseList);
+        Stage thisStage = (Stage) punt.getScene().getWindow();
+        //if(thisStage == null)System.out.println("EL STAGE ES NULO");
+        pausaController.initPausaWindow(pausaWinStage, thisStage, cancion, audio, observPauseList);
         Scene scene = new Scene(root);
         pausaWinStage.setScene(scene);
         pausaWinStage.setTitle("Pausa");

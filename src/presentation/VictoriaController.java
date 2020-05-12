@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import logic.Puntuacion;
@@ -58,8 +59,20 @@ public class VictoriaController implements Initializable {
     }
     
     @FXML
-    private void exit_onClick(ActionEvent event) {
-        System.exit(0);
+    private void exit_onClick(ActionEvent event) throws IOException{
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPrincipal.fxml"));
+        Parent root = (Parent) myLoader.load();
+        MenuPrincipalController menuPrincipalController = myLoader.<MenuPrincipalController>getController();
+        Stage winStage = new Stage();
+        menuPrincipalController.initWindow(winStage);
+        Scene scene = new Scene(root);
+        winStage.setScene(scene);
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+        winStage.setTitle("TWINS");
+        //stopAudio(cancion);
+        Stage thisStage = (Stage) puntu.getScene().getWindow();
+        thisStage.close();
     }
     
     void initVictoriaWindow(Stage stage, Puntuacion p, int t, String m) {

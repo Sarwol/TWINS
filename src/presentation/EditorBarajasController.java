@@ -20,7 +20,10 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -30,6 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
@@ -100,8 +104,20 @@ public class EditorBarajasController implements Initializable {
     }    
 
     @FXML
-    private void abrirNuevaPareja(ActionEvent event) {
+    private void abrirNuevaPareja(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("NuevaPareja.fxml"));
+        Parent root = (Parent) myLoader.load();
+        NuevaParejaController nuevaParejaController = myLoader.<NuevaParejaController>getController();
+        Stage winStage = new Stage();
+        Stage thisStage = (Stage) deleteParejaButton.getScene().getWindow();
+        nuevaParejaController.initWindow(winStage, thisStage);
+        Scene scene = new Scene(root);
         
+        // winStage is the stage of VentanaJuegoLibre
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
         //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
         //Utilizando el método devolverCarta() de NuevaCartaController
         //cartaNueva = (el controlador).devolverCarta();

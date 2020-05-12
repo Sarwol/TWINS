@@ -21,6 +21,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
 import logic.Carta;
@@ -48,7 +49,8 @@ public class NuevaParejaController implements Initializable {
     private ObservableList<Categoria> categoriasObservableList;
     private Baraja barajaSeleccionada;
     private Carta cartaNueva;
-    
+    private Stage winStage;
+    private Stage parentStage;
 
     /**
      * Initializes the controller class.
@@ -57,9 +59,9 @@ public class NuevaParejaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cartaNueva = null;
-        barajaCategorias = barajaSeleccionada.getCategorias();
-        categoriasObservableList = FXCollections.observableList(barajaCategorias);
-        categoriaComboBox.setItems(categoriasObservableList);
+        //barajaCategorias = barajaSeleccionada.getCategorias();
+        //categoriasObservableList = FXCollections.observableList(barajaCategorias);
+        //categoriaComboBox.setItems(categoriasObservableList);
     }    
 
     @FXML
@@ -108,5 +110,10 @@ public class NuevaParejaController implements Initializable {
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
+    }
+
+    void initWindow(Stage stage, Stage pStage) {
+        winStage  = stage;
+        parentStage = pStage;
     }
 }
