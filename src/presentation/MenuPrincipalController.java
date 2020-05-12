@@ -114,7 +114,20 @@ public class MenuPrincipalController implements Initializable {
     }
 
     @FXML
-    private void abrirBarajas(ActionEvent event) {
+    private void abrirBarajas(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("EditorBarajas.fxml"));
+        Parent root = (Parent) myLoader.load();
+        EditorBarajasController editorBarajasController = myLoader.<EditorBarajasController>getController();
+        Stage winStage = new Stage();
+        Stage thisStage = (Stage) salirButton.getScene().getWindow();
+        editorBarajasController.initWindow(winStage, thisStage);
+        Scene scene = new Scene(root);
+        
+        // winStage is the stage of VentanaJuegoLibre
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
     }
 
     @FXML
