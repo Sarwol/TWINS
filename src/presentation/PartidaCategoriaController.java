@@ -121,17 +121,17 @@ public class PartidaCategoriaController extends JuegoLibreController {
         }
 
         List<Carta> baraja = new ArrayList<Carta>();
-        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-        String cardImages = "." + File.separator + "images" + File.separator + "card";
+        File deckCard = new File("src" + File.separator + "images" + File.separator + "card.png");
+        String cardImages = "src" + File.separator + "images" + File.separator + "card";
         //String fruitImages = "." + File.separator + "images" + File.separator + "fruit";
         Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
                 if (j % 2 == 0) {
-                    cardImages = "." + File.separator + "images" + File.separator + "fruit";
+                    cardImages = "src" + File.separator + "images" + File.separator + "fruit";
                 } else {
-                    cardImages = "." + File.separator + "images" + File.separator + "card";
+                    cardImages = "src" + File.separator + "images" + File.separator + "card";
                 }
                 File currentCard = new File(cardImages + (j + 1) + ".png");
                 Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);

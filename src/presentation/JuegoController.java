@@ -346,8 +346,8 @@ public class JuegoController implements Initializable {
         }
 
         List<Carta> baraja = new ArrayList<>();
-        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
+        File deckCard = new File("src" + File.separator + "images" + File.separator + "card.png");
+        String cardImages = "src" + File.separator + "images" + File.separator + cartaModelo;
         Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
 
         for (int i = 0; i < 2; i++) {
