@@ -62,20 +62,16 @@ public class NuevaParejaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-//        FXMLLoader cargador = crearCargador("/presentation/EditorBarajasController.fxml");
-//        EditorBarajasController editorBarajasController = cargador.<EditorBarajasController>getController();
-//        barajaSeleccionada = editorBarajasController.devolverBaraja();
         cartaNueva = null;
-        barajaSeleccionada.setCategorias(Arrays.asList(
-                new Categoria("FRUTAS"),
-                new Categoria("PAJAROS"),
-                new Categoria("COCHES")
-        ));
+//        barajaSeleccionada.setCategorias(Arrays.asList(
+//                new Categoria("FRUTAS"),
+//                new Categoria("PAJAROS"),
+//                new Categoria("COCHES")
+//        ));
         
-        barajaCategorias = barajaSeleccionada.getCategorias();
-        categoriasObservableList = FXCollections.observableList(barajaCategorias);
-        categoriaComboBox.setItems(categoriasObservableList);
+//        barajaCategorias = barajaSeleccionada.getCategorias();
+//        categoriasObservableList = FXCollections.observableList(barajaCategorias);
+//        categoriaComboBox.setItems(categoriasObservableList);
     }
 
     @FXML
@@ -100,7 +96,8 @@ public class NuevaParejaController implements Initializable {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
     }
 
-    public Carta devolverCarta() {
+    public Carta devolverCarta(Carta cartaNueva) {
+        cartaNueva = this.cartaNueva;
         return cartaNueva;
     }
 
@@ -139,5 +136,11 @@ public class NuevaParejaController implements Initializable {
 
     public FXMLLoader crearCargador(String fxml) {
         return new FXMLLoader(getClass().getResource(fxml));
+    }
+    
+    public void inicializarBaraja(Baraja baraja){
+        barajaCategorias = baraja.getCategorias();
+        categoriasObservableList = FXCollections.observableList(barajaCategorias);
+        categoriaComboBox.setItems(categoriasObservableList);
     }
 }

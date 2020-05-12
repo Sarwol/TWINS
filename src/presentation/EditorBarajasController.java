@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -20,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -33,6 +35,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
 import logic.Carta;
+import logic.Categoria;
 
 /**
  * FXML Controller class
@@ -84,13 +87,20 @@ public class EditorBarajasController implements Initializable {
         // TODO
         //prueba
         List<Carta> pruebaCartas = new ArrayList<Carta>();
-        prueba = new Baraja("", pruebaCartas, null);
+        prueba = new Baraja();
+        prueba.setCategorias(Arrays.asList(
+                new Categoria("FRUTAS"),
+                new Categoria("PAJAROS"),
+                new Categoria("COCHES")
+        ));
         prueba.setNombre("prueba");
+        
         cartas = new ArrayList<Carta>();
         barajas = new ArrayList<Baraja>();
 
         barajas.add(prueba);
-
+        
+        barajaNueva = null;
         barajaActual = null;
         cartaNueva = null;
 
@@ -122,14 +132,20 @@ public class EditorBarajasController implements Initializable {
     @FXML
     private void abrirNuevaPareja(ActionEvent event) throws IOException {
         FXMLLoader cargador = crearCargador("/presentation/NuevaPareja.fxml");
+        Parent root = cargador.load();
         NuevaParejaController controladorPareja = cargador.<NuevaParejaController>getController();
-        abrirVentana(cargador);
-        cartaNueva = controladorPareja.devolverCarta();
+        controladorPareja.inicializarBaraja(barajaActual);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.showAndWait();
+        //abrirVentana(cargador);
+      
+        cartaNueva = controladorPareja.devolverCarta(cartaNueva);
         if (cartaNueva != null) {
             System.out.println("CARTA BUENA");
-            cartasObservableList.add(cartaNueva);
-            for (int i = 0; i < 2; i++) {
-                barajaActual.añadirCarta(cartaNueva);
+            cartasObservableList.add(cartaNueva); 
+            barajaActual.añadirCarta(cartaNueva);
             }
         }
         //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
@@ -149,8 +165,13 @@ public class EditorBarajasController implements Initializable {
     @FXML
     private void abrirNuevaBaraja(ActionEvent event) throws IOException {
         FXMLLoader cargador = crearCargador("/presentation/NuevaBaraja.fxml");
+        Parent root = cargador.load();
         NuevaBarajaController controladorBaraja = cargador.<NuevaBarajaController>getController();
-        abrirVentana(cargador);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.showAndWait();
+        //abrirVentana(cargador);
         barajaNueva = controladorBaraja.devolverBaraja();
         if (barajaNueva != null) {
             barajasObservableList.add(barajaNueva);
@@ -190,7 +211,8 @@ public class EditorBarajasController implements Initializable {
         return listaBarajas.getSelectionModel().getSelectedItem();
     }
     
-    public Baraja devolverBaraja(){
+    public Baraja devolverBaraja(Baraja barajaActual){
+        barajaActual = this.barajaActual;
         return barajaActual;
     }
 
@@ -218,7 +240,7 @@ public class EditorBarajasController implements Initializable {
     }
 
     public void abrirVentana(FXMLLoader cargador) throws IOException {
-        Pane root = cargador.load();
+        Parent root = cargador.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
