@@ -6,6 +6,7 @@
 package presentation;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,22 +120,23 @@ public class PartidaCategoriaController extends JuegoLibreController {
         if (numCartas % 2 != 0) {
             return null;
         }
-
+        Baraja laBaraja = null;
+        try{
         List<Carta> baraja = new ArrayList<Carta>();
-        File deckCard = new File("src" + File.separator + "images" + File.separator + "card.png");
-        String cardImages = "src" + File.separator + "images" + File.separator + "card";
+        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
+        String cardImages = "." + File.separator + "images" + File.separator + "card";
         //String fruitImages = "." + File.separator + "images" + File.separator + "fruit";
-        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
+        Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
                 if (j % 2 == 0) {
-                    cardImages = "src" + File.separator + "images" + File.separator + "fruit";
+                    cardImages = "/images/fruit";
                 } else {
-                    cardImages = "src" + File.separator + "images" + File.separator + "card";
+                    cardImages = "/images/card";
                 }
                 File currentCard = new File(cardImages + (j + 1) + ".png");
-                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
+                Image currentCardImage = new Image(this.getClass().getResource(cardImages + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
                 if (j % 2 == 0) {
                     carta.setCategoria(Categoria.FRUTAS);
@@ -147,7 +149,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
             }
 
         }
-        Baraja laBaraja = new Baraja(nombreBaraja,baraja,deckCardImage);
+        laBaraja = new Baraja(nombreBaraja,baraja,deckCardImage);
+        }catch(URISyntaxException e){e.printStackTrace();}
         return laBaraja;
     }
 /*
