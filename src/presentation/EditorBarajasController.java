@@ -92,6 +92,7 @@ public class EditorBarajasController implements Initializable {
         barajas.add(prueba);
 
         barajaActual = null;
+        cartaNueva = null;
 
         barajasObservableList = FXCollections.observableList(barajas);
         listaBarajas.setItems(barajasObservableList);
@@ -125,6 +126,7 @@ public class EditorBarajasController implements Initializable {
         abrirVentana(cargador);
         cartaNueva = controladorPareja.devolverCarta();
         if (cartaNueva != null) {
+            System.out.println("CARTA BUENA");
             cartasObservableList.add(cartaNueva);
             for (int i = 0; i < 2; i++) {
                 barajaActual.añadirCarta(cartaNueva);
@@ -186,6 +188,10 @@ public class EditorBarajasController implements Initializable {
 
     public Baraja barajaSeleccionada() {
         return listaBarajas.getSelectionModel().getSelectedItem();
+    }
+    
+    public Baraja devolverBaraja(){
+        return barajaActual;
     }
 
     public Image uploadImage() {
