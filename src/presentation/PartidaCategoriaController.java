@@ -63,7 +63,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
         /*rellenarCategorias();
         categoriaActual = categorias.get(0);*/
         //categoria = false;
-        categoriaActual = Categoria.FRUTAS;
+        // CAMBIO CATEGORIA
+        categoriaActual = new Categoria("FRUTAS");
         categoriaLabel.setText(categoriaActual.toString());
         //mostrarCategoria();
     }
@@ -88,7 +89,8 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 contador++;
                 audioOK.play(0.1);
                 if (contador == 1 + ((ANCHURA_TABLERO*LONGITUD_TABLERO)/2) / NUM_CATEGORIAS) {
-                    categoriaActual = Categoria.PAJAROS;
+                    // CAMBIO CATEGORIA
+                    categoriaActual = new Categoria("PAJAROS");
                     categoriaLabel.setText(categoriaActual.toString());
                     //mostrarCategoria();
                 }
@@ -108,13 +110,15 @@ public class PartidaCategoriaController extends JuegoLibreController {
             parSelec.remove(0);
         }
     }
-
+    // CAMBIO CATEGORIA
     @Override
     public boolean sonIguales(Carta card1, Carta card2) {
-        return super.sonIguales(card1, card2) && carta1.getCategoria()
-                == categoriaActual && carta2.getCategoria() == categoriaActual;
+        return super.sonIguales(card1, card2) && carta1.getCategoria().equals(categoriaActual)
+                && carta2.getCategoria().equals(categoriaActual);
     }
 
+    
+    // CAMBIO CATEGORIA
     @Override
     public Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
         if (numCartas % 2 != 0) {
@@ -139,9 +143,9 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 Image currentCardImage = new Image(this.getClass().getResource(cardImages + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
                 Carta carta = new Carta(j, currentCardImage, deckCardImage);
                 if (j % 2 == 0) {
-                    carta.setCategoria(Categoria.FRUTAS);
+                    carta.setCategoria(new Categoria("FRUTAS"));
                 } else {
-                    carta.setCategoria(Categoria.PAJAROS);
+                    carta.setCategoria(new Categoria("PAJAROS"));
                 }
                 // Add event to detect when a Carta is clicked
                 carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
