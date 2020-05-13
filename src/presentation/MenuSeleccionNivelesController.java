@@ -82,7 +82,7 @@ public class MenuSeleccionNivelesController implements Initializable {
         // From VentanaJuegoLibre
         musicaInicial.stop();
         //thisStage.close();
-        parentStage.close();
+        //parentStage.close();
         
     }
     @FXML
