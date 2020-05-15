@@ -650,9 +650,10 @@ public class ParametrosPartidaController implements Initializable {
         exposicionParErrorBox.setValue(parametros.getTiempoVerError());
         tiempoPartidaBox.setValue(parametros.getTiempoPartida());
         showCardsTime.setValue(parametros.getTiempoCartasInicio());
-        soundOKBox.setValue("Acierto 1");
-        soundFailBox.setValue("Fallo 1");
-        soundFlipBox.setValue("Giro 1");
+        soundOKBox.setValue(comprobarSonido("Acierto"));
+        soundFailBox.setValue(comprobarSonido("Fallo"));
+        soundFlipBox.setValue(comprobarSonido("Giro"));
+        desplegableMusica.setValue(comprobarMusica());
         normal.setSelected(true);
         limiteChekbox.setSelected(parametros.isLimitePartida());
 
@@ -728,4 +729,32 @@ public class ParametrosPartidaController implements Initializable {
         this.parentStage = stage;
     }
 
+    //Método que compureba los efectos que hay instanciados actualemnte en la clase Configuración
+    
+    protected String comprobarSonido(String sonido){
+        if(sonido == "Acierto"){
+            if(parametros.getSonidoCorrecto() == "/music/correct.mp3") return sonido = sonido + " " + 1;
+            else if (parametros.getSonidoCorrecto() == "/music/correct2.mp3") return sonido = sonido + " " + 2;
+            else return sonido = sonido + " " + 3;
+        } else if(sonido == "Fallo") {
+                    if(parametros.getSonidoFallo() == "/music/fail.mp3") return sonido = sonido + " " + 1;
+                    else if (parametros.getSonidoFallo() == "/music/fail2.mp3") return sonido = sonido + " " + 2;
+                    else return sonido = sonido + " " + 3;
+                  }
+        else {
+            if(parametros.getSonidoGiro() == "/music/flip.wav") return sonido = sonido + " " + 1;
+            else if(parametros.getSonidoGiro() == "/music/flip2.wav") return sonido = sonido + " " + 2;
+            else return sonido = sonido + " " + 3;
+        }
+    }
+    
+    //Método para comprobar qué canción es la que está configurada actualmente en Configuración
+    protected String comprobarMusica(){
+        if(parametros.getCancionPartida() == "/music/Cancion1.mp3") return "Golf It Music";
+        else if(parametros.getCancionPartida() == "/music/Cancion2.mp3") return "Zelda Remix";
+        else if(parametros.getCancionPartida() == "/music/Cancion3.mp3") return "Force Theme Star Wars";
+        else if(parametros.getCancionPartida() == "/music/Cancion4.mp3") return "Chill Music to play";
+        else if(parametros.isSinMusica()) return "Sin Música"; 
+        else return "Seleccione música para la partida";
+    }
 }

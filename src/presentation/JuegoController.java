@@ -453,7 +453,7 @@ public abstract class JuegoController implements Initializable {
     public abstract void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException;
 
     public void saltarADerrota(String m) throws IOException {
-        audio.stop();
+        if(audio.isPlaying()) audio.stop();
         tablero.setDisable(true);
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
         Parent root = (Parent) myLoader.load();
