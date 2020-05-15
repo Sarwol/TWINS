@@ -41,19 +41,6 @@ public class PartidaPorCartaController extends JuegoLibreController {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
-//        parSelec = new ArrayList<Carta>();
-//        parSeleccionado = FXCollections.observableList(parSelec);
-//        parSeleccionado.addListener(new ListChangeListener() {
-//            @Override
-//            public void onChanged(ListChangeListener.Change change) {
-//                comprobarCartas();
-//                if(isVictoria()) {
-//                    try{
-//                        saltarAVictoria(puntuacion, tiempoActualPartida);
-//                    } catch(IOException e) {}
-//                }
-//            }
-//        });     // end parSeleccionado
         seleccionarCartaAEncontrar();
     }
 
@@ -70,7 +57,6 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 cardsNotFound.add((Carta) nodoCarta);
             }
         }
-         System.out.println("THERE ARE " + cardsNotFound.size() + " CARDS LEFT");
         if(cardsNotFound.size() > 0){
             int randomPos = (int) Math.floor(Math.random() * (cardsNotFound.size()));
             Carta chosenCard = cardsNotFound.get(randomPos);
@@ -100,7 +86,7 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
                 audioOK.play(0.1);
-                //setTimer(DURACION_TURNO, tiempoTurno);
+                //setTimer(duracionTurno, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");

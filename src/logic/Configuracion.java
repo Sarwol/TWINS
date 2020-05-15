@@ -5,10 +5,13 @@
  */
 package logic;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -72,7 +75,7 @@ public class Configuracion {
         mostrarCartasInicio = cartasInicio;
         // May change depending on where we're going to end up putting the card generation
         this.barajaNormal = generarBaraja(larguraTablero * anchuraTablero, CARTA_PARTIDA_DEFAULT, "Baraja Default");
-        this.barajaCategoria = generarBaraja(larguraTablero * anchuraTablero, getCartaPartida(), "Baraja Default");
+        this.barajaCategoria = generarBarajaCategoria(larguraTablero * anchuraTablero, getCartaPartida(), "Baraja Default");
     }
 
     private Configuracion(String song, String correctSound, String failSound,
@@ -308,6 +311,8 @@ public class Configuracion {
         this.barajaCategoria = barajaCategoria;
     }
 
+    
+    // DON'T FORGET TO CHANGE THIS WHEN DECK GENERATION WORKS PROPERLY
     public final Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
         Baraja barajaCartas = null;
         if (numCartas % 2 != 0) {
@@ -329,13 +334,14 @@ public class Configuracion {
                     //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));
                     Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
 
-                    Carta carta = new Carta(j, currentCardImage, deckCardImage);
+                    Carta carta = new Carta(j, currentCardImage, deckCardImage, new Categoria("FRUTAS"));
 
                     // Add event to detect when a Carta is clicked
                     baraja.add(carta);
                 }
             }
             barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
+            barajaCartas.setCategorias(Arrays.asList(new Categoria("FRUTAS")));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -343,5 +349,41 @@ public class Configuracion {
             System.out.println("BARAJA IS NULL!!!!");
         }
         return barajaCartas;
+    }
+    
+    // CAMBIO CATEGORIA
+    public Baraja generarBarajaCategoria(int numCartas, String cartaModelo, String nombreBaraja) {
+        if (numCartas % 2 != 0) {
+            return null;
+        }
+        Baraja laBaraja = null;
+        try{
+        List<Carta> baraja = new ArrayList<Carta>();
+        String cardImages;
+        Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < numCartas / 2; j++) {
+                if (j % 2 == 0) {
+                    cardImages = "/images/fruit";
+                } else {
+                    cardImages = "/images/card";
+                }
+                Image currentCardImage = new Image(this.getClass().getResource(cardImages + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
+                Carta carta = new Carta(j, currentCardImage, deckCardImage);
+                if (j % 2 == 0) {
+                    carta.setCategoria(new Categoria("FRUTAS"));
+                } else {
+                    carta.setCategoria(new Categoria("PAJAROS"));
+                }
+                baraja.add(carta);
+            }
+
+        }
+        laBaraja = new Baraja(nombreBaraja,baraja,deckCardImage);
+        laBaraja.setCategorias(Arrays.asList(new Categoria("FRUTAS"), new Categoria("PAJAROS")));
+        
+        }catch(URISyntaxException e){e.printStackTrace();}
+        return laBaraja;
     }
 }

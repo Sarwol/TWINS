@@ -20,8 +20,6 @@ import logic.Baraja;
 import logic.Carta;
 import logic.Configuracion;
 import logic.Puntuacion;
-//import static presentation.ParametrosPartidaController.*;
-//import static presentation.PausaController.pauseMusic;
 
 /**
  * FXML Controller class
@@ -33,90 +31,17 @@ import logic.Puntuacion;
  * @author Dani
  */
 public class JuegoLibreController extends JuegoController {
-
-    //public static int LONGITUD_TABLERO = 6;
-    //public static int ANCHURA_TABLERO = 4;
-    //public static int turnDelay = 500;
-    public static int NUM_CATEGORIAS = 2;
-    //public static int DURACION_PARTIDA = 60;
-    //public static int DURACION_TURNO = 5;
-//    public static int S_CARTAS_INICIO = 2;
-
-    //protected static String modo = VentanaJuegoLibreController.mode;
-    //modo = VentanaJuegoLibreController.mode;
-
-    //private Stage winStage;
     
-    //protected static String cancion;
-//    @FXML
-//    protected Tablero tablero;
-//    // tiempoPartida restante de la partida actual
-//    @FXML
-//    protected Label tiempoPartida;
-//    // tiempoPartida restante del turno actual
-//    @FXML
-//    protected Label tiempoTurno;
-//    // Label de puntuación
-//    @FXML
-//    protected Label punt;
-//    // Actualiza el tiempoPartida restante de partida
-//    protected Timeline countdownPartida;
-//    // Actualiza el tiempoPartida restante del turno
-//    protected Timeline countdownTurno;
-//    // se usa para la cuenta atrás de la partida
-//    protected int tiempoActualPartida;
-//    // se usa para la cuenta atrás del turno
-//    protected int tiempoActualTurno;
-//    // Se usa para guardar las dos cartas seleccionadas
-//    protected List<Carta> parSelec;
-//    // Se usa para guardar las dos cartas seleccionadas
-//    protected ObservableList<Carta> parSeleccionado;
-//    // Guarda un booleano para ocultar el tablero
-//    protected static List<Boolean> pauseList;
-//    // Guarda un booleano para ocultar el tablero
-//    protected static ObservableList<Boolean> observPauseList;
-//    // Lleva el registro de la puntuación
-//    protected Puntuacion puntuacion;
-//    // La primera carta que se selecciona
-//    protected Carta carta1;
-//    // La segunda carta que se selecciona
-//    protected Carta carta2;
-//    // Para reproducir la canción
-//    protected AudioClip audio = null;
-//    // Animación de rotación
-//    public RotateTransition turnAnimation;
-//    //Audio de fallo de carta
-//    public static AudioClip audioFail;
-//    //Audio de Acierto
-//    public static AudioClip audioOK;
-//    //Audio de Giro
-//    public static AudioClip audioFlip;
-//    //Baraja que contendrá el tablero de la partida
-//    public static Baraja barajaActual;
-//    //Baraja que contendrá el tablero de la partida por Categoria
-//    public static Baraja barajaCategoria;
-    //String para comprobar si se ha activado el límite de tiempo de la partida
-    public static String limiteActivado;
-//    public boolean mostrarCartasOn = false;
-    //Baraja default que, si la de Parámetros es null, instanciará el tablero
-    Baraja nuevaBaraja;
     //Objeto configuración (parámetros default si es la primera vez que se crea)
     public  Configuracion parametros = Configuracion.getInstance();
-    //String que marcará que baraja se inicia en partida estándar y partida por carta
-//    String cartaBaraja;
-    
+  
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       System.out.println("Initializing parameters");
+        // Loads parameters from config class
         recibirParametros();
-        
-        
-//        if (cancion == null) {
-//            cancion = "/music/Cancion1.mp3";
-//        }
         if (!parametros.isSinMusica()) {
             setAudio(cancion);
             audio.play(0.3);
@@ -127,35 +52,28 @@ public class JuegoLibreController extends JuegoController {
         
        
         if(parametros.isLimitePartida())
-            setTimers(DURACION_PARTIDA, DURACION_TURNO);
+            setTimers(duracionPartida, duracionTurno);
         
-        configurarTablero();
+        configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
         setAnimation();
-        
     }
     
     /**
      * Configura las opciones del tablero
      */
-    @Override
-    public void configurarTablero(){
-        System.out.println("Running CONFIGURARTABLERO from JUEGOLIBRECONTROLLER");
+//    @Override
+    public void configurarTablero(Baraja barajaElegida){
         
-        barajaActual = copiaBaraja(parametros.getBarajaNormal());
-        System.out.println("BARAJA ACTUAL: " + barajaActual);
-//        barajaCategoria = parametros.getBarajaCategoria();
+        
+        
         // Add event handlers
-        for(Carta carta : barajaActual){
+        for(Carta carta : barajaElegida){
             carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-        }
-//        for(Carta carta : barajaCategoria){
-//            carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-//        }
-//        
+        }   
         // initialize tablero
-        tablero.setFilas(ANCHURA_TABLERO);
-        tablero.setColumnas(LONGITUD_TABLERO);
-        tablero.setBaraja(barajaActual.getCartas());
+        tablero.setFilas(anchuraTablero);
+        tablero.setColumnas(longitudTablero);
+        tablero.setBaraja(barajaElegida.getCartas());
         if(parametros.isMostrarCartasInicio()){
             tablero.girarTodasCartas();
             mostrarCartasPrincipio();
@@ -168,21 +86,21 @@ public class JuegoLibreController extends JuegoController {
      * Returns a copy of barajaOriginal with new instances of cards inside of 
      * it.
      * @param barajaOriginal
-     * @return  nuevaBaraja baraja con nuevas instancias de todos los objetos 
-     *          que contiene
+     * @return  nuevaCopiaBaraja baraja con nuevas instancias de todos los objetos 
+          que contiene
      */
     public Baraja copiaBaraja(Baraja barajaOriginal){
-        Baraja nuevaBaraja = new Baraja(barajaOriginal.getNombre(), 
+        Baraja nuevaCopiaBaraja = new Baraja(barajaOriginal.getNombre(), 
                 barajaOriginal.getImagenReverso());
-        nuevaBaraja.setCategorias(barajaOriginal.getCategorias());
+        nuevaCopiaBaraja.setCategorias(barajaOriginal.getCategorias());
         
         for(Carta cartaOriginal : barajaOriginal){
             Carta nuevaCarta = new Carta(cartaOriginal.getCartaID(),
                     cartaOriginal.getImagenCarta(), cartaOriginal.getImagenBaraja(),
                     cartaOriginal.getCategoria());
-            nuevaBaraja.añadirCarta(nuevaCarta);
+            nuevaCopiaBaraja.añadirCarta(nuevaCarta);
         }
-        return nuevaBaraja;
+        return nuevaCopiaBaraja;
     }
 
     /**
@@ -239,16 +157,12 @@ public class JuegoLibreController extends JuegoController {
     
     protected void recibirParametros(){
         
-        LONGITUD_TABLERO = parametros.getLarguraTablero();
-        ANCHURA_TABLERO = parametros.getAnchuraTablero();
-        DURACION_PARTIDA = parametros.getTiempoPartida();
-        DURACION_TURNO = parametros.getTiempoTurno();
+        longitudTablero = parametros.getLarguraTablero();
+        anchuraTablero = parametros.getAnchuraTablero();
+        duracionPartida = parametros.getTiempoPartida();
+        duracionTurno = parametros.getTiempoTurno();
         turnDelay = parametros.getTiempoVerError();
-//        cartaBaraja = parametros.getCartaPartida();
-        if(parametros.isMostrarCartasInicio()){
-//            mostrarCartasOn = parametros.isMostrarCartasInicio();
-//            S_CARTAS_INICIO = parametros.getTiempoCartasInicio();
-        }
+        
         audioFail = new AudioClip(this.getClass().getResource(parametros.getSonidoFallo()).toString());
         audioOK = new AudioClip(this.getClass().getResource(parametros.getSonidoCorrecto()).toString());
         audioFlip = new AudioClip(this.getClass().getResource(parametros.getSonidoGiro()).toString());
@@ -258,15 +172,14 @@ public class JuegoLibreController extends JuegoController {
     
     @Override
     protected void defaultData(){
-        LONGITUD_TABLERO = Configuracion.LARGURA_TABLERO_DEFAULT;
-        ANCHURA_TABLERO = Configuracion.ANCHURA_TABLERO_DEFAULT;
-        DURACION_PARTIDA = Configuracion.TIEMPO_PARTIDA_DEFAULT;
-        DURACION_TURNO = Configuracion.TIEMPO_TURNO_DEFAULT;
+        longitudTablero = Configuracion.LARGURA_TABLERO_DEFAULT;
+        anchuraTablero = Configuracion.ANCHURA_TABLERO_DEFAULT;
+        duracionPartida = Configuracion.TIEMPO_PARTIDA_DEFAULT;
+        duracionTurno = Configuracion.TIEMPO_TURNO_DEFAULT;
         turnDelay = Configuracion.TIEMPO_VER_ERROR_DEFAULT;
         audioFail = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_FALLO_DEFAULT).toString());
         audioOK = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_CORRECTO_DEFAULT).toString());
         audioFlip = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_GIRO_DEFAULT).toString());
-//        cartaBaraja = Configuracion.CARTA_PARTIDA_DEFAULT;   
     }
     
     /**
