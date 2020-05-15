@@ -22,7 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import logic.Carta;
 import logic.Puntuacion;
-import static presentation.JuegoLibreController.TURN_DELAY;
+import static presentation.JuegoLibreController.turnDelay;
 
 /**
  * FXML Controller class

@@ -6,13 +6,13 @@
  */
 package presentation;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
@@ -58,7 +58,8 @@ public abstract class JuegoController implements Initializable {
 
     public static int LONGITUD_TABLERO = 6;
     public static int ANCHURA_TABLERO = 4;
-    public static int TURN_DELAY = 500;
+    // Measured in seconds
+    public static double turnDelay = 0.500;
 //    public static int NUM_CATEGORIAS = 2;
     public static int DURACION_PARTIDA = 60;
     public static int DURACION_TURNO = 5;
@@ -103,8 +104,8 @@ public abstract class JuegoController implements Initializable {
     protected Carta carta2;
     // Para reproducir la canción
     protected AudioClip audio = null;
-    // Animación de rotación
-    public RotateTransition rotateAnimation;
+    // Animaciones
+    public RotateTransition turnAnimation;
     //Audio de fallo de carta
     public static AudioClip audioFail;
     //Audio de Acierto
@@ -184,6 +185,13 @@ public abstract class JuegoController implements Initializable {
         barajaActual = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, "fruit", "Baraja Default");
         tablero.setFilas(ANCHURA_TABLERO);
         tablero.setColumnas(LONGITUD_TABLERO);
+        
+        for(Carta carta : barajaActual){
+            carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+        }
+//        for(Carta carta : barajaCategoria){
+//            carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+//        }
         tablero.setBaraja(barajaActual.getCartas());
         tablero.barajarTablero();
     }
@@ -192,12 +200,13 @@ public abstract class JuegoController implements Initializable {
      * Configures animations for cards
      */
     public void setAnimation() {
-        rotateAnimation = new RotateTransition();
-        rotateAnimation.setDuration(Duration.millis(200));
-        rotateAnimation.setByAngle(360);
-        rotateAnimation.setCycleCount(1);
-        rotateAnimation.setAutoReverse(false);
-        rotateAnimation.setAxis(new Point3D(0, 1, 0));
+        
+        turnAnimation = new RotateTransition();
+        turnAnimation.setDuration(Duration.millis(200));
+        turnAnimation.setByAngle(360);
+        turnAnimation.setCycleCount(1);
+        turnAnimation.setAutoReverse(false);
+        turnAnimation.setAxis(new Point3D(0, 1, 0));
     }
 
     /**
@@ -222,7 +231,9 @@ public abstract class JuegoController implements Initializable {
                         e.printStackTrace();
                     }
                 }
-                tiempoPartida.setText((tiempoActualPartida--)/60 + ":" + (tiempoActualPartida--)%60);
+                String timeStr = String.format("%02d:%02d", tiempoActualPartida/60, tiempoActualPartida%60 );
+                tiempoPartida.setText(timeStr);
+                tiempoActualPartida--;
                 //System.out.println("UPDATED GAME TIME");
             }
         }));
@@ -297,7 +308,8 @@ public abstract class JuegoController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(TURN_DELAY);
+                    System.out.println("GOING TO SLEEP FOR: " + turnDelay * 1000 + " ms");
+                    Thread.sleep(Math.round(turnDelay * 1000));
                 } catch (InterruptedException ie) {
                     System.out.println("Error sleeping before turning cards");
                     ie.printStackTrace();
@@ -309,12 +321,13 @@ public abstract class JuegoController implements Initializable {
         waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
+                System.out.println("Turning cards");
                 carta1.turn();
-                rotateAnimation.setNode(carta1);
-                rotateAnimation.play();
+                turnAnimation.setNode(carta1);
+                turnAnimation.play();
                 carta2.turn();
-                rotateAnimation.setNode(carta2);
-                rotateAnimation.play();
+                turnAnimation.setNode(carta2);
+                turnAnimation.play();
             }
         });
         new Thread(waitTurnCards).start();
@@ -406,8 +419,8 @@ public abstract class JuegoController implements Initializable {
             cartaElegida.turn();
 
             // Plays animation
-            rotateAnimation.setNode(cartaElegida);
-            rotateAnimation.play();
+            turnAnimation.setNode(cartaElegida);
+            turnAnimation.play();
 
             // Just for the debug print
             int cartaID = cartaElegida.getCartaID();
@@ -509,7 +522,7 @@ public abstract class JuegoController implements Initializable {
         ANCHURA_TABLERO = 4;
         DURACION_PARTIDA = 60;
         DURACION_TURNO = 5;
-        TURN_DELAY = 1000;
+        turnDelay = 1;
         cancion = "/music/Cancion1.mp3";
         setAudio(cancion);
         audio.play(0.3);

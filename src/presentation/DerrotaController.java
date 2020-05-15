@@ -43,7 +43,6 @@ public class DerrotaController implements Initializable {
     @FXML
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
-        
         Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
