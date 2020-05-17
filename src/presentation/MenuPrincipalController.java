@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,7 +19,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +31,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import logic.Configuracion;
 import static presentation.VentanaJuegoLibreController.mode;
 
 /**
@@ -61,6 +65,7 @@ public class MenuPrincipalController implements Initializable {
     public static AudioClip musicaInicial;
     private Stage winStage;
     public static String mode;
+    public Configuracion parametros = Configuracion.getInstance();
     
     /**
      * Initializes the controller class.
@@ -146,7 +151,17 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void salir(ActionEvent event) {
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Aviso");
+        alert.setHeaderText("Estás a punto de salir");
+        alert.setContentText("¿Seguro que quieres salir?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            System.exit(0);
+        } else {
+            System.out.println("CANCEL");
+            }
+        //((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
         //System.exit(0);
     }
 
@@ -223,24 +238,33 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void abrirPorCategoria(ActionEvent event) throws IOException {
-        mode = "PartidaCategoria.fxml";
-        MenuPrincipalController.musicaInicial.stop();
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
-        Parent root = (Parent) myLoader.load();
-        PartidaCategoriaController partidaCatController = myLoader.<PartidaCategoriaController>getController();
-        Stage winStage = new Stage();
-        partidaCatController.initWindow(winStage, mode);
-        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        thisStage.close();
-        winStage.close();
-        //We create the scene foe win1
-        Scene scene = new Scene(root);
-        //we asign new scene to current stage/window
-        winStage.setScene(scene);
-        winStage.setTitle("TWINS");
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-        //System.out.println(mode);
+        if(parametros.getBarajaCategoria().getCategorias().size() >= 2){
+            mode = "PartidaCategoria.fxml";
+            MenuPrincipalController.musicaInicial.stop();
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
+            Parent root = (Parent) myLoader.load();
+            PartidaCategoriaController partidaCatController = myLoader.<PartidaCategoriaController>getController();
+            Stage winStage = new Stage();
+            partidaCatController.initWindow(winStage, mode);
+            Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+            thisStage.close();
+            winStage.close();
+            //We create the scene foe win1
+            Scene scene = new Scene(root);
+            //we asign new scene to current stage/window
+            winStage.setScene(scene);
+            winStage.setTitle("TWINS");
+            winStage.initModality(Modality.APPLICATION_MODAL);
+            winStage.show();
+            //System.out.println(mode);
+        } else {
+             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             alert.setTitle("Atención");
+             alert.setHeaderText("Baraja no compatible con Categoria");
+             alert.setContentText("La baraja que ha seleccionadono es compatible "
+                    + "con el modo de juego de Categoria, ya que solo tiene una categoría.");
+             alert.showAndWait();
+        }
     }
 /*
     @FXML

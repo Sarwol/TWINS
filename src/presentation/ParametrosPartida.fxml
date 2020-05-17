@@ -26,70 +26,17 @@
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label layoutX="54.0" layoutY="134.0" prefHeight="27.0" prefWidth="278.0" text="Barajas para Partida por Categoría">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
                         <Button fx:id="defaultBarajasButton" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#setDefaultBarajas" prefHeight="32.0" prefWidth="196.0" text="Restablecer predeterminados" />
                         <Button fx:id="saveButton" layoutX="481.0" layoutY="294.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="88.0" text="Guardar" />
-                        <RadioButton fx:id="pajarosNormal" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="seleccionBaraja" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="frutasNormal" layoutX="152.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
-                        <RadioButton fx:id="baraja3Normal" layoutX="300.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
-                        <RadioButton fx:id="defaultBaraja" layoutX="254.0" layoutY="10.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" text="Baraja predeterminada" toggleGroup="$seleccionBaraja" />
-                        <RadioButton fx:id="baraja4Normal" layoutX="431.0" layoutY="65.0" mnemonicParsing="false" onAction="#elegirBarajaEstandar" toggleGroup="$seleccionBaraja" />
-                        <ImageView fx:id="normal1" fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="43.0" onMouseClicked="#pajarosNormal1" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/card1.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="normal2" fitHeight="71.0" fitWidth="68.0" layoutX="196.0" layoutY="43.0" onMouseClicked="#frutasNormal2" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/fruit1.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="normal3" fitHeight="80.0" fitWidth="67.0" layoutX="339.0" layoutY="41.0" onMouseClicked="#barajaNormal3" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/card2.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="normal4" fitHeight="77.0" fitWidth="72.0" layoutX="481.0" layoutY="43.0" onMouseClicked="#barajaNormal4" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/fruit4.png" />
-                           </image>
-                        </ImageView>
-                        <RadioButton fx:id="pajarosRotacion" layoutX="14.0" layoutY="207.0" mnemonicParsing="false" selected="true">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="barajasCategoria" />
-                           </toggleGroup></RadioButton>
-                        <RadioButton fx:id="frutasRotacion" layoutX="152.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
-                        <RadioButton fx:id="baraja3Rotacion" layoutX="300.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
-                        <RadioButton fx:id="baraja4Rotacion" layoutX="431.0" layoutY="207.0" mnemonicParsing="false" toggleGroup="$barajasCategoria" />
-                        <ImageView fx:id="categ1" fitHeight="78.0" fitWidth="75.0" layoutX="54.0" layoutY="185.0" onMouseClicked="#pajarosRotacion1" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/card1.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="categ2" fitHeight="78.0" fitWidth="75.0" layoutX="195.0" layoutY="185.0" onMouseClicked="#frutasRotacion2" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/fruit1.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="categ3" fitHeight="78.0" fitWidth="75.0" layoutX="339.0" layoutY="185.0" onMouseClicked="#barajaRotacion3" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/card2.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="categ4" fitHeight="78.0" fitWidth="75.0" layoutX="480.0" layoutY="185.0" onMouseClicked="#barajaRotacion4" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/fruit4.png" />
-                           </image>
-                        </ImageView>
                         <Line endX="100.0" layoutX="132.0" layoutY="30.0" startX="-100.0" />
-                        <Line endX="100.0" layoutX="132.0" layoutY="161.0" startX="-100.0" />
+                        <ComboBox fx:id="barajasBox" layoutX="57.0" layoutY="40.0" onAction="#elegirBaraja" prefHeight="28.0" prefWidth="222.0" />
+                        <Label layoutX="38.0" layoutY="118.0" prefHeight="18.0" prefWidth="92.0" text="Nº Categorías:" />
+                        <Label fx:id="nCategorias" layoutX="135.0" layoutY="118.0" prefHeight="18.0" prefWidth="24.0" />
+                        <Label layoutX="182.0" layoutY="119.0" prefHeight="18.0" prefWidth="75.0" text="Categorías:" />
+                        <Label fx:id="categoriasLabel" layoutX="257.0" layoutY="111.0" prefHeight="35.0" prefWidth="308.0" />
+                        <Label layoutX="38.0" layoutY="204.0" prefHeight="18.0" prefWidth="97.0" text="Cartas ejemplo:" />
+                        <ImageView fx:id="cartaEjemplo1" fitHeight="84.0" fitWidth="75.0" layoutX="145.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="cartaEjemplo2" fitHeight="84.0" fitWidth="75.0" layoutX="233.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
                      </children></AnchorPane>
                </content>
             </Tab>
