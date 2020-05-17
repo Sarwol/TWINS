@@ -111,13 +111,13 @@
                         <Label layoutX="30.0" layoutY="141.0" prefHeight="18.0" prefWidth="217.0" text="Tiempo de Partida:" />
                         <Label layoutX="394.0" layoutY="141.0" prefHeight="18.0" prefWidth="64.0" text="segundos" />
                         <Label layoutX="29.0" layoutY="177.0" prefHeight="18.0" prefWidth="99.0" text="Tipo de tablero:" />
-                        <RadioButton fx:id="eHorizontal" layoutX="27.0" layoutY="205.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="147.0" text="Espejo horizontal">
+                        <RadioButton fx:id="eHorizontal" disable="true" layoutX="27.0" layoutY="205.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="147.0" text="Espejo horizontal">
                            <toggleGroup>
                               <ToggleGroup fx:id="rotacionButtons" />
                            </toggleGroup></RadioButton>
-                        <RadioButton fx:id="eVertical" layoutX="27.0" layoutY="234.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="153.0" text="Espejo vertical" toggleGroup="$rotacionButtons" />
-                        <RadioButton fx:id="rDerecha" layoutX="186.0" layoutY="205.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="147.0" text="Rotación derecha" toggleGroup="$rotacionButtons" />
-                        <RadioButton fx:id="rIzquierda" layoutX="186.0" layoutY="234.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="155.0" text="Rotación izquierda" toggleGroup="$rotacionButtons" />
+                        <RadioButton fx:id="eVertical" disable="true" layoutX="27.0" layoutY="234.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="153.0" text="Espejo vertical" toggleGroup="$rotacionButtons" />
+                        <RadioButton fx:id="rDerecha" disable="true" layoutX="186.0" layoutY="205.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="147.0" text="Rotación derecha" toggleGroup="$rotacionButtons" />
+                        <RadioButton fx:id="rIzquierda" disable="true" layoutX="186.0" layoutY="234.0" mnemonicParsing="false" onAction="#elegirTablero" prefHeight="30.0" prefWidth="155.0" text="Rotación izquierda" toggleGroup="$rotacionButtons" />
                         <RadioButton fx:id="normal" layoutX="355.0" layoutY="219.0" mnemonicParsing="false" onAction="#elegirTablero" text="Normal" toggleGroup="$rotacionButtons" />
                         <Button fx:id="defaultParametrosButton" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#setDefaultParametros" prefHeight="32.0" prefWidth="196.0" text="Restablecer predeterminados" />
                         <Button fx:id="saveButton2" layoutX="481.0" layoutY="294.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="32.0" prefWidth="88.0" text="Guardar" />

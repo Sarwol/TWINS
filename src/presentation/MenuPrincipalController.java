@@ -7,6 +7,7 @@ package presentation;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,12 +19,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static presentation.VentanaJuegoLibreController.mode;
 
 /**
  * FXML Controller class
@@ -33,20 +38,30 @@ import javafx.stage.Stage;
 public class MenuPrincipalController implements Initializable {
 
     @FXML
-    private Button juegoLibreButton;
-    @FXML
     private Button barajasButton;
     @FXML
     private AnchorPane anchorPane;
     @FXML
     private Button nivelesButton;
     @FXML
+    private Button cartaButton;
+    @FXML
+    private Button estandarButton;
+    @FXML
+    private Button categoriaButton;
+    @FXML
+    private Button parametrosButton;
+    @FXML
+    private ImageView muteView;
+
+    @FXML
     private Button salirButton;
 
     public MediaPlayer player;
     public static AudioClip musicaInicial;
     private Stage winStage;
-
+    public static String mode;
+    
     /**
      * Initializes the controller class.
      */
@@ -59,10 +74,9 @@ public class MenuPrincipalController implements Initializable {
         //player.play();
         //audio = new AudioClip((this.getClass().getResource("src/music/HOME-Resonance.mp3").toString()));
         musicaInicial = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
-        musicaInicial.play(0.3);
+        musicaInicial.play(0.15);
     }
 
-    @FXML
     private void abrirJuegoLibre(ActionEvent event) throws IOException {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("VentanaJuegoLibre.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -161,5 +175,131 @@ public class MenuPrincipalController implements Initializable {
 
     void initWindow(Stage stage) {
         winStage = stage;
+    }
+
+    @FXML
+    private void abrirPorCarta(ActionEvent event) throws IOException {
+        mode = "PartidaPorCarta.fxml";
+        MenuPrincipalController.musicaInicial.stop();
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
+        Parent root = (Parent) myLoader.load();
+        PartidaPorCartaController partidaCartController = myLoader.<PartidaPorCartaController>getController();
+        Stage winStage = new Stage();
+        partidaCartController.initWindow(winStage, mode);
+        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+        thisStage.close();
+        winStage.close();
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+         //System.out.println(mode);
+    }
+
+    @FXML
+    private void abrirEstandar(ActionEvent event) throws IOException {
+         mode = "PartidaEstandar.fxml";
+        MenuPrincipalController.musicaInicial.stop();
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
+        Parent root = (Parent) myLoader.load();
+        PartidaEstandarController partidaEstController = myLoader.<PartidaEstandarController>getController();
+        Stage winStage = new Stage();
+        partidaEstController.initWindow(winStage, mode);
+        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+        thisStage.close();
+        winStage.close();
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+        //System.out.println(mode);
+    }
+
+    @FXML
+    private void abrirPorCategoria(ActionEvent event) throws IOException {
+        mode = "PartidaCategoria.fxml";
+        MenuPrincipalController.musicaInicial.stop();
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
+        Parent root = (Parent) myLoader.load();
+        PartidaCategoriaController partidaCatController = myLoader.<PartidaCategoriaController>getController();
+        Stage winStage = new Stage();
+        partidaCatController.initWindow(winStage, mode);
+        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+        thisStage.close();
+        winStage.close();
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+        //System.out.println(mode);
+    }
+/*
+    @FXML
+    private void abrirParametros(ActionEvent event) {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ParametrosPartida.fxml"));
+        MenuPrincipalController.musicaInicial.stop();
+        Parent root = null;
+        try{
+        root = (Parent) myLoader.load();
+        } catch(IOException e){}
+        ParametrosPartidaController ventanaJuegoLibreController = myLoader.<ParametrosPartidaController>getController();
+        Stage winStage = new Stage();
+        ventanaJuegoLibreController.initWindow(winStage);
+        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+        //thisStage.close();
+        //parentStage.close();
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
+    }
+*/
+
+    @FXML
+    private void changeMusic(MouseEvent event) throws URISyntaxException {
+        if(musicaInicial.isPlaying()) {
+            musicaInicial.stop();
+               //Image image = new Image(this.getClass().getResource("/images/appImages/muteOffIcon.png").toURI().toString());
+               //muteView.setImage(image);
+        } else {
+            musicaInicial.play(0.15);
+               //Image image = new Image(this.getClass().getResource("/images/appImages/muteOnIcon.png").toURI().toString());
+               //muteView.setImage(image);
+        }
+    }
+
+    @FXML
+    private void abrirParametros(MouseEvent event) {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ParametrosPartida.fxml"));
+        MenuPrincipalController.musicaInicial.stop();
+        Parent root = null;
+        try{
+        root = (Parent) myLoader.load();
+        } catch(IOException e){}
+        ParametrosPartidaController ventanaJuegoLibreController = myLoader.<ParametrosPartidaController>getController();
+        Stage winStage = new Stage();
+        ventanaJuegoLibreController.initWindow(winStage);
+        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+        //thisStage.close();
+        //parentStage.close();
+        //We create the scene foe win1
+        Scene scene = new Scene(root);
+        //we asign new scene to current stage/window
+        winStage.setScene(scene);
+        winStage.setTitle("TWINS");
+        winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.show();
     }
 }
