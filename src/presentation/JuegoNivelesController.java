@@ -28,9 +28,9 @@ import javafx.stage.Stage;
 import logic.Carta;
 import logic.Nivel;
 import logic.Puntuacion;
-import static presentation.JuegoController.DURACION_PARTIDA;
-import static presentation.JuegoController.DURACION_TURNO;
 import static presentation.JuegoController.modo;
+import static presentation.JuegoController.duracionPartida;
+import static presentation.JuegoController.duracionTurno;
 
 /**
  * FXML Controller class
@@ -73,7 +73,7 @@ public class JuegoNivelesController extends JuegoController {
         setUpPairSelection();
         // Specify levels to be loaded
         // configures countdowns
-        setTimers(DURACION_PARTIDA, DURACION_TURNO);
+        setTimers(duracionPartida, duracionTurno);
         // initialize tablero
         configurarTablero();
         // loads the card turning animation
@@ -95,15 +95,15 @@ public class JuegoNivelesController extends JuegoController {
     public void setUpLevel(int levelIndex) {
         Nivel nivel = niveles.get(levelIndex);
         System.out.println("LEVEL PARAMETERS: " + nivel);
-        ANCHURA_TABLERO = nivel.getBoardHeight();
-        LONGITUD_TABLERO = nivel.getBoardWidth();
-        DURACION_PARTIDA = nivel.getTime();
+        anchuraTablero = nivel.getBoardHeight();
+        longitudTablero = nivel.getBoardWidth();
+        duracionPartida = nivel.getTime();
         minPoints = nivel.getMinPoints();
     }
 //    @Override
 //    public void configurarTablero(){
-//        tablero.setFilas(ANCHURA_TABLERO);
-//        tablero.setColumnas(LONGITUD_TABLERO);
+//        tablero.setFilas(anchuraTablero);
+//        tablero.setColumnas(longitudTablero);
 //        tablero.setBaraja(barajaActual.getCartas());
 //        tablero.barajarTablero();
 //    }

@@ -6,13 +6,13 @@
  */
 package presentation;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
@@ -56,12 +56,14 @@ import logic.Tablero;
  */
 public abstract class JuegoController implements Initializable {
 
-    public static int LONGITUD_TABLERO = 6;
-    public static int ANCHURA_TABLERO = 4;
-    public static int TURN_DELAY = 500;
+    public static int longitudTablero = 6;
+    public static int anchuraTablero = 4;
+    // Measured in seconds
+    public static double turnDelay = 0.500;
 //    public static int NUM_CATEGORIAS = 2;
-    public static int DURACION_PARTIDA = 60;
-    public static int DURACION_TURNO = 5;
+    public static int duracionPartida = 60;
+    // Duracion del turno en segundos
+    public static int duracionTurno = 5;
 
     protected static String modo;
     // Referencia a esta Stage
@@ -103,8 +105,8 @@ public abstract class JuegoController implements Initializable {
     protected Carta carta2;
     // Para reproducir la canción
     protected AudioClip audio = null;
-    // Animación de rotación
-    public RotateTransition rotateAnimation;
+    // Animaciones
+    public RotateTransition turnAnimation;
     //Audio de fallo de carta
     public static AudioClip audioFail;
     //Audio de Acierto
@@ -130,7 +132,7 @@ public abstract class JuegoController implements Initializable {
         // Configures pair selection mechanics
         setUpPairSelection();
         // configures countdowns
-        setTimers(DURACION_PARTIDA, DURACION_TURNO);
+        setTimers(duracionPartida, duracionTurno);
         // initialize tablero
         configurarTablero();
         // loads the card turning animation
@@ -148,10 +150,6 @@ public abstract class JuegoController implements Initializable {
             public void onChanged(ListChangeListener.Change change) {
                 if (observPauseList.get(0)) {
                     tablero.setVisible(true);
-                    // La música de la pausa
-//                    if (pauseMusic.isPlaying()) {
-//                        pauseMusic.stop();
-//                    }
                 }
             }
         });
@@ -181,9 +179,13 @@ public abstract class JuegoController implements Initializable {
      * Configura las opciones del tablero
      */
     public void configurarTablero(){
-        barajaActual = generarBaraja(LONGITUD_TABLERO * ANCHURA_TABLERO, "fruit", "Baraja Default");
-        tablero.setFilas(ANCHURA_TABLERO);
-        tablero.setColumnas(LONGITUD_TABLERO);
+        barajaActual = generarBaraja(longitudTablero * anchuraTablero, "fruit", "Baraja Default");
+        tablero.setFilas(anchuraTablero);
+        tablero.setColumnas(longitudTablero);
+        
+        for(Carta carta : barajaActual){
+            carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
+        }
         tablero.setBaraja(barajaActual.getCartas());
         tablero.barajarTablero();
     }
@@ -192,12 +194,13 @@ public abstract class JuegoController implements Initializable {
      * Configures animations for cards
      */
     public void setAnimation() {
-        rotateAnimation = new RotateTransition();
-        rotateAnimation.setDuration(Duration.millis(200));
-        rotateAnimation.setByAngle(360);
-        rotateAnimation.setCycleCount(1);
-        rotateAnimation.setAutoReverse(false);
-        rotateAnimation.setAxis(new Point3D(0, 1, 0));
+        
+        turnAnimation = new RotateTransition();
+        turnAnimation.setDuration(Duration.millis(200));
+        turnAnimation.setByAngle(360);
+        turnAnimation.setCycleCount(1);
+        turnAnimation.setAutoReverse(false);
+        turnAnimation.setAxis(new Point3D(0, 1, 0));
     }
 
     /**
@@ -222,8 +225,9 @@ public abstract class JuegoController implements Initializable {
                         e.printStackTrace();
                     }
                 }
-                tiempoPartida.setText((tiempoActualPartida--)/60 + ":" + (tiempoActualPartida--)%60);
-                //System.out.println("UPDATED GAME TIME");
+                String timeStr = String.format("%02d:%02d", tiempoActualPartida/60, tiempoActualPartida%60 );
+                tiempoPartida.setText(timeStr);
+                tiempoActualPartida--;
             }
         }));
         countdownPartida.setCycleCount(Timeline.INDEFINITE);
@@ -234,10 +238,9 @@ public abstract class JuegoController implements Initializable {
                 if (tiempoActualTurno == 0) {
                     puntuacion.restarPuntos();
                     punt.setText(puntuacion.getPuntos() + "");
-                    tiempoActualTurno = DURACION_TURNO;
+                    tiempoActualTurno = duracionTurno;
                 }
                 tiempoTurno.setText((tiempoActualTurno--) + "");
-                //System.out.println("UPDATED TURN TIME");
             }
         }));
         countdownTurno.setCycleCount(Timeline.INDEFINITE);
@@ -261,7 +264,7 @@ public abstract class JuegoController implements Initializable {
                 puntuacion.sumarPuntos();
                 audioOK.play(0.1);
                 punt.setText(puntuacion.getPuntos() + "");
-                //setTimer(DURACION_TURNO, tiempoTurno);
+                //setTimer(duracionTurno, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
@@ -285,7 +288,7 @@ public abstract class JuegoController implements Initializable {
      */
     public void resetTurnCountdown() {
         // Reset turn countdown
-        tiempoActualTurno = DURACION_TURNO;
+        tiempoActualTurno = duracionTurno;
         //tiempoTurno.setText(tiempoActualTurno + "");
     }
 
@@ -297,7 +300,7 @@ public abstract class JuegoController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(TURN_DELAY);
+                    Thread.sleep(Math.round(turnDelay * 1000));
                 } catch (InterruptedException ie) {
                     System.out.println("Error sleeping before turning cards");
                     ie.printStackTrace();
@@ -310,11 +313,11 @@ public abstract class JuegoController implements Initializable {
             @Override
             public void handle(WorkerStateEvent event) {
                 carta1.turn();
-                rotateAnimation.setNode(carta1);
-                rotateAnimation.play();
+                turnAnimation.setNode(carta1);
+                turnAnimation.play();
                 carta2.turn();
-                rotateAnimation.setNode(carta2);
-                rotateAnimation.play();
+                turnAnimation.setNode(carta2);
+                turnAnimation.play();
             }
         });
         new Thread(waitTurnCards).start();
@@ -351,9 +354,6 @@ public abstract class JuegoController implements Initializable {
             
 
             List<Carta> baraja = new ArrayList<>();
-//        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-//        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
-            //System.out.println(this.getClass().getResource("/images/card.png"));
             Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
 
             for (int i = 0; i < 2; i++) {
@@ -374,26 +374,6 @@ public abstract class JuegoController implements Initializable {
         }
         if(barajaCartas == null){System.out.println("BARAJA IS NULL!!!!");}
         return barajaCartas;
-
-        /*
-        List<Carta> baraja = new ArrayList<Carta>();
-        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-        //String cardImages = "." + File.separator + "images" + File.separator + "card";
-        String cardImages = "." + File.separator + "images" + File.separator + "fruit";
-        Image deckCardImage = new Image(deckCard.toURI().toString(), 50, 50, false, false);
-
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < numCartas / 2; j++) {
-                File currentCard = new File(cardImages + (j + 1) + ".png");
-                Image currentCardImage = new Image(currentCard.toURI().toString(), 50, 50, false, false);
-                Carta carta = new Carta(j, currentCardImage, deckCardImage);
-
-                // Add event to detect when a Carta is clicked
-                carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-                baraja.add(carta);
-            }
-        }
-        return baraja;*/
     }
     /*
     Turns the card around and adds it to the selected pair
@@ -406,8 +386,8 @@ public abstract class JuegoController implements Initializable {
             cartaElegida.turn();
 
             // Plays animation
-            rotateAnimation.setNode(cartaElegida);
-            rotateAnimation.play();
+            turnAnimation.setNode(cartaElegida);
+            turnAnimation.play();
 
             // Just for the debug print
             int cartaID = cartaElegida.getCartaID();
@@ -447,14 +427,7 @@ public abstract class JuegoController implements Initializable {
         countdownTurno.pause();
 
         Stage pausaWinStage = new Stage();
-        // When this stage is closed, resume the countdown
-//        pausaWinStage.setOnHidden(e -> {
-//            countdownTurno.play();
-//            countdownPartida.play();
-//            audio.play();
-//        });
         Stage thisStage = (Stage) punt.getScene().getWindow();
-        //if(thisStage == null)System.out.println("EL STAGE ES NULO");
         pausaController.initPausaWindow(pausaWinStage, thisStage, cancion, audio, observPauseList, countdownPartida, countdownTurno);
         Scene scene = new Scene(root);
         pausaWinStage.setScene(scene);
@@ -480,7 +453,7 @@ public abstract class JuegoController implements Initializable {
     public abstract void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException;
 
     public void saltarADerrota(String m) throws IOException {
-        audio.stop();
+        if(audio.isPlaying()) audio.stop();
         tablero.setDisable(true);
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -505,18 +478,17 @@ public abstract class JuegoController implements Initializable {
     }
     
     protected void defaultData() {
-        LONGITUD_TABLERO = 6;
-        ANCHURA_TABLERO = 4;
-        DURACION_PARTIDA = 60;
-        DURACION_TURNO = 5;
-        TURN_DELAY = 1000;
+        longitudTablero = 6;
+        anchuraTablero = 4;
+        duracionPartida = 60;
+        duracionTurno = 5;
+        turnDelay = 1;
         cancion = "/music/Cancion1.mp3";
         setAudio(cancion);
         audio.play(0.3);
         audioFail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
         audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
         audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
-
     }
 }
 

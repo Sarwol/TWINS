@@ -30,6 +30,9 @@ public class Baraja implements Iterable<Carta> {
         this.imagenReverso = null;
         this.categorias = new ArrayList<>();
     }
+    public Baraja(String nombre, Image imagenReverso){
+        this(nombre, new ArrayList<Carta>(), imagenReverso);
+    }
 
     public Baraja(String nombre, List<Carta> cartas, Image imagenReverso) {
         this.nombre = nombre;
@@ -143,5 +146,17 @@ public class Baraja implements Iterable<Carta> {
          return imagenesCarta;
     }
 
+    public int size(){
+        return this.cartas.size();
+    }
     
+    @Override
+    public String toString(){
+        String thisBaraja = nombre + ": {";
+        for(Carta carta : cartas){
+            thisBaraja += carta.toString() + ", ";
+        }
+        thisBaraja += "}";
+        return thisBaraja;
+    }
 }

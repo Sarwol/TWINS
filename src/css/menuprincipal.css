@@ -14,16 +14,16 @@
         -fx-background-position: center;
         -fx-border-color: transparent;
         -fx-border-width: 0;
-        -fx-background-size: 200px;
+        -fx-background-size: 175px;
         
     }
    
     #juegoLibreButton{
-        -fx-background-image: url("/buttons/juegolibre.png");
+        -fx-background-image: url("/buttons/estandar.png");
     }
     
     #juegoLibreButton:hover{
-        -fx-background-image: url("/buttons/juegolibreHover.png");
+        -fx-background-image: url("/buttons/estandarHover.png");
     }
     
     #salirButton{

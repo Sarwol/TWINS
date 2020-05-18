@@ -47,11 +47,11 @@ public class Tablero extends GridPane {
      */
     public int barajarTablero(){
         
-        if(baraja.size() != filas * columnas){  // comprobar tamaño correcto
+        if(baraja.size() < filas * columnas){  // comprobar tamaño correcto
             return -1;
         }
-        
-        List<Carta> copiaBaraja = clonarBaraja(baraja);
+        // Used to remove cards from
+        List<Carta> copiaBaraja = clonarBaraja(baraja, filas * columnas);
         Carta cartaAIntroducir = null;
         
         
@@ -71,15 +71,26 @@ public class Tablero extends GridPane {
     
     /**
      * Método auxiliar para copiar los elementos de una lista a otra.
+     * Realiza ajustes de tamaño si la lista tiene más cartas de las necesarias
      * @param barajaOriginal
+     * @param size tamaño de la baraja resultante
      * @return Copia de la baraja original
      */
-    public List<Carta> clonarBaraja(List<Carta> barajaOriginal){
+    public List<Carta> clonarBaraja(List<Carta> barajaOriginal, int size){
         List<Carta> copiaBaraja = new ArrayList<Carta>();
-        for(Carta carta : barajaOriginal){
-            copiaBaraja.add(carta);
-        }
         
+        for(int i = 0; i < size/2; i++){
+            for(int j = i; j < barajaOriginal.size(); j++){
+                Carta carta = barajaOriginal.get(j);
+//                System.out.println("i: " + i + " | j: " + j + " | " + carta);
+                if(carta.getCartaID() == i){
+                    copiaBaraja.add(carta);
+//                    System.out.println("ADDED CARD: " + carta);
+                }
+            }
+        }
+//        System.out.println("ORIGINAL DECK: " + barajaOriginal);
+//        System.out.println("TRUNCATED DECK: " + copiaBaraja);
         return copiaBaraja;
     }
     
