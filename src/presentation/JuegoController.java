@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
@@ -41,9 +40,6 @@ import logic.Baraja;
 import logic.Carta;
 import logic.Puntuacion;
 import logic.Tablero;
-//import static presentation.ParametrosPartidaController.barajaCategoriaActual;
-//import static presentation.ParametrosPartidaController.imagenCarta;
-//import static presentation.ParametrosPartidaController.*;
 
 /**
  * FXML Controller class
@@ -120,6 +116,8 @@ public abstract class JuegoController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -140,7 +138,7 @@ public abstract class JuegoController implements Initializable {
     }
     
     public void setUpPauseMenuAccess(){
-        pauseList = new ArrayList<Boolean>();
+        pauseList = new ArrayList<>();
         pauseList.add(Boolean.FALSE);
         observPauseList = FXCollections.observableList(pauseList);
         

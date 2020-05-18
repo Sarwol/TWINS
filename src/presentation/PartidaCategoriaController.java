@@ -5,13 +5,10 @@
  */
 package presentation;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import logic.Carta;
 import logic.Categoria;
-import logic.Puntuacion;
 import static presentation.PartidaEstandarController.longitudTablero;
 import static presentation.PartidaEstandarController.anchuraTablero;
 

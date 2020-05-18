@@ -6,8 +6,6 @@
 package presentation;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +28,7 @@ import logic.Puntuacion;
  *
  * @author Dani
  */
-public class JuegoLibreController extends JuegoController {
+public abstract class JuegoLibreController extends JuegoController {
     
     //Objeto configuración (parámetros default si es la primera vez que se crea)
     public  Configuracion parametros = Configuracion.getInstance();
@@ -137,24 +135,8 @@ public class JuegoLibreController extends JuegoController {
         thisStage.close();
     }
 
-//    @Override
-//    public void saltarADerrota(String m) throws IOException {
-//        if(audio.isPlaying()) audio.stop();
-//        tablero.setDisable(true);
-//        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
-//        Parent root = (Parent) myLoader.load();
-//        DerrotaController derrotaController = myLoader.<DerrotaController>getController();
-//        Stage derrotaWinStage = new Stage();
-//        derrotaController.initDerrotaWindow(derrotaWinStage, m);
-//        Scene scene = new Scene(root);
-//        derrotaWinStage.setScene(scene);
-//        derrotaWinStage.initModality(Modality.APPLICATION_MODAL);
-//        derrotaWinStage.show();
-//        //stopAudio(cancion);
-//        Stage thisStage = (Stage) tablero.getScene().getWindow();
-//        thisStage.close();
-//    }
     
+    @Override
     protected void recibirParametros(){
         
         longitudTablero = parametros.getLarguraTablero();
