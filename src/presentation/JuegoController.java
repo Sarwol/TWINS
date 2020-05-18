@@ -124,19 +124,19 @@ public abstract class JuegoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // loads the default parameters
-        defaultData();
+        recibirParametros();                        // abstract
         // initial score
-        puntuacion = new Puntuacion(0);
+        puntuacion = new Puntuacion(0);             // same for all game modes
         // configures access to the pause menu
-        setUpPauseMenuAccess();
+        setUpPauseMenuAccess();                     // same for all game modes
         // Configures pair selection mechanics
-        setUpPairSelection();
+        setUpPairSelection();                       // same for all game modes
         // configures countdowns
-        setTimers(duracionPartida, duracionTurno);
+        setTimers(duracionPartida, duracionTurno);  // same for all game modes
         // initialize tablero
-        configurarTablero();
+        configurarTablero();                        // abstract
         // loads the card turning animation
-        setAnimation();
+        setAnimation();                             // same for all game modes
     }
     
     public void setUpPauseMenuAccess(){
@@ -178,17 +178,7 @@ public abstract class JuegoController implements Initializable {
     /**
      * Configura las opciones del tablero
      */
-    public void configurarTablero(){
-        barajaActual = generarBaraja(longitudTablero * anchuraTablero, "fruit", "Baraja Default");
-        tablero.setFilas(anchuraTablero);
-        tablero.setColumnas(longitudTablero);
-        
-        for(Carta carta : barajaActual){
-            carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-        }
-        tablero.setBaraja(barajaActual.getCartas());
-        tablero.barajarTablero();
-    }
+    public abstract void configurarTablero();
 
     /**
      * Configures animations for cards
@@ -477,18 +467,14 @@ public abstract class JuegoController implements Initializable {
         winStage = stage;
     }
     
-    protected void defaultData() {
-        longitudTablero = 6;
-        anchuraTablero = 4;
-        duracionPartida = 60;
-        duracionTurno = 5;
-        turnDelay = 1;
-        cancion = "/music/Cancion1.mp3";
-        setAudio(cancion);
-        audio.play(0.3);
-        audioFail = new AudioClip(this.getClass().getResource("/music/fail.mp3").toString());
-        audioOK = new AudioClip(this.getClass().getResource("/music/correct.mp3").toString());
-        audioFlip = new AudioClip(this.getClass().getResource("/music/flip.wav").toString());
-    }
+    /**
+     * Should load default data for a given game
+     */
+    protected abstract void defaultData();
+    /**
+     * Should load parameters from the Configuration class.
+     * Can also load default data
+     */
+    protected abstract void recibirParametros();
 }
 

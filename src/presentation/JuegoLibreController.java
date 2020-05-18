@@ -38,34 +38,35 @@ public class JuegoLibreController extends JuegoController {
     /**
      * Initializes the controller class.
      */
+//    @Override
+//    public void initialize(URL url, ResourceBundle rb) {
+//        // Loads parameters from config class
+//        recibirParametros();
+//        puntuacion = new Puntuacion(0);
+//        setUpPauseMenuAccess();
+//        setUpPairSelection();
+//        setTimers(duracionPartida, duracionTurno);
+//        
+//        configurarTablero();
+//        setAnimation();
+//    }
+    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Loads parameters from config class
-        recibirParametros();
-        if (!parametros.isSinMusica()) {
-            setAudio(cancion);
-            audio.play(0.3);
-        }
-        puntuacion = new Puntuacion(0);
-        setUpPauseMenuAccess();
-        setUpPairSelection();
-        
-       
-        if(parametros.isLimitePartida())
-            setTimers(duracionPartida, duracionTurno);
-        
-        configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
-        setAnimation();
+    public void setTimers(int roundDuration, int turnDuration){
+        if(parametros.isLimitePartida()) super.setTimers(roundDuration, turnDuration);
     }
     
     /**
      * Configura las opciones del tablero
      */
-//    @Override
+    @Override
+    public void configurarTablero(){
+        configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
+        
+        
+    }
+    
     public void configurarTablero(Baraja barajaElegida){
-        
-        
-        
         // Add event handlers
         for(Carta carta : barajaElegida){
             carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
@@ -80,7 +81,6 @@ public class JuegoLibreController extends JuegoController {
         }
         tablero.barajarTablero();
     }
-    
     
     /**
      * Returns a copy of barajaOriginal with new instances of cards inside of 
@@ -137,23 +137,23 @@ public class JuegoLibreController extends JuegoController {
         thisStage.close();
     }
 
-    @Override
-    public void saltarADerrota(String m) throws IOException {
-        if(audio.isPlaying()) audio.stop();
-        tablero.setDisable(true);
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
-        Parent root = (Parent) myLoader.load();
-        DerrotaController derrotaController = myLoader.<DerrotaController>getController();
-        Stage derrotaWinStage = new Stage();
-        derrotaController.initDerrotaWindow(derrotaWinStage, m);
-        Scene scene = new Scene(root);
-        derrotaWinStage.setScene(scene);
-        derrotaWinStage.initModality(Modality.APPLICATION_MODAL);
-        derrotaWinStage.show();
-        //stopAudio(cancion);
-        Stage thisStage = (Stage) tablero.getScene().getWindow();
-        thisStage.close();
-    }
+//    @Override
+//    public void saltarADerrota(String m) throws IOException {
+//        if(audio.isPlaying()) audio.stop();
+//        tablero.setDisable(true);
+//        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
+//        Parent root = (Parent) myLoader.load();
+//        DerrotaController derrotaController = myLoader.<DerrotaController>getController();
+//        Stage derrotaWinStage = new Stage();
+//        derrotaController.initDerrotaWindow(derrotaWinStage, m);
+//        Scene scene = new Scene(root);
+//        derrotaWinStage.setScene(scene);
+//        derrotaWinStage.initModality(Modality.APPLICATION_MODAL);
+//        derrotaWinStage.show();
+//        //stopAudio(cancion);
+//        Stage thisStage = (Stage) tablero.getScene().getWindow();
+//        thisStage.close();
+//    }
     
     protected void recibirParametros(){
         
@@ -167,6 +167,10 @@ public class JuegoLibreController extends JuegoController {
         audioOK = new AudioClip(this.getClass().getResource(parametros.getSonidoCorrecto()).toString());
         audioFlip = new AudioClip(this.getClass().getResource(parametros.getSonidoGiro()).toString());
         cancion = parametros.getCancionPartida();
+        if (!parametros.isSinMusica()) {
+            setAudio(cancion);
+            audio.play(0.3);
+        }
       
     }
     
@@ -180,6 +184,7 @@ public class JuegoLibreController extends JuegoController {
         audioFail = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_FALLO_DEFAULT).toString());
         audioOK = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_CORRECTO_DEFAULT).toString());
         audioFlip = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_GIRO_DEFAULT).toString());
+        cancion = Configuracion.CANCION_PARTIDA_DEFAULT;
     }
     
     /**
