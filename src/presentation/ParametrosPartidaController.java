@@ -34,6 +34,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import logic.Baraja;
 import logic.Carta;
+import logic.Categoria;
 import logic.Configuracion;
 
 /**
@@ -169,8 +170,9 @@ public class ParametrosPartidaController implements Initializable {
     public static String sonidoActualGiro = "/music/flip.wav";
 
     //Barajas
-    Baraja barajaDefault = generarBaraja(24, "card", "Baraja1");
-    Baraja baraja2 = generarBaraja(24, "fruit", "Baraja2");
+    /*Baraja barajaDefault = generarBaraja(24, "card", "Baraja1");
+    Baraja baraja2 = generarBaraja(24, "fruit", "Baraja2");*/
+    public List<Baraja> listaBarajas; 
     public static Baraja barajaNormalActual;
     public static Baraja barajaCategoriaActual;
     private Baraja barajaActual = parametros.getBarajaNormal();
@@ -222,8 +224,7 @@ public class ParametrosPartidaController implements Initializable {
         //Parámetros de Partida (tipo de tablero)
         normal.setSelected(true);
         //Barajas
-        barajasBox.setItems(FXCollections.observableList(Arrays.asList(parametros.getBarajaNormal().getNombre(),
-                "Baraja Default 2", parametros.getBarajaCategoria().getNombre()+ " Categorias")));
+        setBarajas();
         //Efectos de Partida
         //Sonidos
         soundOKBox.setItems(FXCollections.observableList(Arrays.asList("Acierto 1", "Acierto 2", "Acierto 3")));
@@ -290,17 +291,7 @@ public class ParametrosPartidaController implements Initializable {
     //Botones de restablecer a Valores Predeterminados
     @FXML
     private void setDefaultBarajas(ActionEvent event) {
-        /*
-        defaultBaraja.setSelected(true);
-        pajarosRotacion.setSelected(true);
-        if (baraja3Rotacion.isSelected()) {
-            baraja3Rotacion.setSelected(false);
-        }
-        if (baraja4Rotacion.isSelected()) {
-            baraja4Rotacion.setSelected(false);
-        }
-        */
-      
+        
          barajasBox.setValue(parametros.getBarajaNormal().getNombre());
          barajaActual = parametros.getBarajaNormal();
          nCategorias.setText(String.valueOf(barajaActual.getCategorias().size()));
@@ -538,128 +529,24 @@ public class ParametrosPartidaController implements Initializable {
     
     @FXML
     private void elegirBaraja(ActionEvent event) /*throws URISyntaxException*/ {
-       switch(barajasBox.getSelectionModel().getSelectedIndex()) {
-                case 0:
-                    barajaActual = parametros.getBarajaNormal();
-                    
-                    /*parametros.setBarajaNormal(barajaActual);
-                    if(barajaActual.getCategorias().size() >= 2) parametros.setBarajaCategoria(barajaActual);*/
-                   
-                    
-                case 1:
-                     barajaActual = parametros.generarBaraja(parametros.getAnchuraTablero()*parametros.getLarguraTablero(), "card", "Default 2");
-                     //barajaActual.getCategorias().remove(0);
-                     /*parametros.setBarajaNormal(barajaActual);
-                     if(barajaActual.getCategorias().size() >= 2) parametros.setBarajaCategoria(barajaActual);*/
-                case 2:
-                     barajaActual = parametros.getBarajaCategoria();
-                     /*parametros.setBarajaNormal(barajaActual);
-                     if(barajaActual.getCategorias().size() >= 2) parametros.setBarajaCategoria(barajaActual);*/
-            }
+       barajaActual = listaBarajas.get(barajasBox.getSelectionModel().getSelectedIndex());
        nCategorias.setText(String.valueOf(barajaActual.getCategorias().size()));
        categoriasLabel.setText(barajaActual.getCategorias().toString());
        cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenCarta());
        cartaEjemplo2.setImage(barajaActual.getCartas().get(1).getImagenCarta());
     }
     
-/*
-    private void pajarosNormal1(MouseEvent event) {
-        if (pajarosNormal.isSelected()) {
-            pajarosNormal.setSelected(false);
-        } else {
-            pajarosNormal.setSelected(true);
+    private void setBarajas(){
+        listaBarajas = new ArrayList<>();
+        listaBarajas.add(parametros.getBarajaNormal());
+        listaBarajas.add(parametros.generarBaraja(parametros.getAnchuraTablero()*parametros.getLarguraTablero(),"card",new Categoria("PAJAROS"),"Baraja Default 2"));
+        listaBarajas.add(parametros.getBarajaCategoria());
+        List<String> nombreBarajas = new ArrayList<String>();
+        for(int i =0; i < listaBarajas.size();i++){
+            nombreBarajas.add(listaBarajas.get(i).getNombre());
         }
-        imagenCarta = "card";
-        barajaNormalActual = barajaDefault;
+        barajasBox.setItems(FXCollections.observableList(nombreBarajas));
     }
-
-    private void frutasNormal2(MouseEvent event) {
-        if (frutasNormal.isSelected()) {
-            frutasNormal.setSelected(false);
-        } else {
-            frutasNormal.setSelected(true);
-        }
-        imagenCarta = "fruit";
-        barajaNormalActual = baraja2;
-    }
-
-    private void barajaNormal3(MouseEvent event) {
-        if (baraja3Normal.isSelected()) {
-            baraja3Normal.setSelected(false);
-        } else {
-            baraja3Normal.setSelected(true);
-        }
-        imagenCarta = "card";
-        barajaNormalActual = barajaDefault;
-    }
-
-    private void barajaNormal4(MouseEvent event) {
-        if (baraja4Normal.isSelected()) {
-            baraja4Normal.setSelected(false);
-        } else {
-            baraja4Normal.setSelected(true);
-        }
-        imagenCarta = "fruit";
-        barajaNormalActual = baraja2;
-    }
-
-    private void pajarosRotacion1(MouseEvent event) {
-        if (pajarosRotacion.isSelected()) {
-            pajarosRotacion.setSelected(false);
-        } else {
-            pajarosRotacion.setSelected(true);
-        }
-        imagenCarta = "card";
-        barajaCategoriaActual = barajaDefault;
-
-    }
-
-    private void frutasRotacion2(MouseEvent event) {
-        if (frutasRotacion.isSelected()) {
-            frutasRotacion.setSelected(false);
-        } else {
-            frutasRotacion.setSelected(true);
-        }
-        imagenCarta = "fruit";
-        barajaCategoriaActual = baraja2;
-    }
-
-    private void barajaRotacion3(MouseEvent event) {
-        if (baraja3Rotacion.isSelected()) {
-            baraja3Rotacion.setSelected(false);
-        } else {
-            baraja3Rotacion.setSelected(true);
-        }
-        imagenCarta = "card";
-        barajaCategoriaActual = barajaDefault;
-    }
-
-    private void barajaRotacion4(MouseEvent event) {
-        if (baraja4Rotacion.isSelected()) {
-            baraja4Rotacion.setSelected(false);
-        } else {
-            baraja4Rotacion.setSelected(true);
-        }
-        imagenCarta = "fruit";
-        barajaCategoriaActual = baraja2;
-    }
-
-    /**
-     * Populates interfaces with latest default parameters
-     */
-    // Can be changed
-    /*
-    private String cancionPartida;
-    private String sonidoCorrecto;
-    private String sonidoFallo;
-    private String sonidoGiro;
-    private String cartaPartida;
-    private boolean sinMusica;
-    private boolean mostrarCartasInicio;
-    private Baraja barajaNormal;
-    private Baraja barajaCategoria;
-     */
-    
     
     protected void loadCurrentParameters() {
         largoBox.setValue(parametros.getLarguraTablero());

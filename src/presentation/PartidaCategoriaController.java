@@ -24,7 +24,7 @@ import static presentation.PartidaEstandarController.anchuraTablero;
 public class PartidaCategoriaController extends JuegoLibreController {
 
     private Categoria categoriaActual;
-    public static int numeroCategorias = 2;
+    public int numeroCategorias = parametros.getBarajaCategoria().getCategorias().size();
     
     protected int contador = 1;
     

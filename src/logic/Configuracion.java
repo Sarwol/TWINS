@@ -74,8 +74,8 @@ public class Configuracion {
         sinMusica = noMusic;
         mostrarCartasInicio = cartasInicio;
         // May change depending on where we're going to end up putting the card generation
-        this.barajaNormal = generarBaraja(larguraTablero * anchuraTablero, CARTA_PARTIDA_DEFAULT, "Baraja Default");
-        this.barajaCategoria = generarBarajaCategoria(larguraTablero * anchuraTablero, getCartaPartida(), "Baraja Default");
+        this.barajaNormal = generarBaraja(larguraTablero * anchuraTablero, CARTA_PARTIDA_DEFAULT,new Categoria("FRUTAS"), "Baraja Default");
+        this.barajaCategoria = generarBarajaCategoria(larguraTablero * anchuraTablero, getCartaPartida(), "Baraja Categoria Default");
     }
 
     private Configuracion(String song, String correctSound, String failSound,
@@ -126,8 +126,8 @@ public class Configuracion {
         cartaPartida = CARTA_PARTIDA_DEFAULT;
         sinMusica = SIN_MUSICA_DEFAULT;
         mostrarCartasInicio = MOSTRAR_CARTAS_INICIO_DEFAULT;
-        this.barajaNormal = generarBaraja(larguraTablero * anchuraTablero, CARTA_PARTIDA_DEFAULT, "Baraja Default");
-        this.barajaCategoria = generarBaraja(larguraTablero * anchuraTablero, getCartaPartida(), "Baraja Default");
+        this.barajaNormal = generarBaraja(larguraTablero * anchuraTablero, CARTA_PARTIDA_DEFAULT,new Categoria("FRUTAS"), "Baraja Default");
+        this.barajaCategoria = generarBarajaCategoria(larguraTablero * anchuraTablero, getCartaPartida(), "Baraja Default Categoria");
     }
 
     /**
@@ -313,7 +313,7 @@ public class Configuracion {
 
     
     // DON'T FORGET TO CHANGE THIS WHEN DECK GENERATION WORKS PROPERLY
-    public final Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
+    public final Baraja generarBaraja(int numCartas, String cartaModelo, Categoria categoria, String nombreBaraja) {
         Baraja barajaCartas = null;
         if (numCartas % 2 != 0) {
             System.out.println("*****************************************");
@@ -334,14 +334,14 @@ public class Configuracion {
                     //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));
                     Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
 
-                    Carta carta = new Carta(j, currentCardImage, deckCardImage, new Categoria("FRUTAS"));
+                    Carta carta = new Carta(j, currentCardImage, deckCardImage, new Categoria(categoria.getName()));
 
                     // Add event to detect when a Carta is clicked
                     baraja.add(carta);
                 }
             }
             barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
-            barajaCartas.setCategorias(Arrays.asList(new Categoria("FRUTAS")));
+            barajaCartas.setCategorias(Arrays.asList(categoria));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
