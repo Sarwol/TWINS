@@ -15,8 +15,6 @@ import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
 import logic.Puntuacion;
-import static presentation.PartidaEstandarController.longitudTablero;
-import static presentation.PartidaEstandarController.anchuraTablero;
 
 /**
  * FXML Controller class para Partida por categoría.
@@ -29,11 +27,13 @@ public class PartidaCategoriaController extends JuegoLibreController {
     @FXML
     private Label categoriaLabel;
     
-    private Categoria categoriaActual;
+   
     public List<Integer> listaNumCategorias = new ArrayList<Integer>();
+    public Baraja barajaCatActual = parametros.getBarajaCategoria();
+    private Categoria categoriaActual;
     protected int contador = 0;
     private int indiceCat = 0;
-    public Baraja barajaCategoria = parametros.getBarajaCategoria();
+    
    
     /**
      * Initializes the controller class.
@@ -54,11 +54,11 @@ public class PartidaCategoriaController extends JuegoLibreController {
         if(parametros.isLimitePartida())
             setTimers(duracionPartida, duracionTurno);
         
-        configurarTablero(copiaBaraja(barajaCategoria));
+        configurarTablero(copiaBaraja(barajaCatActual));
         setAnimation();
         // CAMBIO CATEGORIA
-        listaNumCategorias = barajaCategoria.getListaNumCategorias();
-        categoriaActual = barajaCategoria.getCategorias().get(indiceCat);
+        listaNumCategorias = barajaCatActual.getListaNumCategorias();
+        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
         categoriaLabel.setText(categoriaActual.toString());
     }
 
@@ -85,7 +85,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 if (contador == listaNumCategorias.get(indiceCat)/2) {
                     // CAMBIO CATEGORIA
                     indiceCat++;
-                    categoriaActual = barajaCategoria.getCategorias().get(indiceCat);
+                    categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
                     categoriaLabel.setText(categoriaActual.toString());
                 }
             } else {
