@@ -150,6 +150,21 @@ public class Baraja implements Iterable<Carta> {
         return this.cartas.size();
     }
     
+    public List<Integer> getListaNumCategorias(){
+        List<Integer> lista = new ArrayList<Integer>();
+        int contadorCategoria = 0;
+        for(int i =0; i < categorias.size(); i++){
+            for(int j = 0; j < cartas.size(); j++){
+                if(cartas.get(j).getCategoria().equals(categorias.get(i)))
+                  contadorCategoria++;  
+            }
+            lista.add(i, contadorCategoria);
+            contadorCategoria = 0;
+        }
+        
+        return lista;
+    }
+    
     @Override
     public String toString(){
         String thisBaraja = nombre + ": {";

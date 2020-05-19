@@ -6,9 +6,12 @@
 package presentation;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
 import logic.Puntuacion;
@@ -23,15 +26,15 @@ import static presentation.PartidaEstandarController.anchuraTablero;
  */
 public class PartidaCategoriaController extends JuegoLibreController {
 
-    private Categoria categoriaActual;
-    public int numeroCategorias = parametros.getBarajaCategoria().getCategorias().size();
-    
-    protected int contador = 1;
-    
-   
     @FXML
     private Label categoriaLabel;
-
+    
+    private Categoria categoriaActual;
+    public List<Integer> listaNumCategorias = new ArrayList<Integer>();
+    protected int contador = 0;
+    private int indiceCat = 0;
+    public Baraja barajaCategoria = parametros.getBarajaCategoria();
+   
     /**
      * Initializes the controller class.
      */
@@ -51,10 +54,11 @@ public class PartidaCategoriaController extends JuegoLibreController {
         if(parametros.isLimitePartida())
             setTimers(duracionPartida, duracionTurno);
         
-        configurarTablero(copiaBaraja(parametros.getBarajaCategoria()));
+        configurarTablero(copiaBaraja(barajaCategoria));
         setAnimation();
         // CAMBIO CATEGORIA
-        categoriaActual = parametros.getBarajaCategoria().getCategorias().get(0);
+        listaNumCategorias = barajaCategoria.getListaNumCategorias();
+        categoriaActual = barajaCategoria.getCategorias().get(indiceCat);
         categoriaLabel.setText(categoriaActual.toString());
     }
 
@@ -78,10 +82,10 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 audioOK.play(0.1);
-                int numCategorias = parametros.getBarajaCategoria().getCategorias().size();
-                if (contador == 1 + ((anchuraTablero*longitudTablero)/numCategorias) / numeroCategorias) {
+                if (contador == listaNumCategorias.get(indiceCat)/2) {
                     // CAMBIO CATEGORIA
-                    categoriaActual = parametros.getBarajaCategoria().getCategorias().get(1);
+                    indiceCat++;
+                    categoriaActual = barajaCategoria.getCategorias().get(indiceCat);
                     categoriaLabel.setText(categoriaActual.toString());
                 }
             } else {
