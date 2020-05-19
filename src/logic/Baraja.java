@@ -158,7 +158,7 @@ public class Baraja implements Iterable<Carta> {
                 if(cartas.get(j).getCategoria().equals(categorias.get(i)))
                   contadorCategoria++;  
             }
-            lista.add(i, contadorCategoria);
+            lista.add(i, contadorCategoria/2);
             contadorCategoria = 0;
         }
         

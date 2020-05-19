@@ -82,11 +82,15 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 audioOK.play(0.1);
-                if (contador == listaNumCategorias.get(indiceCat)/2) {
+                if (contador == listaNumCategorias.get(indiceCat)) {
                     // CAMBIO CATEGORIA
                     indiceCat++;
-                    categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
-                    categoriaLabel.setText(categoriaActual.toString());
+                    contador = 0;
+                    try{
+                        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
+                        categoriaLabel.setText(categoriaActual.toString());
+                    } catch(Exception e){categoriaLabel.setText("FIN!!");} 
+                    
                 }
             } else {
                 puntuacion.restarPuntos();
