@@ -5,24 +5,15 @@
  */
 package presentation;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import logic.Carta;
-import logic.Puntuacion;
-import static presentation.JuegoLibreController.turnDelay;
 
 /**
  * FXML Controller class
@@ -38,11 +29,11 @@ public class PartidaPorCartaController extends JuegoLibreController {
      * Initializes the controller class.
      */
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        super.initialize(url, rb);
-        seleccionarCartaAEncontrar();
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle rb) {
+//        super.initialize(url, rb);
+//        
+//    }
 
     /**
      * Looks for cards that haven't been found and chooses a random one among
@@ -109,5 +100,11 @@ public class PartidaPorCartaController extends JuegoLibreController {
     public boolean sonIguales(Carta card1, Carta card2) {
         return super.sonIguales(card1, card2) 
                 && card1.getCartaID() == cartaAEncontrar.getCartaID();
+    }
+    
+    @Override
+    public void configurarTablero(){
+        super.configurarTablero();
+        seleccionarCartaAEncontrar();
     }
 }
