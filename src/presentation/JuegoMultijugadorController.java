@@ -98,7 +98,7 @@ public class JuegoMultijugadorController extends JuegoController {
     protected void defaultData() {
         longitudTablero = 6;
         anchuraTablero = 4;
-        duracionPartida = 21;
+        duracionPartida = 120;
         duracionTurno = 10;
         turnDelay = 0.5;
         cancion = "/music/Cancion1.mp3";
