@@ -165,18 +165,8 @@ public class JuegoMultijugadorController extends JuegoController {
         countdownPartida = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (tiempoActualPartida == 0) {
-                    countdownPartida.stop();
-                    try {
-                        saltarADerrota(modo);
-                    } catch (IOException e) {
-                        System.out.println("No se pudo saltar a la pantalla de derrota");
-                        e.printStackTrace();
-                    }
-                }
-                String timeStr = String.format("%02d:%02d", tiempoActualPartida / 60, tiempoActualPartida % 60);
-                tiempoPartida.setText(timeStr);
-                tiempoActualPartida--;
+                // It's easier to leave this empty than removing all instructions
+                // where this timer is accessed
             }
         }));
         countdownPartida.setCycleCount(Timeline.INDEFINITE);
@@ -189,10 +179,10 @@ public class JuegoMultijugadorController extends JuegoController {
                     punt.setText(puntuacion.getPuntos() + "");
                     tiempoActualTurno = duracionTurno;
                     switchPlayers();
-                    System.out.println("RESETTING TURN TIME");
+//                    System.out.println("RESETTING TURN TIME");
                 }
                 tiempoTurno.setText((tiempoActualTurno--) + "");
-                System.out.println("DECREASING TURN TIME");
+//                System.out.println("DECREASING TURN TIME");
 
             }
         }));
@@ -223,27 +213,6 @@ public class JuegoMultijugadorController extends JuegoController {
     @Override
     public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
         saltarAVictoria(puntuacionJugador1, puntuacionJugador2, temp, m);
-//        if (audio.isPlaying()) {
-//            audio.stop();
-//        }
-//
-//        countdownPartida.stop();
-//        countdownTurno.stop();
-//
-//        tablero.setDisable(true);
-//        
-//        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Victoria.fxml"));
-//        Parent root = (Parent) myLoader.load();
-//        VictoriaController victoriaController = myLoader.<VictoriaController>getController();
-//        Stage victoriaWinStage = new Stage();
-//        victoriaController.initVictoriaWindow(victoriaWinStage, punt, temp, m);
-//        Scene scene = new Scene(root);
-//        victoriaWinStage.setScene(scene);
-//        victoriaWinStage.initModality(Modality.APPLICATION_MODAL);
-//        victoriaWinStage.show();
-//        //stopAudio(cancion);
-//        Stage thisStage = (Stage) tablero.getScene().getWindow();
-//        thisStage.close();
     }
     
     public void saltarAVictoria(Puntuacion puntJ1, Puntuacion puntJ2, int temp, String m){
