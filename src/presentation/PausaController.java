@@ -83,6 +83,7 @@ public class PausaController extends JuegoLibreController implements Initializab
 
     @FXML
     private void exit_onClick(ActionEvent event) throws IOException {
+        pauseMusic.stop();
         // close timelines to avoid end screen
         countdownPartida.stop();
         countdownTurno.stop();
