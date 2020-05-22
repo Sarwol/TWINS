@@ -153,6 +153,7 @@ public abstract class JuegoLibreController extends JuegoController {
             setAudio(cancion);
             audio.play(0.3);
         }
+        puntuacion = new Puntuacion(0);
       
     }
     

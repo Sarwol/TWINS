@@ -124,7 +124,7 @@ public abstract class JuegoController implements Initializable {
         // loads the default parameters
         recibirParametros();                        // abstract
         // initial score
-        puntuacion = new Puntuacion(0);             // same for all game modes
+        //puntuacion = new Puntuacion(0);             // same for all game modes
         // configures access to the pause menu
         setUpPauseMenuAccess();                     // same for all game modes
         // Configures pair selection mechanics

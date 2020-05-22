@@ -58,11 +58,11 @@
         -fx-background-image: url("/buttons/estandarHover.png");
     }
     
-    #parametrosButton{
+    #multijugadorButton{
         -fx-background-image: url("/buttons/parametros.png");
     }
     
-    #parametrosButton:hover{
+    #multijugadorButton:hover{
         -fx-background-image: url("/buttons/parametrosHover.png");
     }
 

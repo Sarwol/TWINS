@@ -54,7 +54,7 @@ public class MenuPrincipalController implements Initializable {
     @FXML
     private Button categoriaButton;
     @FXML
-    private Button parametrosButton;
+    private Button multijugadorButton;
     @FXML
     private ImageView muteView;
 
@@ -266,18 +266,18 @@ public class MenuPrincipalController implements Initializable {
              alert.showAndWait();
         }
     }
-/*
+
     @FXML
-    private void abrirParametros(ActionEvent event) {
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ParametrosPartida.fxml"));
+    private void abrirMultijugador(ActionEvent event) {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("JuegoMultijugador.fxml"));
         MenuPrincipalController.musicaInicial.stop();
         Parent root = null;
         try{
         root = (Parent) myLoader.load();
-        } catch(IOException e){}
-        ParametrosPartidaController ventanaJuegoLibreController = myLoader.<ParametrosPartidaController>getController();
+        } catch(IOException e){e.printStackTrace();}
+        JuegoMultijugadorController juegoMultijugadorController = myLoader.<JuegoMultijugadorController>getController();
         Stage winStage = new Stage();
-        ventanaJuegoLibreController.initWindow(winStage);
+        juegoMultijugadorController.initWindow(winStage);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         //thisStage.close();
         //parentStage.close();
@@ -289,7 +289,7 @@ public class MenuPrincipalController implements Initializable {
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
-*/
+
 
     @FXML
     private void changeMusic(MouseEvent event) throws URISyntaxException {

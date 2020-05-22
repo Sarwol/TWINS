@@ -68,11 +68,12 @@ public class PausaController extends JuegoLibreController implements Initializab
     @FXML
     private void resume_onClick(ActionEvent event) throws IOException {
        //try{
-        cancion = cancionActual;
-        if(cancionActual != null /*&& cancionActual != ""*/){
+//        cancion = cancionActual;
+//        if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
             audio.play(0.3);
-        }
+            System.out.println("SETUP GAME SONG: " + cancion);
+//        }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
         countdownPartida.play();
@@ -100,6 +101,7 @@ public class PausaController extends JuegoLibreController implements Initializab
         wStage.show();
         wStage.setTitle("TWINS");
         //stopAudio(cancion);
+        pauseMusic.stop();
         
     }
 

@@ -136,7 +136,7 @@ public class ParametrosPartidaController implements Initializable {
     private ImageView cartaEjemplo2;
 
 
-    // Singleton instance for configuring parameters
+    // Singleton instance to configure parameters
     Configuracion parametros = Configuracion.getInstance();
 
     protected AudioClip audio = null;

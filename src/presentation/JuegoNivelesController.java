@@ -247,6 +247,7 @@ public class JuegoNivelesController extends JuegoController {
     @Override
     protected void recibirParametros() {
         defaultData();
+        puntuacion = new Puntuacion(0);
         String[] selectedLevels = {MenuSeleccionNivelesController.nivel};
         niveles = loadLevels(selectedLevels);
         setUpLevel(0);
