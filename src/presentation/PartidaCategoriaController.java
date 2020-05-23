@@ -5,12 +5,16 @@
  */
 package presentation;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
-import static presentation.PartidaEstandarController.longitudTablero;
-import static presentation.PartidaEstandarController.anchuraTablero;
+import logic.Puntuacion;
 
 /**
  * FXML Controller class para Partida por categoría.
@@ -20,15 +24,17 @@ import static presentation.PartidaEstandarController.anchuraTablero;
  */
 public class PartidaCategoriaController extends JuegoLibreController {
 
-    private Categoria categoriaActual;
-    public int numeroCategorias = parametros.getBarajaCategoria().getCategorias().size();
-    
-    protected int contador = 1;
-    
-   
     @FXML
     private Label categoriaLabel;
-
+    
+   
+    public List<Integer> listaNumCategorias = new ArrayList<Integer>();
+    public Baraja barajaCatActual = parametros.getBarajaCategoria();
+    private Categoria categoriaActual;
+    protected int contador = 0;
+    private int indiceCat = 0;
+    
+   
     /**
      * Initializes the controller class.
      */
@@ -56,10 +62,6 @@ public class PartidaCategoriaController extends JuegoLibreController {
 //    }
 
     @Override
-    public void configurarTablero(){
-        configurarTablero(copiaBaraja(parametros.getBarajaCategoria()));
-    }
-    @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
             carta1 = parSeleccionado.get(0);
@@ -78,11 +80,15 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 audioOK.play(0.1);
-                int numCategorias = parametros.getBarajaCategoria().getCategorias().size();
-                if (contador == 1 + ((anchuraTablero*longitudTablero)/numCategorias) / numeroCategorias) {
+                if (contador == listaNumCategorias.get(indiceCat)) {
                     // CAMBIO CATEGORIA
-                    categoriaActual = parametros.getBarajaCategoria().getCategorias().get(1);
-                    categoriaLabel.setText(categoriaActual.toString());
+                    indiceCat++;
+                    contador = 0;
+                    try{
+                        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
+                        categoriaLabel.setText(categoriaActual.toString());
+                    } catch(Exception e){categoriaLabel.setText("FIN!!");} 
+                    
                 }
             } else {
                 puntuacion.restarPuntos();
@@ -110,7 +116,9 @@ public class PartidaCategoriaController extends JuegoLibreController {
     @Override
     public void recibirParametros(){
         super.recibirParametros();
-        categoriaActual = parametros.getBarajaCategoria().getCategorias().get(0);
+       // CAMBIO CATEGORIA
+        listaNumCategorias = barajaCatActual.getListaNumCategorias();
+        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
         categoriaLabel.setText(categoriaActual.toString());
     }
 }

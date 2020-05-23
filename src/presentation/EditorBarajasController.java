@@ -28,6 +28,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
@@ -36,6 +37,7 @@ import javax.imageio.ImageIO;
 import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
+import static presentation.MenuPrincipalController.musicaInicial;
 
 /**
  * FXML Controller class
@@ -264,6 +266,19 @@ public class EditorBarajasController implements Initializable {
     void initWindow(Stage stage, Stage pStage) {
         winStage = stage;
         parentStage = pStage;
+    }
+
+    @FXML
+    private void muteMusic(MouseEvent event) {
+         if(musicaInicial.isPlaying()) {
+            musicaInicial.stop();
+               //Image image = new Image(this.getClass().getResource("/images/appImages/muteOffIcon.png").toURI().toString());
+               //muteView.setImage(image);
+        } else {
+            musicaInicial.play(0.15);
+               //Image image = new Image(this.getClass().getResource("/images/appImages/muteOnIcon.png").toURI().toString());
+               //muteView.setImage(image);
+        }
     }
 
     class BarajaListCell extends ListCell<Baraja> {
