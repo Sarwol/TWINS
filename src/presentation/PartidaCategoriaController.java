@@ -38,31 +38,29 @@ public class PartidaCategoriaController extends JuegoLibreController {
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Loads parameters from config class
-        recibirParametros();
-        if (!parametros.isSinMusica()) {
-            setAudio(cancion);
-            audio.play(0.3);
-        }
-        puntuacion = new Puntuacion(0);
-        setUpPauseMenuAccess();
-        setUpPairSelection();
-        
-       
-        if(parametros.isLimitePartida())
-            setTimers(duracionPartida, duracionTurno);
-        
-        configurarTablero(copiaBaraja(barajaCatActual));
-        setAnimation();
-        // CAMBIO CATEGORIA
-        listaNumCategorias = barajaCatActual.getListaNumCategorias();
-        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
-        categoriaLabel.setText(categoriaActual.toString());
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle rb) {
+//        // Loads parameters from config class
+//        recibirParametros();
+//        if (!parametros.isSinMusica()) {
+//            setAudio(cancion);
+//            audio.play(0.3);
+//        }
+//        puntuacion = new Puntuacion(0);
+//        setUpPauseMenuAccess();
+//        setUpPairSelection();
+//        
+//       
+//        if(parametros.isLimitePartida())
+//            setTimers(duracionPartida, duracionTurno);
+//        
+//        configurarTablero();
+//        setAnimation();
+//        // CAMBIO CATEGORIA
+//        categoriaActual = parametros.getBarajaCategoria().getCategorias().get(0);
+//        categoriaLabel.setText(categoriaActual.toString());
+//    }
 
-    
     @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
@@ -113,5 +111,14 @@ public class PartidaCategoriaController extends JuegoLibreController {
     public boolean sonIguales(Carta card1, Carta card2) {
         return super.sonIguales(card1, card2) && carta1.getCategoria().equals(categoriaActual)
                 && carta2.getCategoria().equals(categoriaActual);
+    }
+    
+    @Override
+    public void recibirParametros(){
+        super.recibirParametros();
+       // CAMBIO CATEGORIA
+        listaNumCategorias = barajaCatActual.getListaNumCategorias();
+        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
+        categoriaLabel.setText(categoriaActual.toString());
     }
 }

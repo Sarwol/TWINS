@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -32,12 +33,15 @@ public class DerrotaController implements Initializable {
     
     private Stage winStage;
     private String modo;
+    private AudioClip fanfarria;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fanfarria = new AudioClip(this.getClass().getResource("/music/fanfarriaD.mp3").toString());
+        fanfarria.play(0.30);
     }    
 
     @FXML

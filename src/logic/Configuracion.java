@@ -5,13 +5,11 @@
  */
 package logic;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 
 /**
  *

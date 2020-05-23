@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.Puntuacion;
@@ -37,6 +38,7 @@ public class VictoriaNivelesController implements Initializable {
     
     private Stage winStage;
     private String modo;
+    private AudioClip fanfarria;
 
     /**
      * Initializes the controller class.
@@ -44,6 +46,8 @@ public class VictoriaNivelesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fanfarria = new AudioClip(this.getClass().getResource("/music/fanfarriaV.mp3").toString());
+        fanfarria.play(0.30);
     }    
 
     @FXML
@@ -61,6 +65,7 @@ public class VictoriaNivelesController implements Initializable {
     private void exit_onClick(ActionEvent event) throws IOException {
         Stage thisStage = (Stage) puntu.getScene().getWindow();
         thisStage.close();
+        MenuSeleccionNivelesController.musica.play(0.15);
     }
 
     @FXML
