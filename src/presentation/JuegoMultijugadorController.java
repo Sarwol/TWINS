@@ -180,6 +180,11 @@ public class JuegoMultijugadorController extends JuegoController {
                     puntuacion.restarPuntos();
                     punt.setText(puntuacion.getPuntos() + "");
                     tiempoActualTurno = duracionTurno;
+                    // if there is a card selected, turn it back around
+                    if(parSeleccionado.size() > 0){
+                        parSeleccionado.get(0).turn();
+                        parSeleccionado.remove(0);
+                    }
                     switchPlayers();
 //                    System.out.println("RESETTING TURN TIME");
                 }

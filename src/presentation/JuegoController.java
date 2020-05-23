@@ -89,6 +89,8 @@ public abstract class JuegoController implements Initializable {
     protected List<Carta> parSelec;
     // Se usa para guardar las dos cartas seleccionadas
     protected ObservableList<Carta> parSeleccionado;
+    // Guarda todas las cartas que están boca arriba y se deben girar
+    protected List<Carta> cartasPorGirar;
     // Guarda un booleano para ocultar el tablero
     protected static List<Boolean> pauseList;
     // Guarda un booleano para ocultar el tablero
@@ -116,6 +118,7 @@ public abstract class JuegoController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -136,12 +139,12 @@ public abstract class JuegoController implements Initializable {
         // loads the card turning animation
         setAnimation();                             // same for all game modes
     }
-    
-    public void setUpPauseMenuAccess(){
+
+    public void setUpPauseMenuAccess() {
         pauseList = new ArrayList<>();
         pauseList.add(Boolean.FALSE);
         observPauseList = FXCollections.observableList(pauseList);
-        
+
         //listener para activar de nuevo el tablero después de Pausa
         observPauseList.addListener(new ListChangeListener() {
             @Override
@@ -152,7 +155,8 @@ public abstract class JuegoController implements Initializable {
             }
         });
     }
-    public void setUpPairSelection(){
+
+    public void setUpPairSelection() {
         /*
         Construye la lista para guardar las cartas seleccionadas
          */
@@ -172,7 +176,10 @@ public abstract class JuegoController implements Initializable {
                 }
             }
         });
+        // Las cartas que deben volver a girarse
+        cartasPorGirar = new ArrayList<>();
     }
+
     /**
      * Configura las opciones del tablero
      */
@@ -182,7 +189,7 @@ public abstract class JuegoController implements Initializable {
      * Configures animations for cards
      */
     public void setAnimation() {
-        
+
         turnAnimation = new RotateTransition();
         turnAnimation.setDuration(Duration.millis(200));
         turnAnimation.setByAngle(360);
@@ -213,7 +220,7 @@ public abstract class JuegoController implements Initializable {
                         e.printStackTrace();
                     }
                 }
-                String timeStr = String.format("%02d:%02d", tiempoActualPartida/60, tiempoActualPartida%60 );
+                String timeStr = String.format("%02d:%02d", tiempoActualPartida / 60, tiempoActualPartida % 60);
                 tiempoPartida.setText(timeStr);
                 tiempoActualPartida--;
             }
@@ -227,6 +234,12 @@ public abstract class JuegoController implements Initializable {
                     puntuacion.restarPuntos();
                     punt.setText(puntuacion.getPuntos() + "");
                     tiempoActualTurno = duracionTurno;
+
+                    // if there is a card selected, turn it back around
+                    if (parSeleccionado.size() > 0) {
+                        parSeleccionado.get(0).turn();
+                        parSeleccionado.remove(0);
+                    }
                 }
                 tiempoTurno.setText((tiempoActualTurno--) + "");
             }
@@ -284,6 +297,9 @@ public abstract class JuegoController implements Initializable {
      * Creates a new thread that will turn the cards back around.
      */
     public void setDelayedCardTurn() {
+        cartasPorGirar.add(carta1);
+        cartasPorGirar.add(carta2);
+        System.out.println("CALLING SETDELAYEDCARDTURN in JUEGOCONTROLLER");
         Task<Void> waitTurnCards = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -300,12 +316,19 @@ public abstract class JuegoController implements Initializable {
         waitTurnCards.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                carta1.turn();
-                turnAnimation.setNode(carta1);
-                turnAnimation.play();
-                carta2.turn();
-                turnAnimation.setNode(carta2);
-                turnAnimation.play();
+                for (Carta carta : cartasPorGirar) {
+                    carta.turn();
+                    turnAnimation.setNode(carta);
+                    turnAnimation.play();
+                    System.out.println("CARTA:" + carta);
+                }
+                cartasPorGirar.clear();
+//                carta1.turn();
+//                turnAnimation.setNode(carta1);
+//                turnAnimation.play();
+//                carta2.turn();
+//                turnAnimation.setNode(carta2);
+//                turnAnimation.play();
             }
         });
         new Thread(waitTurnCards).start();
@@ -333,13 +356,12 @@ public abstract class JuegoController implements Initializable {
     public Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
         Baraja barajaCartas = null;
         if (numCartas % 2 != 0) {
-                System.out.println("*****************************************");
-                System.out.println("Uneven number of cards");
-                System.out.println("*****************************************");
-                return null;
-            }
+            System.out.println("*****************************************");
+            System.out.println("Uneven number of cards");
+            System.out.println("*****************************************");
+            return null;
+        }
         try {
-            
 
             List<Carta> baraja = new ArrayList<>();
             Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
@@ -348,7 +370,7 @@ public abstract class JuegoController implements Initializable {
                 for (int j = 0; j < numCartas / 2; j++) {
                     //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));
                     Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
-                    
+
                     Carta carta = new Carta(j, currentCardImage, deckCardImage);
 
                     // Add event to detect when a Carta is clicked
@@ -357,10 +379,12 @@ public abstract class JuegoController implements Initializable {
                 }
             }
             barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
-        } catch (URISyntaxException  e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        if(barajaCartas == null){System.out.println("BARAJA IS NULL!!!!");}
+        if (barajaCartas == null) {
+            System.out.println("BARAJA IS NULL!!!!");
+        }
         return barajaCartas;
     }
     /*
@@ -437,11 +461,13 @@ public abstract class JuegoController implements Initializable {
         }
         return allCardsFound;
     }
-    
+
     public abstract void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException;
 
     public void saltarADerrota(String m) throws IOException {
-        if(audio.isPlaying()) audio.stop();
+        if (audio.isPlaying()) {
+            audio.stop();
+        }
         tablero.setDisable(true);
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Derrota.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -459,20 +485,21 @@ public abstract class JuegoController implements Initializable {
 
     /**
      * Pass the parameters needed when starting this stage
+     *
      * @param stage a reference to this stage
      */
     void initWindow(Stage stage) {
         winStage = stage;
     }
-    
+
     /**
      * Should load default data for a given game
      */
     protected abstract void defaultData();
+
     /**
-     * Should load parameters from the Configuration class.
-     * Can also load default data
+     * Should load parameters from the Configuration class. Can also load
+     * default data
      */
     protected abstract void recibirParametros();
 }
-
