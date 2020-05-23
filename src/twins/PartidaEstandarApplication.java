@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -35,6 +36,7 @@ public class PartidaEstandarApplication extends Application{
 
         stage.setTitle("TWINS");
         stage.setScene(scene);
+        stage.getIcons().add(new Image("/buttons/twinslogo.png"));
         stage.show();
     }
     

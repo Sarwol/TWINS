@@ -57,6 +57,8 @@ public class JuegoMultijugadorController extends JuegoController {
     // Keeps track of current score 
     private Puntuacion puntuacionJugador1;
     private Puntuacion puntuacionJugador2;
+    public static AudioClip musica;
+    private Stage winStage;
 
     /**
      * Initializes the controller class.
@@ -249,11 +251,31 @@ public class JuegoMultijugadorController extends JuegoController {
         this.saltarAVictoria(puntuacionJugador1, puntuacionJugador2, tiempoActualPartida, modo);
     }
 
-    @Override
-    void initWindow(Stage winStage) {
-        super.initWindow(winStage);
+    void initWindow(Stage stage, AudioClip mI) {
+        winStage = stage;
+        musica = mI;
         modo = "JuegoMultijugador.fxml";
         //System.out.println("INIT WINDOW");
 
+    }
+    
+    @FXML
+    public void pause_onClick(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("PausaMultijugador.fxml"));
+        Parent root = (Parent) myLoader.load();
+        PausaMultijugadorController pausaController = myLoader.<PausaMultijugadorController>getController();
+        audio.stop();
+        tablero.setVisible(false);
+        countdownPartida.pause();
+        countdownTurno.pause();
+
+        Stage pausaWinStage = new Stage();
+        Stage thisStage = (Stage) punt.getScene().getWindow();
+        pausaController.initPausaWindow(pausaWinStage, thisStage, cancion, audio, observPauseList, countdownPartida, countdownTurno);
+        Scene scene = new Scene(root);
+        pausaWinStage.setScene(scene);
+        pausaWinStage.setTitle("Pausa");
+        pausaWinStage.initModality(Modality.APPLICATION_MODAL);
+        pausaWinStage.show();
     }
 }

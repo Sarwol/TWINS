@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -38,6 +39,7 @@ import static presentation.JuegoController.duracionPartida;
 import static presentation.JuegoController.duracionTurno;
 import static presentation.JuegoController.longitudTablero;
 import static presentation.JuegoController.modo;
+import static presentation.JuegoController.observPauseList;
 import static presentation.JuegoController.turnDelay;
 
 /**
@@ -56,7 +58,8 @@ public class JuegoNivelesController extends JuegoController {
     private Stage winStage;
     // Para activar el siguiente nivel si se gana el anterior
     private Button nextLevel;
-
+    
+    
     @FXML
     private Label minPointsLabel;
 
@@ -167,6 +170,26 @@ public class JuegoNivelesController extends JuegoController {
         return nivel;
     }
 
+    @FXML
+    public void pause_onClick(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("PausaNiveles.fxml"));
+        Parent root = (Parent) myLoader.load();
+        PausaNivelesController pausaController = myLoader.<PausaNivelesController>getController();
+        audio.stop();
+        tablero.setVisible(false);
+        countdownPartida.pause();
+        countdownTurno.pause();
+
+        Stage pausaWinStage = new Stage();
+        Stage thisStage = (Stage) punt.getScene().getWindow();
+        pausaController.initPausaWindow(pausaWinStage, thisStage, cancion, audio, observPauseList, countdownPartida, countdownTurno);
+        Scene scene = new Scene(root);
+        pausaWinStage.setScene(scene);
+        pausaWinStage.setTitle("Pausa");
+        pausaWinStage.initModality(Modality.APPLICATION_MODAL);
+        pausaWinStage.show();
+    }
+    
     @Override
     public boolean isVictoria() {
         boolean allCardsFound = true;
@@ -253,6 +276,24 @@ public class JuegoNivelesController extends JuegoController {
         setUpLevel(0);
         minPointsLabel.setText(minPoints + "");
 
+    }
+    
+    @Override
+    public void saltarADerrota(String m) throws IOException {
+        if(audio.isPlaying()) audio.stop();
+        tablero.setDisable(true);
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("DerrotaNiveles.fxml"));
+        Parent root = (Parent) myLoader.load();
+        DerrotaNivelesController derrotaController = myLoader.<DerrotaNivelesController>getController();
+        Stage derrotaWinStage = new Stage();
+        derrotaController.initDerrotaWindow(derrotaWinStage, m);
+        Scene scene = new Scene(root);
+        derrotaWinStage.setScene(scene);
+        derrotaWinStage.initModality(Modality.APPLICATION_MODAL);
+        derrotaWinStage.show();
+        //stopAudio(cancion);
+        Stage thisStage = (Stage) tablero.getScene().getWindow();
+        thisStage.close();
     }
 
 }

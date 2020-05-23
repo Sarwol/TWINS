@@ -29,13 +29,13 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </Tablero>
-      <Label fx:id="tiempoTurnoLabel" layoutX="334.0" layoutY="05.0" text="Tiempo del Turno" />
-      <Label fx:id="tiempoTurno" layoutX="374.0" layoutY="25.0" text="0" />
+      <Label fx:id="tiempoTurnoLabel" layoutX="334.0" layoutY="05.0" text="Tiempo del Turno" textFill="#ff00ff" />
+      <Label fx:id="tiempoTurno" layoutX="374.0" layoutY="25.0" text="0" textFill="#ff00ff" />
       <Button fx:id="pauseBtn" layoutX="534.0" layoutY="14.0" mnemonicParsing="false" onAction="#pause_onClick" prefHeight="30.0" prefWidth="30.0" />
-      <Label fx:id="puntosJugador1" layoutX="20.0" layoutY="30.0" prefHeight="46.0" prefWidth="65.0" text="Puntos Jugador 1" wrapText="true" />
-      <Label fx:id="puntJugador1" layoutX="25.0" layoutY="74.0" text="0" />
+      <Label fx:id="puntosJugador1" layoutX="20.0" layoutY="30.0" prefHeight="46.0" prefWidth="65.0" text="Puntos Jugador 1" wrapText="true" textFill="#ff00ff" />
+      <Label fx:id="puntJugador1" layoutX="25.0" layoutY="74.0" text="0" textFill="#ff00ff" />
       <Button fx:id="mute" layoutX="464.0" layoutY="14.0" mnemonicParsing="false" onAction="#mute_onClick" prefHeight="30.0" prefWidth="30.0" />
-      <Label fx:id="puntosJugador2" layoutX="93.0" layoutY="30.0" prefHeight="46.0" prefWidth="65.0" text="Puntos Jugador 2" wrapText="true" />
-      <Label fx:id="puntJugador2" layoutX="108.0" layoutY="74.0" text="0" />
+      <Label fx:id="puntosJugador2" layoutX="93.0" layoutY="30.0" prefHeight="46.0" prefWidth="65.0" text="Puntos Jugador 2" wrapText="true" textFill="#ff00ff" />
+      <Label fx:id="puntJugador2" layoutX="108.0" layoutY="74.0" text="0" textFill="#ff00ff" />
    </children>
 </AnchorPane>

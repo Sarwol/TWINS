@@ -1,0 +1,64 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 may. 2020, 22:33:13
+    Author     : User
+*/
+@font-face {
+    font-family: 'Plateia';
+    src: url('fonts/Plateia.ttf');
+}
+
+#AnchorPane{
+    -fx-background-image: url("/buttons/Victoria.png"), url("/buttons/victory.gif");
+    -fx-background-position: center center, center center;
+    -fx-background-size: 261 322, 130 161;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+
+#AnchorPaneMult{
+    -fx-background-image: url("/buttons/fondo.png"), url("/buttons/victory.gif");
+    -fx-background-position: center center, center center;
+    -fx-background-size: 261 322, 130 161;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+
+.label{
+    -fx-font-family: 'Plateia';  
+}
+
+.button{
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-size: 175px;
+}
+    
+#exitBtn{
+    -fx-background-image: url("/buttons/salir.png");
+}
+    
+#exitBtn:hover{
+    -fx-background-image: url("/buttons/salirHover.png");
+}
+
+#resetBtn{
+    -fx-background-image: url("/buttons/reiniciar.png");
+}
+    
+#resetBtn:hover{
+    -fx-background-image: url("/buttons/reiniciar_hover.png");
+}
+
+#result{
+    -fx-background-image: url("/buttons/vict.png");
+}
+
+#resultEmpate{
+    -fx-background-image: url("/buttons/emp.png");
+}

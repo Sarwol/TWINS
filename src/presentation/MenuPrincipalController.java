@@ -121,7 +121,7 @@ public class MenuPrincipalController implements Initializable {
         MenuSeleccionNivelesController menuSeleccionNivelesController = myLoader.<MenuSeleccionNivelesController>getController();
         Stage winStage = new Stage();
         Stage thisStage = (Stage) salirButton.getScene().getWindow();
-        menuSeleccionNivelesController.initWindow(winStage, thisStage);
+        menuSeleccionNivelesController.initWindow(winStage, thisStage, musicaInicial);
         Scene scene = new Scene(root);
         
         // winStage is the stage of VentanaJuegoLibre
@@ -277,7 +277,7 @@ public class MenuPrincipalController implements Initializable {
         } catch(IOException e){e.printStackTrace();}
         JuegoMultijugadorController juegoMultijugadorController = myLoader.<JuegoMultijugadorController>getController();
         Stage winStage = new Stage();
-        juegoMultijugadorController.initWindow(winStage);
+        juegoMultijugadorController.initWindow(winStage, musicaInicial);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         //thisStage.close();
         //parentStage.close();

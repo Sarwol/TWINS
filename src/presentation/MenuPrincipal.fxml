@@ -20,7 +20,7 @@
       <Button fx:id="multijugadorButton" layoutX="223.0" layoutY="300.0" mnemonicParsing="false" onAction="#abrirMultijugador" prefHeight="38.0" prefWidth="154.0" />
       <ImageView fx:id="muteView" fitHeight="38.0" fitWidth="38.0" layoutX="543.0" layoutY="21.0" onMouseClicked="#changeMusic" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/appImages/muteOnIcon.png" />
+            <Image url="@../images/appImages/mute_to_on.png" />
          </image></ImageView>
       <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="28.0" layoutY="21.0" onMouseClicked="#abrirParametros" pickOnBounds="true" preserveRatio="true">
          <image>

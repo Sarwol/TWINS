@@ -5,6 +5,7 @@
  */
 package presentation;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +18,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -32,6 +36,11 @@ public class VictoriaMultijugadorController implements Initializable {
     @FXML
     protected Button resetBtn;
     
+    //THIS IS THE WAY WE DO IT IN MY TOWN, HEADBUTTING THE KEYBOARD UNTIL I FIND
+    //THE SOLUTION, A BUTTON EDITED IN CSS.
+    @FXML
+    protected Button result;
+    
     @FXML
     protected Label puntuacionJugador1;
     @FXML
@@ -44,12 +53,15 @@ public class VictoriaMultijugadorController implements Initializable {
     
     private Stage winStage;
     private String modo;
+    private AudioClip fanfarria;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fanfarria = new AudioClip(this.getClass().getResource("/music/fanfarriaV.mp3").toString());
+        fanfarria.play(0.30);
     }    
 
     @FXML
@@ -65,19 +77,11 @@ public class VictoriaMultijugadorController implements Initializable {
     
     @FXML
     private void exit_onClick(ActionEvent event) throws IOException{
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPrincipal.fxml"));
-        Parent root = (Parent) myLoader.load();
-        MenuPrincipalController menuPrincipalController = myLoader.<MenuPrincipalController>getController();
-        Stage winStage = new Stage();
-        menuPrincipalController.initWindow(winStage);
-        Scene scene = new Scene(root);
-        winStage.setScene(scene);
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-        winStage.setTitle("TWINS");
-        //stopAudio(cancion);
-        Stage thisStage = (Stage) puntuacionJugador1.getScene().getWindow();
+        Stage thisStage = (Stage) resetBtn.getScene().getWindow();
         thisStage.close();
+        //AudioClip vuelta_cancion = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
+        //vuelta_cancion.play(0.15);
+        JuegoMultijugadorController.musica.play(0.15);
     }
     
     void initVictoriaWindow(Stage stage, Puntuacion puntJ1, Puntuacion puntJ2, int t, String m) {
@@ -86,12 +90,12 @@ public class VictoriaMultijugadorController implements Initializable {
         puntuacionJugador2.setText(puntJ2.getPuntos() + "");
         modo = m;
         if(puntJ1.getPuntos() > puntJ2.getPuntos()){
-            textoTitulo.setText("El Jugador 1 ha ganado");
+            textoTitulo.setText("Del Jugador 1");
         } else if(puntJ2.getPuntos() > puntJ1.getPuntos()){
-            textoTitulo.setText("El Jugador 2 ha ganado");
+            textoTitulo.setText("Del Jugador 2");
         } else {
-            textoTitulo.setText("Empate");
+            //JUST TO CHANGE IT IN THE CSS
+            result.setId("resultEmpate");
         }
     }
-
 }
