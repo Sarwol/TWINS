@@ -299,7 +299,7 @@ public abstract class JuegoController implements Initializable {
     public void setDelayedCardTurn() {
         cartasPorGirar.add(carta1);
         cartasPorGirar.add(carta2);
-        System.out.println("CALLING SETDELAYEDCARDTURN in JUEGOCONTROLLER");
+        System.out.println("CALLING SETDELAYEDCARDTURN in JUEGOCONTROLLER" + carta1 + "\n" + carta2);
         Task<Void> waitTurnCards = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
