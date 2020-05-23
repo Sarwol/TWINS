@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -39,12 +40,15 @@ public class VictoriaController implements Initializable {
     
     private Stage winStage;
     private String modo;
+    private AudioClip fanfarria;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fanfarria = new AudioClip(this.getClass().getResource("/music/fanfarriaV.mp3").toString());
+        fanfarria.play(0.30);
     }    
 
     @FXML

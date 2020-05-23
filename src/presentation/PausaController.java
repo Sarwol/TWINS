@@ -68,11 +68,12 @@ public class PausaController extends JuegoLibreController implements Initializab
     @FXML
     private void resume_onClick(ActionEvent event) throws IOException {
        //try{
-        cancion = cancionActual;
-        if(cancionActual != null /*&& cancionActual != ""*/){
+//        cancion = cancionActual;
+//        if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
             audio.play(0.3);
-        }
+            System.out.println("SETUP GAME SONG: " + cancion);
+//        }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
         countdownPartida.play();
@@ -101,32 +102,10 @@ public class PausaController extends JuegoLibreController implements Initializab
         wStage.show();
         wStage.setTitle("TWINS");
         //stopAudio(cancion);
+        pauseMusic.stop();
         
     }
-
-    @FXML
-    private void musicOptions_onClick(ActionEvent event) throws IOException {
-        /*
-        Parent root = FXMLLoader.load(getClass().getResource("Musica.fxml"));
-        Scene scene = new Scene(root);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-        */
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("Musica.fxml"));
-        Parent root = (Parent) myLoader.load();
-        MusicaController musicaController = myLoader.<MusicaController>getController();
-        pauseMusic.stop();
-        Stage winStage = new Stage();
-        musicaController.initMusicaWindow(winStage);
-        //We create the scene foe win1
-        Scene scene = new Scene(root);
-        //we asign new scene to current stage/window
-        winStage.setScene(scene);
-        winStage.setTitle("Pausa");
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-    }
+    
 
     void initPausaWindow(Stage stage, Stage pStage, String cancion, AudioClip audio, ObservableList<Boolean> observPauseList, Timeline countdownPartida, Timeline countdownTurno ) {
         winStage = stage;

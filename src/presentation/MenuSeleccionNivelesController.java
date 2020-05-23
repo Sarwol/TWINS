@@ -6,6 +6,7 @@
 package presentation;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,6 +16,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static presentation.MenuPrincipalController.musicaInicial;
@@ -50,6 +53,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     private Stage winStage;
     private Stage parentStage;
     public static String nivel;
+    public static AudioClip musica;
     /**
      * Initializes the controller class.
      */
@@ -191,8 +195,18 @@ public class MenuSeleccionNivelesController implements Initializable {
         thisStage.close();
     }
 
-    void initWindow(Stage stage, Stage pStage) {
+    void initWindow(Stage stage, Stage pStage, AudioClip mI) {
         winStage = stage;
         parentStage = pStage;
+        musica = mI;
+    }
+    
+    @FXML
+    private void changeMusic(MouseEvent event) throws URISyntaxException {
+        if(musica.isPlaying()) {
+            musica.stop();
+        } else {
+            musica.play(0.15);
+        }
     }
 }

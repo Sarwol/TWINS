@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPaneMult" prefHeight="322.0" prefWidth="261.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.VictoriaMultijugadorController">
+    <stylesheets>
+        <URL value="@/css/victoria.css" />
+    </stylesheets>
+    <children>
+      <Label fx:id="textoTitulo" layoutX="37.0" layoutY="85.0" prefHeight="44.0" prefWidth="217.0" textFill="#f8b93d" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="resetBtn" layoutX="52.0" layoutY="197.0" mnemonicParsing="false" onAction="#reset_onClick" prefHeight="38.0" prefWidth="154.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="exitBtn" layoutX="52.0" layoutY="245.0" mnemonicParsing="false" onAction="#exit_onClick" prefHeight="38.0" prefWidth="154.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="puntuacionJugador1" layoutX="145.0" layoutY="138.0" text="Label" textFill="#f8b93d" />
+      <Label layoutX="87.0" layoutY="138.0" text="J1:" textFill="#f8b93d" />
+      <Label fx:id="puntuacionJugador2" layoutX="145.0" layoutY="166.0" text="Label" textFill="#f8b93d" />
+      <Label layoutX="87.0" layoutY="166.0" text="J2:" textFill="#f8b93d" />
+      <Button fx:id="result" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>

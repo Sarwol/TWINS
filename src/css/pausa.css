@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 may. 2020, 21:34:21
+    Author     : User
+*/
+
+#AnchorPane{
+    -fx-background-image: url("/buttons/twins_pausa.png");
+    -fx-background-position: center center;
+    -fx-background-size: 300 400;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+
+.button{
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-size: 175px;
+        
+}
+   
+#resume{
+    -fx-background-image: url("/buttons/reanudar.png");
+}
+    
+#resume:hover{
+    -fx-background-image: url("/buttons/reanudar_hover.png");
+}
+
+#exit{
+    -fx-background-image: url("/buttons/menup.png");
+}
+    
+#exit:hover{
+    -fx-background-image: url("/buttons/menup_hover.png");
+}
+
+#musicOptions{
+    -fx-background-image: url("/buttons/musica.png");
+}
+    
+#musicOptions:hover{
+    -fx-background-image: url("/buttons/musica_hover.png");
+}
