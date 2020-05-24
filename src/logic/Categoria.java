@@ -6,19 +6,29 @@
 package logic;
 
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author Jesús Yoel
  */
+
+//@XmlRootElement(name="categoria")
+@XmlType(propOrder={"name"})
 public class Categoria{
     
-    private final String name;
+    private String name;
+    
+    public Categoria(){
+        
+    }
     
     public Categoria(String name){
         this.name = name;
     }
     
+    @XmlElement
     public String getName(){
         return name;
     }
@@ -47,5 +57,6 @@ public class Categoria{
     }
     
 }
+
 
 

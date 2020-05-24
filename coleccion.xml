@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<coleccion>
+    <deck>
+        <nombre>Baraja 1</nombre>
+        <cartas>
+            <carta cartaID="23">
+                <categoria>
+                    <name>Pájaros</name>
+                </categoria>
+            </carta>
+        </cartas>
+        <categorias/>
+    </deck>
+    <deck>
+        <nombre>Baraja 2</nombre>
+        <cartas/>
+        <categorias/>
+    </deck>
+</coleccion>
