@@ -435,8 +435,10 @@ public abstract class JuegoController implements Initializable {
         PausaController pausaController = myLoader.<PausaController>getController();
         audio.stop();
         tablero.setVisible(false);
-        countdownPartida.pause();
-        countdownTurno.pause();
+        if(countdownPartida != null && countdownTurno != null){
+            countdownPartida.pause();
+            countdownTurno.pause();
+        }
 
         Stage pausaWinStage = new Stage();
         Stage thisStage = (Stage) punt.getScene().getWindow();
