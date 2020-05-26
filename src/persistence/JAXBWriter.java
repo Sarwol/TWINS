@@ -15,6 +15,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import logic.Baraja;
 import logic.Card;
+import logic.Carta;
 import logic.Categoria;
 import logic.Coleccion;
 import logic.Coleccion;
@@ -39,12 +40,18 @@ public class JAXBWriter {
         Deck baraja1 = new Deck();
         baraja1.setNombre("Baraja 2");
         
+        Carta carta = new Carta();
+        carta.setcartaID(23);
+        //Card cardPrueba = carta.cartaToCard();
+        
         List<Card> cartas = new ArrayList<>();
         Card card = new Card();
         card.setcartaID(23);
         Categoria categoria = new Categoria("Pájaros");
         card.setCategoria(categoria);
         cartas.add(card);
+        
+        //cartas.add(cardPrueba);
         
         baraja.setCartas(cartas);
         

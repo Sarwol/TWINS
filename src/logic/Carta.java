@@ -8,6 +8,7 @@ package logic;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import logic.Card;
 
 /**
  * 
@@ -20,6 +21,8 @@ public class Carta extends Button{
     private Image imagenCarta;
     private Image imagenBaraja;
     private boolean isRevealed;
+    private String pathImagenCarta;
+    private String pathImagenBaraja;
 
     /**
      * Creamos un Button sin texto y con una imagen.
@@ -29,6 +32,16 @@ public class Carta extends Button{
     
     public Carta(){
         super();
+    }
+    
+    public Carta(int cartaID, String pathImagenCarta, String pathImagenBaraja, Categoria categoria){
+        super();
+        this.cartaID = cartaID;
+        imagenCarta = new Image(pathImagenCarta, 50, 50, false, false);
+        imagenBaraja = new Image(pathImagenBaraja, 50, 50, false, false);
+        this.categoria = categoria;
+        this.pathImagenCarta = pathImagenCarta;
+        this.pathImagenBaraja = pathImagenBaraja;
     }
     
     /**
@@ -99,6 +112,26 @@ public class Carta extends Button{
         this.imagenBaraja = imagenBaraja;
         super.setGraphic(new ImageView(this.imagenBaraja));
     }
+
+    public String getPathImagenCarta() {
+        return pathImagenCarta;
+    }
+
+    public void setPathImagenCarta(String pathImagenCarta) {
+        this.pathImagenCarta = pathImagenCarta;
+        this.imagenCarta = new Image(pathImagenCarta, 50, 50, false, false);
+        super.setGraphic(new ImageView(this.imagenCarta));
+    }
+
+    public String getPathImagenBaraja() {
+        return pathImagenBaraja;
+    }
+
+    public void setPathImagenBaraja(String pathImagenBaraja) {
+        this.pathImagenBaraja = pathImagenBaraja;
+        this.imagenBaraja = new Image(pathImagenBaraja, 50, 50, false, false);
+        super.setGraphic(new ImageView(this.imagenBaraja));
+    }
     
     public Categoria getCategoria(){
         return categoria;
@@ -119,4 +152,8 @@ public class Carta extends Button{
         return "[ID: " + getCartaID() + "]";
      }
     
+//     public Card cartaToCard(){
+//      Card resultado = new Card(this.getCartaID(), this.getImagenCarta().impl_getUrl(), this.imagenBaraja.impl_getUrl(), this.getCategoria());
+//      return resultado;
+//     }
 }

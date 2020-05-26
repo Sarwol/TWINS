@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <coleccion>
     <deck>
-        <nombre>Baraja 1</nombre>
+        <nombre>barajacoches</nombre>
         <cartas>
-            <carta cartaID="23">
-                <categoria>
-                    <name>Pájaros</name>
-                </categoria>
+            <carta cartaID="0">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="coches"/>
+            </carta>
+            <carta cartaID="1">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="coches"/>
             </carta>
         </cartas>
-        <categorias/>
-    </deck>
-    <deck>
-        <nombre>Baraja 2</nombre>
-        <cartas/>
-        <categorias/>
+        <imagenReverso>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenReverso>
+        <categorias>
+            <categoria nombre="coches"/>
+            <categoria nombre="flores"/>
+            <categoria nombre="perros"/>
+        </categorias>
     </deck>
 </coleccion>

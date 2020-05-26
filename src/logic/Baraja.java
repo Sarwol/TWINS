@@ -23,6 +23,7 @@ public class Baraja implements Iterable<Carta> {
     private List<Carta> cartas;
     private Image imagenReverso;
     private List<Categoria> categorias;
+    private String pathImagenReverso;
 
     public Baraja() {
         this.nombre = "";
@@ -34,6 +35,16 @@ public class Baraja implements Iterable<Carta> {
         this(nombre, new ArrayList<Carta>(), imagenReverso);
     }
 
+    public Baraja(String nombre, List<Carta> cartas, List<Categoria> categorias, String pathImagenReverso) {
+        this.nombre = nombre;
+        this.cartas = cartas;
+        this.categorias = categorias;
+        this.pathImagenReverso = pathImagenReverso;
+        this.imagenReverso = new Image(pathImagenReverso, 50, 50, false, false);
+    }
+
+    
+    
     public Baraja(String nombre, List<Carta> cartas, Image imagenReverso) {
         this.nombre = nombre;
         this.cartas = cartas;
@@ -66,6 +77,16 @@ public class Baraja implements Iterable<Carta> {
         this.categorias = categorias;
     }
 
+    public String getPathImagenReverso() {
+        return pathImagenReverso;
+    }
+
+    public void setPathImagenReverso(String pathImagenReverso) {
+        this.pathImagenReverso = pathImagenReverso;
+        this.imagenReverso= new Image(pathImagenReverso, 50, 50, false, false);
+    }
+
+    
     /**
      * Get the value of imagenReverso
      *
@@ -148,6 +169,19 @@ public class Baraja implements Iterable<Carta> {
 
     public int size(){
         return this.cartas.size();
+    }
+    
+    public List<Card> convertirCards(){
+        List<Card> cards = new ArrayList();
+        for(Carta carta : this.cartas){
+            Card card = new Card(carta.getCartaID(),carta.getPathImagenCarta(),carta.getPathImagenBaraja(),carta.getCategoria());
+            cards.add(card);
+        }
+        return cards;
+    }
+    
+    public Deck convertirADeck(){
+        return new Deck(nombre, convertirCards() , pathImagenReverso, categorias);
     }
     
     public List<Integer> getListaNumCategorias(){

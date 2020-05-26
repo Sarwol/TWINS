@@ -7,10 +7,13 @@ package presentation;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -55,14 +58,20 @@ public class NuevaBarajaController implements Initializable {
     private Baraja nuevaBaraja;
     private List<Categoria> categorias;
     private ObservableList<Categoria> categoriaObservableList;
-    private Image image;
+    private String pathImagenReverso;
+    private Image imagenNueva;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            // TODO
+            pathImagenReverso = this.getClass().getResource("/images/card.png").toURI().toString();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(NuevaBarajaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         nuevaBaraja = null;
         categorias = new ArrayList<Categoria>();
         categoriaObservableList = FXCollections.observableArrayList(categorias);
@@ -75,7 +84,9 @@ public class NuevaBarajaController implements Initializable {
         List<Carta> cartas = new ArrayList<Carta>();
         nuevaBaraja = new Baraja(nombre,cartas,reverso);
         nuevaBaraja.setCategorias(listaCategorias.getItems());
-	cancelar(event);
+        nuevaBaraja.setPathImagenReverso(pathImagenReverso);
+        System.out.println(nuevaBaraja.getCategorias());
+        cancelar(event);
     }
 
     @FXML
@@ -92,32 +103,33 @@ public class NuevaBarajaController implements Initializable {
 
     @FXML
     private void subirImagenReverso(ActionEvent event) {
-        imagenReverso.setImage(uploadImage());
+        Image imagenSubida = new Image(uploadImagePath(), 50, 50, false, false);
+        imagenReverso.setImage(imagenSubida);
     }
     
     public Baraja devolverBaraja(){
         return nuevaBaraja;
     }
     
-    public Image uploadImage(){
-        Image image = null;
+    public String uploadImagePath() {
+        String imagePath = null;
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
         fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
-              
-            //Show open file dialog
-            File file = fileChooser.showOpenDialog(null);
-                       
-            try {
-                BufferedImage bufferedImage = ImageIO.read(file);
-                image = SwingFXUtils.toFXImage(bufferedImage, null); 
-            } catch (Exception e){
-            }  
-            return image;   
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        try {
+           imagePath = file.toURI().toString();
+           pathImagenReverso = imagePath;
+        } catch (Exception e) {
+        }
+        return imagePath;
     }
-    
-    private void setExtFilters(FileChooser chooser){
+
+    private void setExtFilters(FileChooser chooser) {
         chooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")

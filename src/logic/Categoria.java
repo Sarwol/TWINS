@@ -6,6 +6,7 @@
 package logic;
 
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -28,11 +29,15 @@ public class Categoria{
         this.name = name;
     }
     
-    @XmlElement
+   @XmlAttribute(name="nombre")
     public String getName(){
         return name;
     }
 
+     public void setName(String name){
+        this.name = name;
+    } 
+     
     @Override
     public String toString() {
         return getName();

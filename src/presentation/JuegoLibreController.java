@@ -67,6 +67,7 @@ public abstract class JuegoLibreController extends JuegoController {
     public void configurarTablero(Baraja barajaElegida){
         // Add event handlers
         for(Carta carta : barajaElegida){
+            System.out.println(carta);
             carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
         }   
         // initialize tablero

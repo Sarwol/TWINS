@@ -7,12 +7,15 @@ package presentation;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,9 +37,16 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import logic.Baraja;
+import logic.Card;
 import logic.Carta;
 import logic.Categoria;
+import logic.Coleccion;
+import logic.JAXBResolver;
 import static presentation.MenuPrincipalController.musicaInicial;
 
 /**
@@ -72,7 +82,9 @@ public class EditorBarajasController implements Initializable {
     private List<Carta> cartas;
     private Carta cartaNueva;
     private Baraja barajaNueva;
-
+    private JAXBResolver jaxbResolver;
+    private Coleccion coleccionBarajas;
+    
     Baraja barajaActual;
 
     //prueba
@@ -86,26 +98,26 @@ public class EditorBarajasController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //prueba
-        List<Carta> pruebaCartas = new ArrayList<Carta>();
-        prueba = new Baraja();
-        prueba.setCategorias(Arrays.asList(
-                new Categoria("FRUTAS"),
-                new Categoria("PAJAROS"),
-                new Categoria("COCHES")
-        ));
-        prueba.setNombre("prueba");
-        
+        jaxbResolver = new JAXBResolver();
+        try {
+            coleccionBarajas = jaxbResolver.getColeccionFromXML();
+            barajas = coleccionBarajas.leerBarajas();
+            System.out.println(barajas);
+        } catch (JAXBException ex) {
+            Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+//        //prueba
+//        List<Carta> pruebaCartas = new ArrayList<Carta>();
+//        prueba = new Baraja();
+//        prueba.setCategorias(Arrays.asList(
+//                new Categoria("FRUTAS"),
+//                new Categoria("PAJAROS"),
+//                new Categoria("COCHES")
+//        ));
+//        prueba.setNombre("prueba");
         cartas = new ArrayList<Carta>();
-        barajas = new ArrayList<Baraja>();
-
-        barajas.add(prueba);
-        
-        barajaNueva = null;
-        barajaActual = null;
-        cartaNueva = null;
-
+    
         barajasObservableList = FXCollections.observableList(barajas);
         listaBarajas.setItems(barajasObservableList);
         cartasListView.setCellFactory(c -> new CartaListCell());
@@ -143,19 +155,15 @@ public class EditorBarajasController implements Initializable {
         stage.showAndWait();
         //abrirVentana(cargador);
       
-        cartaNueva = controladorPareja.devolverCarta(cartaNueva);
+        cartaNueva = controladorPareja.devolverCarta();
+  
         if (cartaNueva != null) {
-            System.out.println("CARTA BUENA");
+            cartaNueva.setcartaID(cartas.size());
             cartasObservableList.add(cartaNueva); 
-            barajaActual.añadirCarta(cartaNueva);
+            //barajaActual.añadirCarta(cartaNueva);
+            System.out.println("CARTA BUENA " + cartaNueva);
+            
             }
-        
-        //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
-        //Utilizando el método devolverCarta() de NuevaCartaController
-        //cartaNueva = (el controlador).devolverCarta();
-        // if(cartaNueva != null) 
-        //      castasOvservableList.add(cartaNueva);
-        //  ADEMAS HAY QUE AÑADIR DOS VECES ESTA CARTA EN LA LISTA DE CARTAS DE BARAJA
     }
 
     @FXML
@@ -178,11 +186,6 @@ public class EditorBarajasController implements Initializable {
         if (barajaNueva != null) {
             barajasObservableList.add(barajaNueva);
         }
-        //Después de abrir la ventana y de que se cierre esta, añadir la baraja al observablelist de barajas.
-        //Utilizando el método devolverBaraja() de NuevaBarajaController
-        //barajaNueva = (el controlador).devolverBaraja();
-        // if(barajaNueva != null) 
-        //      barajaOvservableList.add(barajaNueva);
     }
 
     @FXML
@@ -200,6 +203,19 @@ public class EditorBarajasController implements Initializable {
     
     @FXML
     private void volverAMenuPrincipal(ActionEvent event){
+        for(Baraja baraja : barajas){
+            coleccionBarajas.addBaraja(baraja.convertirADeck());
+        }
+        try {
+            JAXBContext context = jaxbResolver.getCtx();
+            Marshaller marshaller = context.createMarshaller();
+             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+             marshaller.marshal(coleccionBarajas, new FileWriter("coleccion.xml"));
+        } catch (JAXBException ex) {
+            Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         winStage.close();
         
     }
@@ -261,6 +277,22 @@ public class EditorBarajasController implements Initializable {
     public void cargarBarajas() {
         barajasObservableList = FXCollections.observableList(barajas);
         listaBarajas.setItems(barajasObservableList);
+    }
+    
+    public List<Baraja> cargarBarajasFromXML(){
+        JAXBResolver dr = new JAXBResolver();
+        JAXBContext context = dr.getCtx();
+        Coleccion coleccion = null;
+        Unmarshaller unmarshaller;
+        try {
+            unmarshaller = context.createUnmarshaller();
+            coleccion = (Coleccion) unmarshaller.unmarshal(new File("coleccion.xml"));
+        } catch (JAXBException ex) {
+            Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return coleccion.leerBarajas();
     }
 
     void initWindow(Stage stage, Stage pStage) {

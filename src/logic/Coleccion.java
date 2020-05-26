@@ -38,4 +38,12 @@ public class Coleccion {
     public void addBaraja(Deck baraja){
         barajas.add(baraja);
     }
+    
+    public List<Baraja> leerBarajas(){
+        List<Baraja> resultado = new ArrayList();
+        for(Deck deck : barajas){
+            resultado.add(deck.convertirABaraja());
+        }
+        return resultado;       
+    }
 }
