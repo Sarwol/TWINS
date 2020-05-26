@@ -30,6 +30,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import logic.Baraja;
+import logic.Card;
 import logic.Carta;
 import logic.Categoria;
 
@@ -51,9 +52,10 @@ public class NuevaParejaController implements Initializable {
     @FXML
     private ImageView imagenCarta;
 
+    private String pathImagenCarta;
     private List<Categoria> barajaCategorias;
     private ObservableList<Categoria> categoriasObservableList;
-    private Baraja barajaSeleccionada = new Baraja();
+    private Baraja barajaSeleccionada;
     private Carta cartaNueva;
 
     /**
@@ -80,17 +82,17 @@ public class NuevaParejaController implements Initializable {
 
     @FXML
     private void subirImagen(ActionEvent event) {
-        imagenCarta.setImage(uploadImage());
+        Image imagenSubida = new Image(uploadImagePath(), 50, 50, false, false);
+        imagenCarta.setImage(imagenSubida);
     }
 
     @FXML
     private void guardar(ActionEvent event) {
-        Image anverso = imagenCarta.getImage();
-        Image reverso = barajaSeleccionada.getImagenReverso();
+        String reverso = barajaSeleccionada.getPathImagenReverso();
         cartaNueva = new Carta();
         cartaNueva.setCategoria(categoriaComboBox.getSelectionModel().getSelectedItem());
-        cartaNueva.setImagenCarta(anverso);
-        cartaNueva.setImagenBaraja(reverso);
+        cartaNueva.setPathImagenCarta(pathImagenCarta);
+        cartaNueva.setPathImagenBaraja(reverso);
         System.out.println("CARTA:" + cartaNueva);
         cancelar(event);
     }
@@ -100,13 +102,12 @@ public class NuevaParejaController implements Initializable {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
     }
 
-    public Carta devolverCarta(Carta cartaNueva) {
-        cartaNueva = this.cartaNueva;
+    public Carta devolverCarta() {
         return cartaNueva;
     }
 
-    public Image uploadImage() {
-        Image image = null;
+    public String uploadImagePath() {
+        String imagePath = null;
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
@@ -116,11 +117,11 @@ public class NuevaParejaController implements Initializable {
         File file = fileChooser.showOpenDialog(null);
 
         try {
-            BufferedImage bufferedImage = ImageIO.read(file);
-            image = SwingFXUtils.toFXImage(bufferedImage, null);
+           imagePath = file.toURI().toString();
+           pathImagenCarta = imagePath;
         } catch (Exception e) {
         }
-        return image;
+        return imagePath;
     }
 
     private void setExtFilters(FileChooser chooser) {
@@ -143,6 +144,7 @@ public class NuevaParejaController implements Initializable {
     }
     
     public void inicializarBaraja(Baraja baraja){
+        barajaSeleccionada = baraja;
         barajaCategorias = baraja.getCategorias();
         categoriasObservableList = FXCollections.observableList(barajaCategorias);
         categoriaComboBox.setItems(categoriasObservableList);

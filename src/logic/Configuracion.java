@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 
 /**
@@ -346,6 +348,12 @@ public class Configuracion {
         if (barajaCartas == null) {
             System.out.println("BARAJA IS NULL!!!!");
         }
+        try {
+            barajaCartas.setPathImagenReverso(this.getClass().getResource("/images/card.png").toURI().toString());
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(barajaCartas.getPathImagenReverso() + " ajhksbdalhsijkbdasjkhdbaskjdbnaskjdbaskjdbaskjdbaskjb");
         return barajaCartas;
     }
     
@@ -380,8 +388,9 @@ public class Configuracion {
         }
         laBaraja = new Baraja(nombreBaraja,baraja,deckCardImage);
         laBaraja.setCategorias(Arrays.asList(new Categoria("FRUTAS"), new Categoria("PAJAROS")));
-        
+        laBaraja.setPathImagenReverso(this.getClass().getResource("/images/card.png").toURI().toString());
         }catch(URISyntaxException e){e.printStackTrace();}
+        System.out.println(laBaraja.getPathImagenReverso() + " ajhksbdalhsijkbdasjkhdbaskjdbnaskjdbaskjdbaskjdbaskjb");
         return laBaraja;
     }
 }

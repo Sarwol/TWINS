@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <coleccion>
     <deck>
-        <nombre>Baraja 1</nombre>
+        <nombre>barajacoches</nombre>
         <cartas>
-            <carta cartaID="23">
-                <categoria>
-                    <name>Pájaros</name>
-                </categoria>
+            <carta cartaID="0">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="coches"/>
+            </carta>
+            <carta cartaID="1">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="coches"/>
+            </carta>
+            <carta cartaID="2">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="flores"/>
+            </carta>
+            <carta cartaID="3">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="perros"/>
+            </carta>
+            <carta cartaID="4">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="flores"/>
+            </carta>
+            <carta cartaID="5">
+                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
+                <categoria nombre="coches"/>
             </carta>
         </cartas>
-        <categorias/>
+        <imagenReverso>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenReverso>
+        <categorias>
+            <categoria nombre="coches"/>
+            <categoria nombre="flores"/>
+            <categoria nombre="perros"/>
+        </categorias>
     </deck>
     <deck>
-        <nombre>Baraja 2</nombre>
+        <nombre>baraja2</nombre>
         <cartas/>
-        <categorias/>
+        <imagenReverso>jar:file:/C:/Users/David/Documents/NetBeansProjects/TWINS/dist/run1034073453/TWINS.jar!/images/card.png</imagenReverso>
+        <categorias>
+            <categoria nombre="frutas"/>
+        </categorias>
     </deck>
 </coleccion>

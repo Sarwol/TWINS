@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import logic.Categoria;
+import logic.Carta;
 
 /**
  * 
@@ -38,6 +39,13 @@ public class Card {
     
     public Card(){
         
+    }
+    
+    public Card(Carta carta){
+        this.cartaID = carta.getCartaID();
+        this.imagenCarta = carta.getImagenCarta().impl_getUrl();
+        this.imagenBaraja = carta.getImagenBaraja().impl_getUrl();
+        this.categoria = carta.getCategoria();
     }
     
     /**
@@ -80,14 +88,22 @@ public class Card {
         return imagenBaraja;
     }
 
-    public void setcartaID(int id) {
-        this.cartaID = id;
+    public void setcartaID(int cartaID) {
+        this.cartaID = cartaID;
     }
 
     @XmlElement(name="categoria")
     public Categoria getCategoria(){
         return categoria;
     }
+    
+    public void setImagenCarta(String imagenCarta) {
+        this.imagenCarta = imagenCarta;
+    } 
+    
+    public void setImagenBaraja(String imagenBaraja) {
+        this.imagenBaraja = imagenCarta;
+    } 
     
     public void setCategoria(Categoria categoria){
         this.categoria = categoria;
@@ -104,6 +120,12 @@ public class Card {
         return "[ID: " + getCartaID() + "]";
      }
     
+     public Carta cardToCarta(){
+        Image imagenCarta = new Image(this.imagenCarta);
+        Image imagenBaraja = new Image (this.imagenBaraja);
+        Carta resultado = new Carta(this.getCartaID(), imagenCarta, imagenBaraja, this.getCategoria());
+        return resultado;
+     }
 }
 
 

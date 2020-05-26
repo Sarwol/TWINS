@@ -31,7 +31,7 @@ import logic.Puntuacion;
 public abstract class JuegoLibreController extends JuegoController {
     
     //Objeto configuración (parámetros default si es la primera vez que se crea)
-    public  Configuracion parametros = Configuracion.getInstance();
+    public Configuracion parametros = Configuracion.getInstance();
   
     /**
      * Initializes the controller class.
@@ -59,25 +59,29 @@ public abstract class JuegoLibreController extends JuegoController {
      */
     @Override
     public void configurarTablero(){
-        configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
-        
-        
+        Baraja baraja = duplicarCartas(parametros.getBarajaNormal());
+        //configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
+        configurarTablero(copiaBaraja(baraja));
     }
     
     public void configurarTablero(Baraja barajaElegida){
+        barajaElegida = duplicarCartas(barajaElegida);
         // Add event handlers
         for(Carta carta : barajaElegida){
+            System.out.println(carta);
             carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
         }   
         // initialize tablero
         tablero.setFilas(anchuraTablero);
         tablero.setColumnas(longitudTablero);
+
         tablero.setBaraja(barajaElegida.getCartas());
         if(parametros.isMostrarCartasInicio()){
             tablero.girarTodasCartas();
             mostrarCartasPrincipio();
         }
         tablero.barajarTablero();
+        System.out.println(tablero.getChildren().size());
     }
     
     /**
@@ -88,19 +92,42 @@ public abstract class JuegoLibreController extends JuegoController {
           que contiene
      */
     public Baraja copiaBaraja(Baraja barajaOriginal){
-        Baraja nuevaCopiaBaraja = new Baraja(barajaOriginal.getNombre(), 
-                barajaOriginal.getImagenReverso());
+//        Baraja nuevaCopiaBaraja = new Baraja(barajaOriginal.getNombre(), 
+//                barajaOriginal.getImagenReverso());
+//        nuevaCopiaBaraja.setCategorias(barajaOriginal.getCategorias());
+        Baraja nuevaCopiaBaraja = new Baraja();
+        nuevaCopiaBaraja.setPathImagenReverso(barajaOriginal.getPathImagenReverso());
+        nuevaCopiaBaraja.setNombre(barajaOriginal.getNombre());
         nuevaCopiaBaraja.setCategorias(barajaOriginal.getCategorias());
-        
+         
+
         for(Carta cartaOriginal : barajaOriginal){
             Carta nuevaCarta = new Carta(cartaOriginal.getCartaID(),
                     cartaOriginal.getImagenCarta(), cartaOriginal.getImagenBaraja(),
                     cartaOriginal.getCategoria());
             nuevaCopiaBaraja.añadirCarta(nuevaCarta);
         }
+        System.out.println(nuevaCopiaBaraja + " buenas tardes");
         return nuevaCopiaBaraja;
     }
 
+        
+    public Baraja duplicarCartas(Baraja baraja){
+        Baraja barajaDuplicada = new Baraja();
+        barajaDuplicada.setNombre(baraja.getNombre());
+        barajaDuplicada.setCategorias(baraja.getCategorias());
+        barajaDuplicada.setPathImagenReverso(baraja.getPathImagenReverso());
+        for(Carta carta : baraja) {
+            Carta cartaDuplicada = new Carta();
+            cartaDuplicada.setcartaID(carta.getCartaID());
+            
+            barajaDuplicada.añadirCarta(carta);
+            barajaDuplicada.añadirCarta(carta);
+        }
+        System.out.println(barajaDuplicada + "  duplacacion");
+        return barajaDuplicada;
+    }
+    
     /**
      * Creates a new thread that will turn the cards back around.
      */
