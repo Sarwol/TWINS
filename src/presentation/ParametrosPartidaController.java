@@ -226,6 +226,10 @@ public class ParametrosPartidaController implements Initializable {
         //Barajas
         setBarajas();
         //Efectos de Partida
+        if(!parametros.isLimitePartida()){
+            volteoCartaBox.setDisable(true);
+            tiempoPartidaBox.setDisable(true);
+        }
         //Sonidos
         soundOKBox.setItems(FXCollections.observableList(Arrays.asList("Acierto 1", "Acierto 2", "Acierto 3")));
         sonidoActualAcierto = parametros.getSonidoCorrecto();

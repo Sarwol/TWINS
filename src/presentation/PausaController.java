@@ -76,8 +76,10 @@ public class PausaController extends JuegoLibreController implements Initializab
 //        }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
-        countdownPartida.play();
-        countdownTurno.play();
+        if(countdownPartida != null && countdownTurno != null){
+            countdownPartida.play();
+            countdownTurno.play();
+        }
        //} catch (Exception e){}
         winStage.hide(); 
     }
@@ -86,8 +88,10 @@ public class PausaController extends JuegoLibreController implements Initializab
     private void exit_onClick(ActionEvent event) throws IOException {
         pauseMusic.stop();
         // close timelines to avoid end screen
-        countdownPartida.stop();
-        countdownTurno.stop();
+        if(countdownPartida != null && countdownTurno != null){
+            countdownPartida.stop();
+            countdownTurno.stop();
+        }
         parentStage.close();
         Stage thisStage = (Stage) resume.getScene().getWindow();
         thisStage.close();

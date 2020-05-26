@@ -107,7 +107,7 @@ public abstract class JuegoLibreController extends JuegoController {
     public void mostrarCartasPrincipio() {
         Platform.runLater(() -> {
             try {
-                Thread.sleep(Math.round(turnDelay * 1000));  
+               Thread.sleep(Math.round(parametros.getTiempoCartasInicio() * 1000));  
                 tablero.girarTodasCartas();  
             } catch (InterruptedException ex) {ex.printStackTrace();}
         });
