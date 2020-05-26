@@ -46,6 +46,7 @@ import logic.Card;
 import logic.Carta;
 import logic.Categoria;
 import logic.Coleccion;
+import logic.Deck;
 import logic.JAXBResolver;
 import static presentation.MenuPrincipalController.musicaInicial;
 
@@ -203,8 +204,11 @@ public class EditorBarajasController implements Initializable {
     
     @FXML
     private void volverAMenuPrincipal(ActionEvent event){
+        List<Deck> decks = new ArrayList();
         for(Baraja baraja : barajas){
-            coleccionBarajas.addBaraja(baraja.convertirADeck());
+//            coleccionBarajas.addBaraja(baraja.convertirADeck());
+            decks.add(baraja.convertirADeck());
+            coleccionBarajas.setBarajas(decks);
         }
         try {
             JAXBContext context = jaxbResolver.getCtx();

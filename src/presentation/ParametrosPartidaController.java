@@ -273,8 +273,8 @@ public class ParametrosPartidaController implements Initializable {
         parametros.setAnchuraTablero(anchoBox.getValue());
 
         //Parámetros de partida
-        if (barajaNormalActual.size() >= nuevaLargura * nuevaAnchura
-                && barajaCategoriaActual.size() >= nuevaLargura * nuevaAnchura) {
+        if (barajaNormalActual.size() >= (nuevaLargura * nuevaAnchura)/2
+                && barajaCategoriaActual.size() >= (nuevaLargura * nuevaAnchura)/2) {
             parametros.setBarajaNormal(barajaNormalActual);
             parametros.setBarajaCategoria(barajaCategoriaActual);
             parametros.setLimitePartida(limiteChekbox.isSelected());
@@ -311,7 +311,7 @@ public class ParametrosPartidaController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Atención");
             alert.setHeaderText("Baraja incompatible");
-            alert.setContentText("La baraja que ha seleccionado es más pequeña que "
+            alert.setContentText("La baraja que ha seleccionado no es adecuada para "
                     + "el tablero que ha escogido. Por favor, cambie alguna de las dos cosas");
             alert.showAndWait();
         }

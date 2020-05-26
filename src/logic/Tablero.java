@@ -48,6 +48,7 @@ public class Tablero extends GridPane {
     public int barajarTablero(){
         
         if(baraja.size() < filas * columnas){  // comprobar tamaño correcto
+            System.out.println("Tamaño inadecuado:  Baraja:" + baraja.size()+ " Filas: " + filas + " Columnas: " + columnas);
             return -1;
         }
         // Used to remove cards from

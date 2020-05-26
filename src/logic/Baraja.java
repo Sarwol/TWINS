@@ -41,6 +41,7 @@ public class Baraja implements Iterable<Carta> {
         this.categorias = categorias;
         this.pathImagenReverso = pathImagenReverso;
         this.imagenReverso = new Image(pathImagenReverso, 50, 50, false, false);
+        System.out.println("se ha creado imagen: " + pathImagenReverso);
     }
 
     
@@ -84,6 +85,7 @@ public class Baraja implements Iterable<Carta> {
     public void setPathImagenReverso(String pathImagenReverso) {
         this.pathImagenReverso = pathImagenReverso;
         this.imagenReverso= new Image(pathImagenReverso, 50, 50, false, false);
+        System.out.println("se ha creado imagen: " + pathImagenReverso);
     }
 
     
@@ -183,7 +185,7 @@ public class Baraja implements Iterable<Carta> {
     public Deck convertirADeck(){
         return new Deck(nombre, convertirCards() , pathImagenReverso, categorias);
     }
-    
+
     public List<Integer> getListaNumCategorias(){
         List<Integer> lista = new ArrayList<Integer>();
         int contadorCategoria = 0;
