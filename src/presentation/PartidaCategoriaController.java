@@ -62,6 +62,13 @@ public class PartidaCategoriaController extends JuegoLibreController {
 //    }
 
     @Override
+    public void configurarTablero() {
+        barajaCatActual = duplicarCartas(barajaCatActual);
+        Baraja baraja = barajaCatActual;
+        //configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
+        configurarTablero(copiaBaraja(baraja));
+    }
+    @Override
     public void comprobarCartas() {
         if (parSeleccionado.size() == 2) {
             carta1 = parSeleccionado.get(0);
@@ -80,7 +87,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 audioOK.play(0.1);
-                if (contador == listaNumCategorias.get(indiceCat)) {
+                if (contador == listaNumCategorias.get(indiceCat)*2) {
                     // CAMBIO CATEGORIA
                     indiceCat++;
                     contador = 0;

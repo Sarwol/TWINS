@@ -34,9 +34,6 @@
                         <Label fx:id="nCategorias" layoutX="135.0" layoutY="118.0" prefHeight="18.0" prefWidth="24.0" />
                         <Label layoutX="182.0" layoutY="119.0" prefHeight="18.0" prefWidth="75.0" text="Categorías:" />
                         <Label fx:id="categoriasLabel" layoutX="257.0" layoutY="111.0" prefHeight="35.0" prefWidth="308.0" />
-                        <Label layoutX="38.0" layoutY="204.0" prefHeight="18.0" prefWidth="97.0" text="Cartas ejemplo:" />
-                        <ImageView fx:id="cartaEjemplo1" fitHeight="84.0" fitWidth="75.0" layoutX="145.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="cartaEjemplo2" fitHeight="84.0" fitWidth="75.0" layoutX="233.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
                      </children></AnchorPane>
                </content>
             </Tab>

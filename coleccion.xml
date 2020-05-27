@@ -49,4 +49,84 @@
             <categoria nombre="frutas"/>
         </categorias>
     </deck>
+    <deck>
+        <nombre>BARAJA_COCHE</nombre>
+        <cartas>
+            <carta cartaID="0">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
+                <categoria nombre="FRUTAS"/>
+            </carta>
+            <carta cartaID="1">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
+                <categoria nombre="FRUTAS"/>
+            </carta>
+            <carta cartaID="2">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
+                <categoria nombre="FRUTAS"/>
+            </carta>
+            <carta cartaID="3">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
+                <categoria nombre="COCHES"/>
+            </carta>
+            <carta cartaID="4">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
+                <categoria nombre="COCHES"/>
+            </carta>
+            <carta cartaID="5">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
+                <categoria nombre="COCHES"/>
+            </carta>
+        </cartas>
+        <imagenReverso>jar:file:/C:/Users/Dani/Documents/NetBeansProjects/TWINS/dist/run689173625/TWINS.jar!/images/card.png</imagenReverso>
+        <categorias>
+            <categoria nombre="FRUTAS"/>
+            <categoria nombre="COCHES"/>
+        </categorias>
+    </deck>
+    <deck>
+        <nombre>COCHES_AUX</nombre>
+        <cartas>
+            <carta cartaID="0">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
+                <categoria nombre="COCHES"/>
+            </carta>
+            <carta cartaID="1">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
+                <categoria nombre="FRUTAS"/>
+            </carta>
+        </cartas>
+        <imagenReverso>file:/C:/Users/Dani/Desktop/card.png</imagenReverso>
+        <categorias>
+            <categoria nombre="FRUTAS"/>
+            <categoria nombre="COCHES"/>
+        </categorias>
+    </deck>
+    <deck>
+        <nombre>COCHES</nombre>
+        <cartas>
+            <carta cartaID="0">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
+                <categoria nombre="COCHES"/>
+            </carta>
+            <carta cartaID="1">
+                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
+                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
+                <categoria nombre="FRUTAS"/>
+            </carta>
+        </cartas>
+        <imagenReverso>file:/C:/Users/Dani/Desktop/card.png</imagenReverso>
+        <categorias>
+            <categoria nombre="COCHES"/>
+            <categoria nombre="FRUTAS"/>
+        </categorias>
+    </deck>
 </coleccion>

@@ -149,7 +149,7 @@ public class Carta extends Button{
 //    }
     @Override
      public String toString(){
-        return "[ID: " + getCartaID() + "]";
+        return "[ID: " + getCartaID() + "] (" + getCategoria() + ")";
      }
     
 //     public Card cartaToCard(){

@@ -168,9 +168,11 @@ public class Deck implements Iterable<Card>{
         List<Carta> cartas = new ArrayList();
         int i = 0;
         for(Card card : this.cartas){
+            // poner ids 
             card.setcartaID(i++);
-            System.out.println(card.getCartaID());
+//            System.out.println(card.getCartaID());
             Carta carta = new Carta(card.getCartaID(),card.getImagenCarta(),card.getImagenBaraja(),card.getCategoria());
+            System.out.println("PATH PERSISTENCIA: " + card.getCartaID() + "        " + card.getImagenBaraja());
             cartas.add(carta);
         }
         return cartas;

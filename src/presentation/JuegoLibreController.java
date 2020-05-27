@@ -6,6 +6,9 @@
 package presentation;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,10 +32,10 @@ import logic.Puntuacion;
  * @author Dani
  */
 public abstract class JuegoLibreController extends JuegoController {
-    
+
     //Objeto configuración (parámetros default si es la primera vez que se crea)
     public Configuracion parametros = Configuracion.getInstance();
-  
+
     /**
      * Initializes the controller class.
      */
@@ -48,102 +51,128 @@ public abstract class JuegoLibreController extends JuegoController {
 //        configurarTablero();
 //        setAnimation();
 //    }
-    
     @Override
-    public void setTimers(int roundDuration, int turnDuration){
-        if(parametros.isLimitePartida()) super.setTimers(roundDuration, turnDuration);
+    public void setTimers(int roundDuration, int turnDuration) {
+        if (parametros.isLimitePartida()) {
+            super.setTimers(roundDuration, turnDuration);
+        }
     }
-    
+
     /**
      * Configura las opciones del tablero
      */
     @Override
-    public void configurarTablero(){
+    public void configurarTablero() {
         Baraja baraja = duplicarCartas(parametros.getBarajaNormal());
         //configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
         configurarTablero(copiaBaraja(baraja));
     }
-    
-    public void configurarTablero(Baraja barajaElegida){
-        barajaElegida = duplicarCartas(barajaElegida);
+
+    public void configurarTablero(Baraja barajaElegida) {
+//        barajaElegida = duplicarCartas(barajaElegida);
         // Add event handlers
-        for(Carta carta : barajaElegida){
-            System.out.println(carta);
+        for (Carta carta : barajaElegida) {
+//            System.out.println(carta);
             carta.addEventHandler(MouseEvent.MOUSE_CLICKED, clickPairEventHandler);
-        }   
+        }
         // initialize tablero
         tablero.setFilas(anchuraTablero);
         tablero.setColumnas(longitudTablero);
 
         tablero.setBaraja(barajaElegida.getCartas());
-        if(parametros.isMostrarCartasInicio()){
+        if (parametros.isMostrarCartasInicio()) {
             tablero.girarTodasCartas();
             mostrarCartasPrincipio();
         }
         tablero.barajarTablero();
         System.out.println(tablero.getChildren().size());
     }
-    
+
     /**
-     * Returns a copy of barajaOriginal with new instances of cards inside of 
+     * Returns a copy of barajaOriginal with new instances of cards inside of
      * it.
+     *
      * @param barajaOriginal
-     * @return  nuevaCopiaBaraja baraja con nuevas instancias de todos los objetos 
-          que contiene
+     * @return nuevaCopiaBaraja baraja con nuevas instancias de todos los
+     * objetos que contiene
      */
-    public Baraja copiaBaraja(Baraja barajaOriginal){
+    public Baraja copiaBaraja(Baraja barajaOriginal) {
 //        Baraja nuevaCopiaBaraja = new Baraja(barajaOriginal.getNombre(), 
 //                barajaOriginal.getImagenReverso());
 //        nuevaCopiaBaraja.setCategorias(barajaOriginal.getCategorias());
+//        System.out.println(barajaOriginal + " ANTES DE COPIABARAJA");
         Baraja nuevaCopiaBaraja = new Baraja();
         nuevaCopiaBaraja.setPathImagenReverso(barajaOriginal.getPathImagenReverso());
         nuevaCopiaBaraja.setNombre(barajaOriginal.getNombre());
         nuevaCopiaBaraja.setCategorias(barajaOriginal.getCategorias());
-         
 
-        for(Carta cartaOriginal : barajaOriginal){
+        for (Carta cartaOriginal : barajaOriginal) {
             Carta nuevaCarta = new Carta(cartaOriginal.getCartaID(),
                     cartaOriginal.getImagenCarta(), cartaOriginal.getImagenBaraja(),
                     cartaOriginal.getCategoria());
             nuevaCopiaBaraja.añadirCarta(nuevaCarta);
         }
-        System.out.println(nuevaCopiaBaraja + " buenas tardes");
+        System.out.println(nuevaCopiaBaraja + " NUEVA COPIA BARAJA");
         return nuevaCopiaBaraja;
     }
 
-        
-    public Baraja duplicarCartas(Baraja baraja){
+    public Baraja duplicarCartas(Baraja baraja) {
+//        System.out.println("Baraja antes de duplicar: " + baraja);
         Baraja barajaDuplicada = new Baraja();
         barajaDuplicada.setNombre(baraja.getNombre());
         barajaDuplicada.setCategorias(baraja.getCategorias());
         barajaDuplicada.setPathImagenReverso(baraja.getPathImagenReverso());
-        for(Carta carta : baraja) {
+        
+        for (Carta carta : baraja) {
+
+            // HAGO COPIA
             Carta cartaDuplicada = new Carta();
+            try {
+                carta.setPathImagenBaraja(this.getClass().getResource("/images/card.png").toURI().toString());
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(JuegoLibreController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Carta a duplicar: " + carta);
             cartaDuplicada.setcartaID(carta.getCartaID());
-            
-            barajaDuplicada.añadirCarta(carta);
-            barajaDuplicada.añadirCarta(carta);
+            cartaDuplicada.setCategoria(carta.getCategoria());
+            cartaDuplicada.setImagenCarta(carta.getImagenCarta());
+            cartaDuplicada.setImagenBaraja(carta.getImagenBaraja());
+            cartaDuplicada.setPathImagenBaraja(carta.getPathImagenBaraja());
+//            System.out.println(cartaDuplicada.getPathImagenBaraja());
+//            cartaDuplicada.setPathImagenCarta(carta.getPathImagenCarta());
+//            System.out.println(cartaDuplicada.getPathImagenCarta());
+
+            barajaDuplicada.añadirCarta(cartaDuplicada);
         }
-        System.out.println(barajaDuplicada + "  duplacacion");
+
+        for (Carta carta : baraja) {
+            barajaDuplicada.añadirCarta(carta);
+
+        }
+//        System.out.println("Baraja después de duplicar: " + barajaDuplicada);
         return barajaDuplicada;
     }
-    
+
     /**
      * Creates a new thread that will turn the cards back around.
      */
     public void mostrarCartasPrincipio() {
         Platform.runLater(() -> {
             try {
-               Thread.sleep(Math.round(parametros.getTiempoCartasInicio() * 1000));  
-                tablero.girarTodasCartas();  
-            } catch (InterruptedException ex) {ex.printStackTrace();}
+                Thread.sleep(Math.round(parametros.getTiempoCartasInicio() * 1000));
+                tablero.girarTodasCartas();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
         });
     }
-    
+
     @Override
     public void saltarAVictoria(Puntuacion punt, int temp, String m) throws IOException {
-        if(audio.isPlaying()) audio.stop();
-        if(parametros.isLimitePartida()){
+        if (audio.isPlaying()) {
+            audio.stop();
+        }
+        if (parametros.isLimitePartida()) {
             countdownPartida.stop();
             countdownTurno.stop();
         }
@@ -162,16 +191,15 @@ public abstract class JuegoLibreController extends JuegoController {
         thisStage.close();
     }
 
-    
     @Override
-    protected void recibirParametros(){
-        
+    protected void recibirParametros() {
+
         longitudTablero = parametros.getLarguraTablero();
         anchuraTablero = parametros.getAnchuraTablero();
         duracionPartida = parametros.getTiempoPartida();
         duracionTurno = parametros.getTiempoTurno();
         turnDelay = parametros.getTiempoVerError();
-        
+
         audioFail = new AudioClip(this.getClass().getResource(parametros.getSonidoFallo()).toString());
         audioOK = new AudioClip(this.getClass().getResource(parametros.getSonidoCorrecto()).toString());
         audioFlip = new AudioClip(this.getClass().getResource(parametros.getSonidoGiro()).toString());
@@ -181,11 +209,11 @@ public abstract class JuegoLibreController extends JuegoController {
             audio.play(0.3);
         }
         puntuacion = new Puntuacion(0);
-      
+
     }
-    
+
     @Override
-    protected void defaultData(){
+    protected void defaultData() {
         longitudTablero = Configuracion.LARGURA_TABLERO_DEFAULT;
         anchuraTablero = Configuracion.ANCHURA_TABLERO_DEFAULT;
         duracionPartida = Configuracion.TIEMPO_PARTIDA_DEFAULT;
@@ -196,13 +224,14 @@ public abstract class JuegoLibreController extends JuegoController {
         audioFlip = new AudioClip(this.getClass().getResource(Configuracion.SONIDO_GIRO_DEFAULT).toString());
         cancion = Configuracion.CANCION_PARTIDA_DEFAULT;
     }
-    
+
     /**
      * Pass the parameters needed when starting this controller
+     *
      * @param stage a reference to this stage
      * @param modoPartida this game mode
      */
-    void initWindow(Stage stage, String modoPartida ) {
+    void initWindow(Stage stage, String modoPartida) {
         super.initWindow(stage);
         modo = modoPartida;
     }

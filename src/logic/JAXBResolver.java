@@ -45,7 +45,7 @@ public class JAXBResolver {
     
     public Coleccion getColeccionFromXML() throws JAXBException{
         Coleccion coleccion = (Coleccion) createUnmarshaller().unmarshal(new File("coleccion.xml"));
-        System.out.println(coleccion.toString());
+//        System.out.println(coleccion.toString());
         return coleccion;
     }
     

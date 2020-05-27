@@ -197,9 +197,17 @@ public class EditorBarajasController implements Initializable {
 
     @FXML
     private void nuevaImagenReverso(ActionEvent event) {
-        Image reverso = uploadImage();
-        imagenReverso.setImage(reverso);
-        barajaActual.setImagenReverso(reverso);
+//        Image reverso = uploadImage();
+        String path = uploadPathImage();
+        System.out.println("PATH REVERSO:" + path);
+        imagenReverso.setImage(new Image(path, 50, 50, false, false));
+        barajaActual.setImagenReverso(new Image(path, 50, 50, false, false));
+        barajaActual.setPathImagenReverso(path);
+        
+        // Actualizar imagen baraja cartas
+        for (Carta carta : barajaActual){
+            carta.setPathImagenBaraja(path);
+        }
     }
     
     @FXML
@@ -242,7 +250,24 @@ public class EditorBarajasController implements Initializable {
         barajaActual = this.barajaActual;
         return barajaActual;
     }
+    public String uploadPathImage(){
+       String path = null; 
+       FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
 
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        try {
+            path = file.toURI().toString();
+        } catch (Exception e) {
+            System.out.println("PROBLEMA ASIGNANDO URI");
+            e.printStackTrace();
+        }
+        return path;
+    }
     public Image uploadImage() {
         Image image = null;
         FileChooser fileChooser = new FileChooser();

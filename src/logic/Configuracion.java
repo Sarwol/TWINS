@@ -329,7 +329,7 @@ public class Configuracion {
             //System.out.println(this.getClass().getResource("/images/card.png"));
             Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
 
-            for (int i = 0; i < 2; i++) {
+//            for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < numCartas / 2; j++) {
                     //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));
                     Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
@@ -339,7 +339,7 @@ public class Configuracion {
                     // Add event to detect when a Carta is clicked
                     baraja.add(carta);
                 }
-            }
+//            }
             barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
             barajaCartas.setCategorias(Arrays.asList(categoria));
         } catch (URISyntaxException e) {
@@ -368,7 +368,7 @@ public class Configuracion {
         String cardImages;
         Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
 
-        for (int i = 0; i < 2; i++) {
+//        for (int i = 0; i < 2; i++) {
             for (int j = 0; j < numCartas / 2; j++) {
                 if (j % 2 == 0) {
                     cardImages = "/images/fruit";
@@ -383,9 +383,10 @@ public class Configuracion {
                     carta.setCategoria(new Categoria("PAJAROS"));
                 }
                 baraja.add(carta);
+                System.out.println("CARTA CREADA: " + carta);
             }
 
-        }
+//        }
         laBaraja = new Baraja(nombreBaraja,baraja,deckCardImage);
         laBaraja.setCategorias(Arrays.asList(new Categoria("FRUTAS"), new Categoria("PAJAROS")));
         laBaraja.setPathImagenReverso(this.getClass().getResource("/images/card.png").toURI().toString());

@@ -140,10 +140,10 @@ public class ParametrosPartidaController implements Initializable {
     private Label nCategorias;
     @FXML
     private Label categoriasLabel;
-    @FXML
-    private ImageView cartaEjemplo1;
-    @FXML
-    private ImageView cartaEjemplo2;
+//    @FXML
+//    private ImageView cartaEjemplo1;
+//    @FXML
+//    private ImageView cartaEjemplo2;
 
     // Singleton instance to configure parameters
     Configuracion parametros = Configuracion.getInstance();
@@ -329,8 +329,8 @@ public class ParametrosPartidaController implements Initializable {
         barajaActual = parametros.getBarajaNormal();
         nCategorias.setText(String.valueOf(barajaActual.getCategorias().size()));
         categoriasLabel.setText(barajaActual.getCategorias().toString());
-        cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenCarta());
-        cartaEjemplo2.setImage(barajaActual.getCartas().get(1).getImagenCarta());
+        //cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenCarta());
+        //cartaEjemplo2.setImage(barajaActual.getCartas().get(1).getImagenCarta());
 
     }
 
@@ -563,7 +563,7 @@ public class ParametrosPartidaController implements Initializable {
         barajaActual = listaBarajas.get(barajasBox.getSelectionModel().getSelectedIndex());
         nCategorias.setText(String.valueOf(barajaActual.getCategorias().size()));
         categoriasLabel.setText(barajaActual.getCategorias().toString());
-        cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenBaraja());
+//        cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenBaraja());
         //cartaEjemplo2.setImage(barajaActual.getCartas().get(1).getImagenCarta());
         System.out.println(barajaActual);
     }
@@ -610,8 +610,8 @@ public class ParametrosPartidaController implements Initializable {
         barajasBox.setValue(parametros.getBarajaNormal());
         nCategorias.setText(String.valueOf(parametros.getBarajaNormal().getCategorias().size()));
         categoriasLabel.setText(parametros.getBarajaNormal().getCategorias().toString());
-        cartaEjemplo1.setImage(parametros.getBarajaNormal().getCartas().get(0).getImagenCarta());
-        cartaEjemplo2.setImage(parametros.getBarajaNormal().getCartas().get(1).getImagenCarta());
+//        cartaEjemplo1.setImage(parametros.getBarajaNormal().getCartas().get(0).getImagenCarta());
+//        cartaEjemplo2.setImage(parametros.getBarajaNormal().getCartas().get(1).getImagenCarta());
     }
 
     protected void setearImagenCartas() {
