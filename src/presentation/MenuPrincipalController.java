@@ -194,51 +194,54 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void abrirPorCarta(ActionEvent event) throws IOException {
-        mode = "PartidaPorCarta.fxml";
-        MenuPrincipalController.musicaInicial.stop();
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
-        Parent root = (Parent) myLoader.load();
-        PartidaPorCartaController partidaCartController = myLoader.<PartidaPorCartaController>getController();
-        Stage winStage = new Stage();
-        partidaCartController.initWindow(winStage, mode);
-        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        thisStage.close();
-        winStage.close();
-        //We create the scene foe win1
-        Scene scene = new Scene(root);
-        //we asign new scene to current stage/window
-        winStage.setScene(scene);
-        winStage.setTitle("TWINS");
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-         //System.out.println(mode);
+        if (parametros.getBarajaNormal().size() >= (parametros.getAnchuraTablero() * parametros.getLarguraTablero())/2){
+            mode = "PartidaPorCarta.fxml";
+            MenuPrincipalController.musicaInicial.stop();
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
+            Parent root = (Parent) myLoader.load();
+            PartidaPorCartaController partidaCartController = myLoader.<PartidaPorCartaController>getController();
+            Stage winStage = new Stage();
+            partidaCartController.initWindow(winStage, mode);
+            Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+            thisStage.close();
+            winStage.close();
+            //We create the scene foe win1
+            Scene scene = new Scene(root);
+            //we asign new scene to current stage/window
+            winStage.setScene(scene);
+            winStage.setTitle("TWINS");
+            winStage.initModality(Modality.APPLICATION_MODAL);
+            winStage.show();
+        } else barajaNoCompatible();
     }
 
     @FXML
     private void abrirEstandar(ActionEvent event) throws IOException {
-         mode = "PartidaEstandar.fxml";
-        MenuPrincipalController.musicaInicial.stop();
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
-        Parent root = (Parent) myLoader.load();
-        PartidaEstandarController partidaEstController = myLoader.<PartidaEstandarController>getController();
-        Stage winStage = new Stage();
-        partidaEstController.initWindow(winStage, mode);
-        Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        thisStage.close();
-        winStage.close();
-        //We create the scene foe win1
-        Scene scene = new Scene(root);
-        //we asign new scene to current stage/window
-        winStage.setScene(scene);
-        winStage.setTitle("TWINS");
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-        //System.out.println(mode);
+        if (parametros.getBarajaNormal().size() >= (parametros.getAnchuraTablero() * parametros.getLarguraTablero())/2){
+            mode = "PartidaEstandar.fxml";
+            MenuPrincipalController.musicaInicial.stop();
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
+            Parent root = (Parent) myLoader.load();
+            PartidaEstandarController partidaEstController = myLoader.<PartidaEstandarController>getController();
+            Stage winStage = new Stage();
+            partidaEstController.initWindow(winStage, mode);
+            Stage thisStage = (Stage) estandarButton.getScene().getWindow();
+            thisStage.close();
+            winStage.close();
+            //We create the scene foe win1
+            Scene scene = new Scene(root);
+            //we asign new scene to current stage/window
+            winStage.setScene(scene);
+            winStage.setTitle("TWINS");
+            winStage.initModality(Modality.APPLICATION_MODAL);
+            winStage.show();
+        } else barajaNoCompatible();
     }
 
     @FXML
     private void abrirPorCategoria(ActionEvent event) throws IOException {
-        if(parametros.getBarajaCategoria().getCategorias().size() >= 2){
+        if(parametros.getBarajaCategoria().getCategorias().size() >= 2 && 
+                parametros.getBarajaCategoria().size() >= (parametros.getAnchuraTablero() * parametros.getLarguraTablero())/2 ){
             mode = "PartidaCategoria.fxml";
             MenuPrincipalController.musicaInicial.stop();
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(mode));
@@ -258,12 +261,14 @@ public class MenuPrincipalController implements Initializable {
             winStage.show();
             //System.out.println(mode);
         } else {
-             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-             alert.setTitle("Atención");
-             alert.setHeaderText("Baraja no compatible con Categoria");
-             alert.setContentText("La baraja que ha seleccionadono es compatible "
-                    + "con el modo de juego de Categoria, ya que solo tiene una categoría.");
-             alert.showAndWait();
+            if(parametros.getBarajaCategoria().size() >= (parametros.getAnchuraTablero() * parametros.getLarguraTablero())/2){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Atención");
+                alert.setHeaderText("Baraja no compatible con Categoria");
+                alert.setContentText("La baraja que ha seleccionadono es compatible "
+                        + "con el modo de juego de Categoria, ya que solo tiene una categoría. Seleccione una compatible o cree una baraja con más de una categoría");
+                alert.showAndWait();
+            } else barajaNoCompatible();
         }
     }
 
@@ -294,13 +299,9 @@ public class MenuPrincipalController implements Initializable {
     @FXML
     private void changeMusic(MouseEvent event) throws URISyntaxException {
         if(musicaInicial.isPlaying()) {
-            musicaInicial.stop();
-               //Image image = new Image(this.getClass().getResource("/images/appImages/muteOffIcon.png").toURI().toString());
-               //muteView.setImage(image);
+            musicaInicial.stop();   
         } else {
-            musicaInicial.play(0.15);
-               //Image image = new Image(this.getClass().getResource("/images/appImages/muteOnIcon.png").toURI().toString());
-               //muteView.setImage(image);
+            musicaInicial.play(0.15);    
         }
     }
 
@@ -326,4 +327,13 @@ public class MenuPrincipalController implements Initializable {
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
+    
+    private void barajaNoCompatible(){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atención");
+            alert.setHeaderText("Baraja incompatible");
+            alert.setContentText("La baraja que ha seleccionado no es adecuada para "
+                    + "el tablero que ha escogido. Por favor, ajuste el tamaño del tablero o cambie la baraja seleccionada");
+            alert.showAndWait();
+      }
 }
