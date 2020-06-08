@@ -35,37 +35,10 @@ public class PartidaCategoriaController extends JuegoLibreController {
     private int indiceCat = 0;
     
    
-    /**
-     * Initializes the controller class.
-     */
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
-//        // Loads parameters from config class
-//        recibirParametros();
-//        if (!parametros.isSinMusica()) {
-//            setAudio(cancion);
-//            audio.play(0.3);
-//        }
-//        puntuacion = new Puntuacion(0);
-//        setUpPauseMenuAccess();
-//        setUpPairSelection();
-//        
-//       
-//        if(parametros.isLimitePartida())
-//            setTimers(duracionPartida, duracionTurno);
-//        
-//        configurarTablero();
-//        setAnimation();
-//        // CAMBIO CATEGORIA
-//        categoriaActual = parametros.getBarajaCategoria().getCategorias().get(0);
-//        categoriaLabel.setText(categoriaActual.toString());
-//    }
-
     @Override
     public void configurarTablero() {
         barajaCatActual = duplicarCartas(barajaCatActual);
         Baraja baraja = barajaCatActual;
-        //configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
         configurarTablero(copiaBaraja(baraja));
     }
     @Override
@@ -91,11 +64,12 @@ public class PartidaCategoriaController extends JuegoLibreController {
                     // CAMBIO CATEGORIA
                     indiceCat++;
                     contador = 0;
-                    try{
+                    //try{
+                    if(indiceCat < barajaCatActual.getCategorias().size()){
                         categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
                         categoriaLabel.setText(categoriaActual.toString());
-                    } catch(Exception e){categoriaLabel.setText("FIN!!");} 
-                    
+                    }//} catch(Exception e){categoriaLabel.setText("FIN!!");} 
+                    else {categoriaLabel.setText("FIN!!");}
                 }
             } else {
                 puntuacion.restarPuntos();
