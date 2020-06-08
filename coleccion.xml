@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <coleccion>
-    <deck>
-        <nombre>Baraja 1</nombre>
+    <deck nombre="Baraja1" imagenReverso="file:/C:/Users/David/Downloads/Mojon%20entertainment.jpg">
         <cartas>
-            <carta cartaID="23">
-                <categoria>
-                    <name>Pájaros</name>
-                </categoria>
+            <carta cartaID="0" imagenCarta="file:/C:/Users/David/Desktop/David/johnny-johnny-yes-papa-edm-remix-extended-275-275-1539745671.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/johnny-johnny-yes-papa-edm-remix-extended-275-275-1539745671.jpg">
+                <categoria nombre="FRUTAS"/>
+            </carta>
+            <carta cartaID="1" imagenCarta="file:/C:/Users/David/Desktop/David/descarga.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/descarga.jpg">
+                <categoria nombre="VERDURAS"/>
+            </carta>
+            <carta cartaID="2" imagenCarta="file:/C:/Users/David/Desktop/David/backtothefuture.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/backtothefuture.jpg">
+                <categoria nombre="FRUTAS"/>
+            </carta>
+            <carta cartaID="3" imagenCarta="file:/C:/Users/David/Desktop/David/rogue-one-a-star-wars-story-wallpapers-hd-wallpapers.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/rogue-one-a-star-wars-story-wallpapers-hd-wallpapers.jpg">
+                <categoria nombre="VERDURAS"/>
             </carta>
         </cartas>
-        <categorias/>
-    </deck>
-    <deck>
-        <nombre>Baraja 2</nombre>
-        <cartas/>
-        <categorias/>
+        <categorias>
+            <categoria nombre="FRUTAS"/>
+            <categoria nombre="VERDURAS"/>
+        </categorias>
     </deck>
 </coleccion>
