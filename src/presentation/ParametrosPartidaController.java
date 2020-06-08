@@ -513,7 +513,7 @@ public class ParametrosPartidaController implements Initializable {
         listaBarajas = leerXML();
         listaBarajas.add(parametros.getBarajaNormal());
         listaBarajas.add(parametros.generarBaraja(parametros.getAnchuraTablero() * parametros.getLarguraTablero(), "card", new Categoria("PAJAROS"), "Baraja Default 2"));
-        listaBarajas.add(parametros.getBarajaCategoria());
+        listaBarajas.add(parametros.generarBarajaCategoria(parametros.getAnchuraTablero() * parametros.getLarguraTablero(), "", "Baraja Categoria Default"));
         List<String> nombreBarajas = new ArrayList<>();
         for (int i = 0; i < listaBarajas.size(); i++) {
             nombreBarajas.add(listaBarajas.get(i).getNombre());
