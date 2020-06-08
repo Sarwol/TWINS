@@ -78,12 +78,12 @@ public class Card {
         return cartaID;
     }
     
-    @XmlElement(name="imagenCarta")
+    @XmlAttribute(name="imagenCarta")
     public String getImagenCarta() {
         return imagenCarta;
     }
     
-    @XmlElement(name="imagenBaraja")
+    @XmlAttribute(name="imagenBaraja")
     public String getImagenBaraja() {
         return imagenBaraja;
     }

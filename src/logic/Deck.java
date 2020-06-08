@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javafx.scene.image.Image;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -79,6 +80,7 @@ public class Deck implements Iterable<Card>{
      *
      * @return the value of imagenReverso
      */
+    @XmlAttribute(name="imagenReverso")
     public String getImagenReverso() {
         return imagenReverso;
     }
@@ -117,6 +119,7 @@ public class Deck implements Iterable<Card>{
      *
      * @return the value of nombre
      */
+    @XmlAttribute(name="nombre")
     public String getNombre() {
         return nombre;
     }

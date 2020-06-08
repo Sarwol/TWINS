@@ -1,132 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <coleccion>
-    <deck>
-        <nombre>barajacoches</nombre>
+    <deck nombre="Baraja1" imagenReverso="file:/C:/Users/David/Downloads/Mojon%20entertainment.jpg">
         <cartas>
-            <carta cartaID="0">
-                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
-                <categoria nombre="coches"/>
+            <carta cartaID="0" imagenCarta="file:/C:/Users/David/Desktop/David/johnny-johnny-yes-papa-edm-remix-extended-275-275-1539745671.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/johnny-johnny-yes-papa-edm-remix-extended-275-275-1539745671.jpg">
+                <categoria nombre="FRUTAS"/>
             </carta>
-            <carta cartaID="1">
-                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
-                <categoria nombre="coches"/>
+            <carta cartaID="1" imagenCarta="file:/C:/Users/David/Desktop/David/descarga.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/descarga.jpg">
+                <categoria nombre="VERDURAS"/>
             </carta>
-            <carta cartaID="2">
-                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
-                <categoria nombre="flores"/>
+            <carta cartaID="2" imagenCarta="file:/C:/Users/David/Desktop/David/backtothefuture.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/backtothefuture.jpg">
+                <categoria nombre="FRUTAS"/>
             </carta>
-            <carta cartaID="3">
-                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
-                <categoria nombre="perros"/>
-            </carta>
-            <carta cartaID="4">
-                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
-                <categoria nombre="flores"/>
-            </carta>
-            <carta cartaID="5">
-                <imagenCarta>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenBaraja>
-                <categoria nombre="coches"/>
+            <carta cartaID="3" imagenCarta="file:/C:/Users/David/Desktop/David/rogue-one-a-star-wars-story-wallpapers-hd-wallpapers.jpg" imagenBaraja="file:/C:/Users/David/Desktop/David/rogue-one-a-star-wars-story-wallpapers-hd-wallpapers.jpg">
+                <categoria nombre="VERDURAS"/>
             </carta>
         </cartas>
-        <imagenReverso>file:/C:/Users/David/Desktop/Obra-maestra-Empire-Back-to-the-Future.jpg</imagenReverso>
-        <categorias>
-            <categoria nombre="coches"/>
-            <categoria nombre="flores"/>
-            <categoria nombre="perros"/>
-        </categorias>
-    </deck>
-    <deck>
-        <nombre>baraja2</nombre>
-        <cartas/>
-        <imagenReverso>jar:file:/C:/Users/David/Documents/NetBeansProjects/TWINS/dist/run1034073453/TWINS.jar!/images/card.png</imagenReverso>
-        <categorias>
-            <categoria nombre="frutas"/>
-        </categorias>
-    </deck>
-    <deck>
-        <nombre>BARAJA_COCHE</nombre>
-        <cartas>
-            <carta cartaID="0">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
-                <categoria nombre="FRUTAS"/>
-            </carta>
-            <carta cartaID="1">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
-                <categoria nombre="FRUTAS"/>
-            </carta>
-            <carta cartaID="2">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
-                <categoria nombre="FRUTAS"/>
-            </carta>
-            <carta cartaID="3">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
-                <categoria nombre="COCHES"/>
-            </carta>
-            <carta cartaID="4">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
-                <categoria nombre="COCHES"/>
-            </carta>
-            <carta cartaID="5">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
-                <categoria nombre="COCHES"/>
-            </carta>
-        </cartas>
-        <imagenReverso>jar:file:/C:/Users/Dani/Documents/NetBeansProjects/TWINS/dist/run689173625/TWINS.jar!/images/card.png</imagenReverso>
         <categorias>
             <categoria nombre="FRUTAS"/>
-            <categoria nombre="COCHES"/>
-        </categorias>
-    </deck>
-    <deck>
-        <nombre>COCHES_AUX</nombre>
-        <cartas>
-            <carta cartaID="0">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
-                <categoria nombre="COCHES"/>
-            </carta>
-            <carta cartaID="1">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
-                <categoria nombre="FRUTAS"/>
-            </carta>
-        </cartas>
-        <imagenReverso>file:/C:/Users/Dani/Desktop/card.png</imagenReverso>
-        <categorias>
-            <categoria nombre="FRUTAS"/>
-            <categoria nombre="COCHES"/>
-        </categorias>
-    </deck>
-    <deck>
-        <nombre>COCHES</nombre>
-        <cartas>
-            <carta cartaID="0">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/INDEX2.jpg</imagenBaraja>
-                <categoria nombre="COCHES"/>
-            </carta>
-            <carta cartaID="1">
-                <imagenCarta>file:/C:/Users/Dani/Desktop/index.png</imagenCarta>
-                <imagenBaraja>file:/C:/Users/Dani/Desktop/index.png</imagenBaraja>
-                <categoria nombre="FRUTAS"/>
-            </carta>
-        </cartas>
-        <imagenReverso>file:/C:/Users/Dani/Desktop/card.png</imagenReverso>
-        <categorias>
-            <categoria nombre="COCHES"/>
-            <categoria nombre="FRUTAS"/>
+            <categoria nombre="VERDURAS"/>
         </categorias>
     </deck>
 </coleccion>
