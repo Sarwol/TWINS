@@ -20,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -28,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -41,7 +39,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import logic.Baraja;
-import logic.Carta;
 import logic.Categoria;
 import logic.Coleccion;
 import logic.Configuracion;
@@ -74,14 +71,6 @@ public class ParametrosPartidaController implements Initializable {
     private Tab barajasPane;
     @FXML
     private Button defaultBarajasButton;
-    private RadioButton pajarosNormal;
-    private RadioButton frutasNormal;
-    private RadioButton baraja3Normal;
-    private RadioButton baraja4Normal;
-    private RadioButton pajarosRotacion;
-    private RadioButton frutasRotacion;
-    private RadioButton baraja3Rotacion;
-    private RadioButton baraja4Rotacion;
     @FXML
     private Tab parametrosPane;
     @FXML
@@ -140,10 +129,6 @@ public class ParametrosPartidaController implements Initializable {
     private Label nCategorias;
     @FXML
     private Label categoriasLabel;
-//    @FXML
-//    private ImageView cartaEjemplo1;
-//    @FXML
-//    private ImageView cartaEjemplo2;
 
     // Singleton instance to configure parameters
     Configuracion parametros = Configuracion.getInstance();
@@ -153,14 +138,14 @@ public class ParametrosPartidaController implements Initializable {
     private Stage parentStage;
 
     //Música de la Partida   
-    protected List<String> gameSongList = new ArrayList<String>();
+    protected List<String> gameSongList = new ArrayList<>();
     public static String cancionActual;
     public static boolean sinMusica = false;
     ////////////////////////////////////////////////////////////////////////////////
 
     //Parámetro de la Partida
     //Parámetros
-    protected List<Integer> tamañoTablero = new ArrayList<Integer>();
+    protected List<Integer> tamañoTablero = new ArrayList<>();
     //Parámetros que actualizarán los datos de la siguiente partida
     public static int nuevaLargura = Configuracion.LARGURA_TABLERO_DEFAULT;
     public static int nuevaAnchura = Configuracion.ANCHURA_TABLERO_DEFAULT;
@@ -171,7 +156,7 @@ public class ParametrosPartidaController implements Initializable {
     //Tipo de Tablero 
     //
     //Efectos
-    protected List<String> sonidos = new ArrayList<String>();
+    protected List<String> sonidos = new ArrayList<>();
     public static int tiempoMostrarCartas = 2;
     //Variables que setearán los sonidos en la partida
     public static String sonidoActualAcierto = "/music/correct.mp3";
@@ -194,18 +179,12 @@ public class ParametrosPartidaController implements Initializable {
         loadCurrentParameters();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Barajas
-
         barajaNormalActual = parametros.getBarajaNormal();
         barajaCategoriaActual = parametros.getBarajaCategoria();
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         populateFields();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //A falta de añadir los Efectos Visuales
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Música de la partida
-//        setListaCanciones();
         ObservableList<String> itemsSong = FXCollections.observableArrayList(gameSongList);
         desplegableMusica.setItems(itemsSong);
         cancionActual = parametros.getCancionPartida();
@@ -277,10 +256,6 @@ public class ParametrosPartidaController implements Initializable {
         parametros.setAnchuraTablero(anchoBox.getValue());
 
         //Parámetros de partida
-        if (barajaNormalActual.size() >= (nuevaLargura * nuevaAnchura)/2
-                && barajaCategoriaActual.size() >= (nuevaLargura * nuevaAnchura)/2) {
-            parametros.setBarajaNormal(barajaNormalActual);
-            parametros.setBarajaCategoria(barajaCategoriaActual);
             parametros.setLimitePartida(limiteChekbox.isSelected());
 
             parametros.setCancionPartida(cancionActual);
@@ -292,46 +267,33 @@ public class ParametrosPartidaController implements Initializable {
             if (showCardsBox.isSelected()) {
                 parametros.setTiempoCartasInicio(showCardsTime.getValue());
             }
-
             parametros.setLimitePartida(limiteChekbox.isSelected());
             if (limiteChekbox.isSelected()) {
                 parametros.setTiempoTurno(volteoCartaBox.getValue());
                 parametros.setTiempoPartida(tiempoPartidaBox.getValue());
             }
-
             parametros.setTiempoVerError(exposicionParErrorBox.getValue());
 
             //Barajas
+            parametros.setBarajaNormal(barajaNormalActual);
+            parametros.setBarajaCategoria(barajaCategoriaActual);
             parametros.setCartaPartida(imagenCarta);
             parametros.setBarajaNormal(barajaActual);
-            if (barajaActual.getCategorias().size() < 2) {
-                avisoBaraja();
-            }
             parametros.setBarajaCategoria(barajaActual);
 
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
 
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Atención");
-            alert.setHeaderText("Baraja incompatible");
-            alert.setContentText("La baraja que ha seleccionado no es adecuada para "
-                    + "el tablero que ha escogido. Por favor, cambie alguna de las dos cosas");
-            alert.showAndWait();
-        }
+
     }
 
     //Botones de restablecer a Valores Predeterminados
     @FXML
     private void setDefaultBarajas(ActionEvent event) {
-
-        //barajasBox.setValue(parametros.getBarajaNormal().getNombre());
+        barajasBox.setValue(parametros.getBarajaNormal());
         barajaActual = parametros.getBarajaNormal();
         nCategorias.setText(String.valueOf(barajaActual.getCategorias().size()));
         categoriasLabel.setText(barajaActual.getCategorias().toString());
-        //cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenCarta());
-        //cartaEjemplo2.setImage(barajaActual.getCartas().get(1).getImagenCarta());
-
+        
     }
 
     @FXML
@@ -368,14 +330,7 @@ public class ParametrosPartidaController implements Initializable {
         }
     }
 
-//    public void setListaCanciones() {
-//        gameSongList.add("Sin Música");
-//        gameSongList.add("Golf It Music");
-//        gameSongList.add("Zelda Remix");
-//        gameSongList.add("Force Theme Star Wars");
-//        gameSongList.add("Chill Music to play");
-//
-//    }
+
     private void seleccionarCancion() {
         switch (desplegableMusica.getSelectionModel().getSelectedIndex()) {
             case 0:
@@ -418,9 +373,6 @@ public class ParametrosPartidaController implements Initializable {
         tamañoTablero.add(m);
     }
 
-    @FXML
-    private void elegirTablero(ActionEvent event) {
-    }
 
     @FXML
     private void disableLimites(ActionEvent event) {
@@ -481,7 +433,7 @@ public class ParametrosPartidaController implements Initializable {
     @FXML
     private void playFlipSound(ActionEvent event) {
         seleccionarSonidoGiro();
-        if (this.sonidoActualGiro != null && this.sonidoActualGiro != "") {
+        if (this.sonidoActualGiro != null && !"".equals(this.sonidoActualGiro)) {
             if (audio.isPlaying()) {
                 audio.stop();
             }
@@ -491,13 +443,6 @@ public class ParametrosPartidaController implements Initializable {
         } else if (audio.isPlaying()) {
             audio.stop();
         }
-    }
-
-    public void setSonido(String string1, String string2, String string3) {
-        sonidos.clear();
-        sonidos.add(string1);
-        sonidos.add(string2);
-        sonidos.add(string3);
     }
 
     private void seleccionarSonidoAcierto() {
@@ -537,7 +482,7 @@ public class ParametrosPartidaController implements Initializable {
     }
 
     private void seleccionarSonidoGiro() {
-        switch (soundFlipBox.getSelectionModel().getSelectedIndex()) { //insertar sonido de giro
+        switch (soundFlipBox.getSelectionModel().getSelectedIndex()) {
             case 0:
                 sonidoActualGiro = "/music/flip.wav";
                 break;
@@ -555,7 +500,6 @@ public class ParametrosPartidaController implements Initializable {
 
     public void setAudio(String sonido) {
         audio = new AudioClip(this.getClass().getResource(sonido).toString());
-        //note.play();
     }
 
     @FXML
@@ -563,17 +507,14 @@ public class ParametrosPartidaController implements Initializable {
         barajaActual = listaBarajas.get(barajasBox.getSelectionModel().getSelectedIndex());
         nCategorias.setText(String.valueOf(barajaActual.getCategorias().size()));
         categoriasLabel.setText(barajaActual.getCategorias().toString());
-//        cartaEjemplo1.setImage(barajaActual.getCartas().get(0).getImagenBaraja());
-        //cartaEjemplo2.setImage(barajaActual.getCartas().get(1).getImagenCarta());
-        System.out.println(barajaActual);
     }
 
     private void setBarajas() {
         listaBarajas = leerXML();
         listaBarajas.add(parametros.getBarajaNormal());
         listaBarajas.add(parametros.generarBaraja(parametros.getAnchuraTablero() * parametros.getLarguraTablero(), "card", new Categoria("PAJAROS"), "Baraja Default 2"));
-        listaBarajas.add(parametros.getBarajaCategoria());
-        List<String> nombreBarajas = new ArrayList<String>();
+        listaBarajas.add(parametros.generarBarajaCategoria(parametros.getAnchuraTablero() * parametros.getLarguraTablero(), "", "Baraja Categoria Default"));
+        List<String> nombreBarajas = new ArrayList<>();
         for (int i = 0; i < listaBarajas.size(); i++) {
             nombreBarajas.add(listaBarajas.get(i).getNombre());
         }
@@ -610,8 +551,7 @@ public class ParametrosPartidaController implements Initializable {
         barajasBox.setValue(parametros.getBarajaNormal());
         nCategorias.setText(String.valueOf(parametros.getBarajaNormal().getCategorias().size()));
         categoriasLabel.setText(parametros.getBarajaNormal().getCategorias().toString());
-//        cartaEjemplo1.setImage(parametros.getBarajaNormal().getCartas().get(0).getImagenCarta());
-//        cartaEjemplo2.setImage(parametros.getBarajaNormal().getCartas().get(1).getImagenCarta());
+        barajasBox.setValue(parametros.getBarajaNormal());
     }
 
     protected void setearImagenCartas() {
@@ -630,98 +570,57 @@ public class ParametrosPartidaController implements Initializable {
             normal4.setImage(image);
             categ4.setImage(image);
         } catch (URISyntaxException use) {
-            use.printStackTrace();
         }
 
-    }
-
-    /**
-     * Generates deck without the event handler
-     *
-     * @param numCartas
-     * @param cartaModelo
-     * @param nombreBaraja
-     * @return
-     */
-    public Baraja generarBaraja(int numCartas, String cartaModelo, String nombreBaraja) {
-        Baraja barajaCartas = null;
-        if (numCartas % 2 != 0) {
-            System.out.println("*****************************************");
-            System.out.println("Uneven number of cards");
-            System.out.println("*****************************************");
-            return null;
-        }
-        try {
-
-            List<Carta> baraja = new ArrayList<>();
-//        File deckCard = new File("." + File.separator + "images" + File.separator + "card.png");
-//        String cardImages = "." + File.separator + "images" + File.separator + cartaModelo;
-            //System.out.println(this.getClass().getResource("/images/card.png"));
-            Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);
-
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < numCartas / 2; j++) {
-                    //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));
-                    Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);
-
-                    Carta carta = new Carta(j, currentCardImage, deckCardImage);
-
-                    // Add event to detect when a Carta is clicked
-                    baraja.add(carta);
-                }
-            }
-            barajaCartas = new Baraja(nombreBaraja, baraja, deckCardImage);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        if (barajaCartas == null) {
-            System.out.println("BARAJA IS NULL!!!!");
-        }
-        return barajaCartas;
-    }
-
-    void initWindow(Stage stage) {
-        this.parentStage = stage;
     }
 
     //Método que compureba los efectos que hay instanciados actualemnte en la clase Configuración
     protected String comprobarSonido(String sonido) {
-        if (sonido == "Acierto") {
-            if (parametros.getSonidoCorrecto() == "/music/correct.mp3") {
-                return sonido = sonido + " " + 1;
-            } else if (parametros.getSonidoCorrecto() == "/music/correct2.mp3") {
-                return sonido = sonido + " " + 2;
-            } else {
+        if ("Acierto".equals(sonido)) {
+            if (null == parametros.getSonidoCorrecto()) {
                 return sonido = sonido + " " + 3;
+            } else switch (parametros.getSonidoCorrecto()) {
+                case "/music/correct.mp3":
+                    return sonido = sonido + " " + 1;
+                case "/music/correct2.mp3":
+                    return sonido = sonido + " " + 2;
+                default:
+                    return sonido = sonido + " " + 3;
             }
-        } else if (sonido == "Fallo") {
-            if (parametros.getSonidoFallo() == "/music/fail.mp3") {
-                return sonido = sonido + " " + 1;
-            } else if (parametros.getSonidoFallo() == "/music/fail2.mp3") {
-                return sonido = sonido + " " + 2;
-            } else {
+        } else if ("Fallo".equals(sonido)) {
+            if (null == parametros.getSonidoFallo()) {
                 return sonido = sonido + " " + 3;
+            } else switch (parametros.getSonidoFallo()) {
+                case "/music/fail.mp3":
+                    return sonido = sonido + " " + 1;
+                case "/music/fail2.mp3":
+                    return sonido = sonido + " " + 2;
+                default:
+                    return sonido = sonido + " " + 3;
             }
         } else {
-            if (parametros.getSonidoGiro() == "/music/flip.wav") {
-                return sonido = sonido + " " + 1;
-            } else if (parametros.getSonidoGiro() == "/music/flip2.wav") {
-                return sonido = sonido + " " + 2;
-            } else {
+            if (null == parametros.getSonidoGiro()) {
                 return sonido = sonido + " " + 3;
+            } else switch (parametros.getSonidoGiro()) {
+                case "/music/flip.wav":
+                    return sonido = sonido + " " + 1;
+                case "/music/flip2.wav":
+                    return sonido = sonido + " " + 2;
+                default:
+                    return sonido = sonido + " " + 3;
             }
         }
     }
 
     //Método para comprobar qué canción es la que está configurada actualmente en Configuración
     protected String comprobarMusica() {
-        if (parametros.getCancionPartida() == "/music/Cancion1.mp3") {
+        if ("/music/Cancion1.mp3".equals(parametros.getCancionPartida())) {
             return "Golf It Music";
-        } else if (parametros.getCancionPartida() == "/music/Cancion2.mp3") {
+        } else if ("/music/Cancion2.mp3".equals(parametros.getCancionPartida())) {
             return "Zelda Remix";
-        } else if (parametros.getCancionPartida() == "/music/Cancion3.mp3") {
+        } else if ("/music/Cancion3.mp3".equals(parametros.getCancionPartida())) {
             return "Force Theme Star Wars";
-        } else if (parametros.getCancionPartida() == "/music/Cancion4.mp3") {
+        } else if ("/music/Cancion4.mp3".equals(parametros.getCancionPartida())) {
             return "Chill Music to play";
         } else if (parametros.isSinMusica()) {
             return "Sin Música";
@@ -730,14 +629,7 @@ public class ParametrosPartidaController implements Initializable {
         }
     }
 
-    protected void avisoBaraja() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Atención");
-        alert.setHeaderText("Baraja no compatible con Categoria");
-        alert.setContentText("La baraja seleccionada no es compatible con el modo de juego de Categoria,"
-                + " ya que solo tiene una categoría.");
-        alert.showAndWait();
-
+     void initWindow(Stage stage) {
+        this.parentStage = stage;
     }
-
 }
