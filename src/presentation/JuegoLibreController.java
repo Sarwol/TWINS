@@ -108,7 +108,7 @@ public abstract class JuegoLibreController extends JuegoController {
 
         for (Carta cartaOriginal : barajaOriginal) {
             Carta nuevaCarta = new Carta(cartaOriginal.getCartaID(),
-                    cartaOriginal.getImagenCarta(), cartaOriginal.getImagenBaraja(),
+                    cartaOriginal.getImagenCarta(), barajaOriginal.getImagenReverso(),
                     cartaOriginal.getCategoria());
             nuevaCopiaBaraja.añadirCarta(nuevaCarta);
         }
@@ -127,17 +127,17 @@ public abstract class JuegoLibreController extends JuegoController {
 
             // HAGO COPIA
             Carta cartaDuplicada = new Carta();
-            try {
-                carta.setPathImagenBaraja(this.getClass().getResource("/images/card.png").toURI().toString());
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(JuegoLibreController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                //carta.setPathImagenBaraja(this.getClass().getResource("/images/card.png").toURI().toString());
+//            } catch (URISyntaxException ex) {
+//                Logger.getLogger(JuegoLibreController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             System.out.println("Carta a duplicar: " + carta);
             cartaDuplicada.setcartaID(carta.getCartaID());
             cartaDuplicada.setCategoria(carta.getCategoria());
             cartaDuplicada.setImagenCarta(carta.getImagenCarta());
             cartaDuplicada.setImagenBaraja(carta.getImagenBaraja());
-            cartaDuplicada.setPathImagenBaraja(carta.getPathImagenBaraja());
+            cartaDuplicada.setPathImagenBaraja(baraja.getPathImagenReverso());
 //            System.out.println(cartaDuplicada.getPathImagenBaraja());
 //            cartaDuplicada.setPathImagenCarta(carta.getPathImagenCarta());
 //            System.out.println(cartaDuplicada.getPathImagenCarta());
