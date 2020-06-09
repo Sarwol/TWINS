@@ -45,13 +45,13 @@ public class JAXBResolver {
     }
     
     public Coleccion getColeccionFromXML() throws JAXBException{
-        Coleccion coleccion = (Coleccion) createUnmarshaller().unmarshal(new File("coleccion.xml"));
+        Coleccion coleccion = (Coleccion) createUnmarshaller().unmarshal(new File(System.getProperty("user.home") + File.separator + "coleccion.xml"));
 //        System.out.println(coleccion.toString());
         return coleccion;
     }
     
     public void setColeccionToXML(Coleccion coleccion) throws JAXBException, IOException{
             context.createMarshaller().setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        context.createMarshaller().marshal(coleccion, new FileWriter("coleccion.xml"));
+        context.createMarshaller().marshal(coleccion, new FileWriter(System.getProperty("user.home") + File.separator + "coleccion.xml"));
     }
 }

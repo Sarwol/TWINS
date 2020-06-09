@@ -222,7 +222,7 @@ public class EditorBarajasController implements Initializable {
             JAXBContext context = jaxbResolver.getCtx();
             Marshaller marshaller = context.createMarshaller();
              marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-             marshaller.marshal(coleccionBarajas, new FileWriter("coleccion.xml"));
+             marshaller.marshal(coleccionBarajas, new FileWriter(System.getProperty("user.home") + File.separator + "coleccion.xml"));
         } catch (JAXBException ex) {
             Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -315,7 +315,7 @@ public class EditorBarajasController implements Initializable {
         Unmarshaller unmarshaller;
         try {
             unmarshaller = context.createUnmarshaller();
-            coleccion = (Coleccion) unmarshaller.unmarshal(new File("coleccion.xml"));
+            coleccion = (Coleccion) unmarshaller.unmarshal(new File(System.getProperty("user.home") + File.separator + "coleccion.xml"));
         } catch (JAXBException ex) {
             Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
         }

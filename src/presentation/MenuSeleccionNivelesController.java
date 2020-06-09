@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -124,7 +125,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     } 
   }
   
-  private void openLevel(Button b, Label l, int p) throws IOException {
+  public void openLevel(Button b, Label l, int p) throws IOException {
     FXMLLoader myLoader = new FXMLLoader(getClass().getResource("JuegoNiveles.fxml"));
     Parent root = myLoader.<Parent>load();
     JuegoNivelesController juegoNivelesController = myLoader.<JuegoNivelesController>getController();
@@ -141,103 +142,117 @@ public class MenuSeleccionNivelesController implements Initializable {
   }
   
   @FXML
-  private void selectLevel1_onClick(ActionEvent event) {
-    nivel = "nivel1.ser";
-    try {
-      openLevel(this.b2, this.l1, 0);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel2_onClick(ActionEvent event) {
-    nivel = "nivel2.ser";
-    try {
-      openLevel(this.b3, this.l2, 1);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel3_onClick(ActionEvent event) {
-    nivel = "nivel3.ser";
-    try {
-      openLevel(this.b4, this.l3, 2);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel4_onClick(ActionEvent event) {
-    nivel = "nivel4.ser";
-    try {
-      openLevel(this.b5, this.l4, 3);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel5_onClick(ActionEvent event) {
-    nivel = "nivel5.ser";
-    try {
-      openLevel(this.b6, this.l5, 4);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel6_onClick(ActionEvent event) {
-    nivel = "nivel6.ser";
-    try {
-      openLevel(this.b7, this.l6, 5);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel7_onClick(ActionEvent event) {
-    nivel = "nivel7.ser";
-    try {
-      openLevel(this.b8, this.l7, 6);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel8_onClick(ActionEvent event) {
-    nivel = "nivel8.ser";
-    try {
-      openLevel(this.b9, this.l8, 7);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel9_onClick(ActionEvent event) {
-    nivel = "nivel9.ser";
-    try {
-      openLevel(this.b10, this.l9, 8);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
-  }
-  
-  @FXML
-  private void selectLevel10_onClick(ActionEvent event) {
-    nivel = "nivel10.ser";
-    try {
-      openLevel(null, this.l10, 9);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
+  private void levelSelected() {
+      b1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel1.ser";
+            try {
+                openLevel(b2, l1, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      }); 
+      b2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel2.ser";
+            try {
+                openLevel(b3, l2, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel3.ser";
+            try {
+                openLevel(b4, l3, 2);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel4.ser";
+            try {
+                openLevel(b5, l4, 3);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel5.ser";
+            try {
+                openLevel(b6, l5, 4);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel6.ser";
+            try {
+                openLevel(b7, l6, 5);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b7.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel7.ser";
+            try {
+                openLevel(b8, l7, 6);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b8.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel8.ser";
+            try {
+                openLevel(b9, l8, 7);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b9.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel9.ser";
+            try {
+                openLevel(b10, l9, 8);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
+      b10.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent t) {
+            nivel = "nivel10.ser";
+            try {
+                openLevel(null, l10, 9);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          }
+      });
   }
   
   @FXML

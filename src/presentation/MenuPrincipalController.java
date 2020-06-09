@@ -6,7 +6,9 @@
 package presentation;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
@@ -86,6 +88,8 @@ public class MenuPrincipalController implements Initializable {
             progress[i] = false; 
             System.out.println(progress[0]);
         }
+        //Si no existe persistencia de barajas lo creará
+        initDeckPersistence();
     }
 
     private void abrirJuegoLibre(ActionEvent event) throws IOException {
@@ -350,4 +354,23 @@ public class MenuPrincipalController implements Initializable {
                     + "el tablero que ha escogido. Por favor, ajuste el tamaño del tablero o cambie la baraja seleccionada");
             alert.showAndWait();
       }
+    
+    public void initDeckPersistence(){
+        File coleccion = new File(System.getProperty("user.home") + File.separator + "coleccion.xml");
+        System.out.println("EXISTS? coleccion.xml " + coleccion.exists());
+        if(!coleccion.exists()){ // create the file
+            String initialSetup = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<coleccion>\n</coleccion>";
+
+            PrintWriter out = null; 
+            try{
+               out = new PrintWriter(System.getProperty("user.home") + File.separator + "coleccion.xml");
+               out.println(initialSetup);
+            } catch(FileNotFoundException fnfe){
+                System.out.println("Cannot create file 'coleccion.xml'");
+                fnfe.printStackTrace();
+            }
+
+            if(out != null) out.close();
+        }
+    }
 }
