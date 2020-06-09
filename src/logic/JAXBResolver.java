@@ -8,6 +8,7 @@ package logic;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -50,7 +51,7 @@ public class JAXBResolver {
     }
     
     public void setColeccionToXML(Coleccion coleccion) throws JAXBException, IOException{
-       context.createMarshaller().setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            context.createMarshaller().setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         context.createMarshaller().marshal(coleccion, new FileWriter("coleccion.xml"));
     }
 }

@@ -314,7 +314,7 @@ public class MenuPrincipalController implements Initializable {
         if(musicaInicial.isPlaying()) {
             musicaInicial.stop();   
         } else {
-            musicaInicial.play(0.15);    
+            musicaInicial.play(0.05);    
         }
     }
 

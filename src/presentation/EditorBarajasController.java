@@ -336,7 +336,7 @@ public class EditorBarajasController implements Initializable {
                //Image image = new Image(this.getClass().getResource("/images/appImages/muteOffIcon.png").toURI().toString());
                //muteView.setImage(image);
         } else {
-            musicaInicial.play(0.15);
+            musicaInicial.play(0.05);
                //Image image = new Image(this.getClass().getResource("/images/appImages/muteOnIcon.png").toURI().toString());
                //muteView.setImage(image);
         }

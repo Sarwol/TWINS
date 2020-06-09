@@ -8,7 +8,9 @@ package presentation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -157,7 +159,8 @@ public class JuegoNivelesController extends JuegoController {
     private Nivel loadLevel(String fileName) {
         Nivel nivel = null;
         try {
-            FileInputStream fileIn = new FileInputStream("." + File.separator + "src" + File.separator + "levels" + File.separator + fileName);
+            //FileInputStream fileIn = new FileInputStream("." + File.separator + "src" + File.separator + "levels" + File.separator + fileName);
+            InputStream fileIn = this.getClass().getResourceAsStream("/levels/" + fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             nivel = (Nivel) in.readObject();
             in.close();

@@ -258,7 +258,7 @@ public class MenuSeleccionNivelesController implements Initializable {
     if (musica.isPlaying()) {
       musica.stop();
     } else {
-      musica.play(0.15);
+      musica.play(0.05);
     } 
   }
 }
