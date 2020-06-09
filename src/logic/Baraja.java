@@ -186,11 +186,11 @@ public class Baraja implements Iterable<Carta> {
         return new Deck(nombre, convertirCards() , pathImagenReverso, categorias);
     }
 
-    public List<Integer> getListaNumCategorias(){
+    public List<Integer> getListaNumCategorias(int tamañoTablero){
         List<Integer> lista = new ArrayList<Integer>();
         int contadorCategoria = 0;
         for(int i =0; i < categorias.size(); i++){
-            for(int j = 0; j < cartas.size(); j++){
+            for(int j = 0; j < tamañoTablero/2; j++){
                 if(cartas.get(j).getCategoria().equals(categorias.get(i)))
                   contadorCategoria++;  
             }
@@ -200,7 +200,6 @@ public class Baraja implements Iterable<Carta> {
         
         return lista;
     }
-    
     @Override
     public String toString(){
         String thisBaraja = nombre + ": {";

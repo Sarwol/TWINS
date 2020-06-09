@@ -64,12 +64,10 @@ public class PartidaCategoriaController extends JuegoLibreController {
                     // CAMBIO CATEGORIA
                     indiceCat++;
                     contador = 0;
-                    //try{
                     if(indiceCat < barajaCatActual.getCategorias().size()){
                         categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
                         categoriaLabel.setText(categoriaActual.toString());
-                    }//} catch(Exception e){categoriaLabel.setText("FIN!!");} 
-                    else {categoriaLabel.setText("FIN!!");}
+                    } else {categoriaLabel.setText("FIN!!");}
                 }
             } else {
                 puntuacion.restarPuntos();
@@ -98,7 +96,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
     public void recibirParametros(){
         super.recibirParametros();
        // CAMBIO CATEGORIA
-        listaNumCategorias = barajaCatActual.getListaNumCategorias();
+        listaNumCategorias = barajaCatActual.getListaNumCategorias(parametros.getAnchuraTablero()*parametros.getLarguraTablero());
         categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
         categoriaLabel.setText(categoriaActual.toString());
     }
