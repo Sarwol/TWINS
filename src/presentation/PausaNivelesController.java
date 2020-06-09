@@ -28,7 +28,7 @@ import static presentation.ParametrosPartidaController.*;
  *
  * @author User
  */
-public class PausaNivelesController extends JuegoLibreController implements Initializable {    
+public class PausaNivelesController implements Initializable {    
     @FXML
     private Button resume;
     @FXML
@@ -93,7 +93,7 @@ public class PausaNivelesController extends JuegoLibreController implements Init
         thisStage.close();
         //AudioClip vuelta_cancion = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
         //vuelta_cancion.play(0.15);
-        MenuSeleccionNivelesController.musica.play(0.15);
+        MenuSeleccionNivelesController.musica.play(0.05);
     }
     
 
@@ -107,4 +107,7 @@ public class PausaNivelesController extends JuegoLibreController implements Init
         this.countdownTurno = countdownTurno;
     }
     
+    public void setAudio(String sonido) {	
+        audio = new AudioClip(this.getClass().getResource(sonido).toString());	
+    }
 }

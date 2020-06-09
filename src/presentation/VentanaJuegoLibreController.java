@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -70,6 +71,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
         //System.out.println(mode);
@@ -94,6 +96,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
@@ -115,6 +118,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
         //System.out.println(mode);
@@ -137,6 +141,7 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
          //System.out.println(mode);

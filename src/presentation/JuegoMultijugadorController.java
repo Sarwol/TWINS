@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
@@ -280,6 +281,7 @@ public class JuegoMultijugadorController extends JuegoController {
         Scene scene = new Scene(root);
         pausaWinStage.setScene(scene);
         pausaWinStage.setTitle("Pausa");
+        pausaWinStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         pausaWinStage.initModality(Modality.APPLICATION_MODAL);
         pausaWinStage.show();
     }

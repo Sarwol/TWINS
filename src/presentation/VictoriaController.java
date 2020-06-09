@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -74,6 +75,7 @@ public class VictoriaController implements Initializable {
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         //stopAudio(cancion);
         Stage thisStage = (Stage) puntu.getScene().getWindow();
         thisStage.close();

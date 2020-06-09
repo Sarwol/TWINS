@@ -66,6 +66,8 @@ public class MenuPrincipalController implements Initializable {
     private Stage winStage;
     public static String mode;
     public Configuracion parametros = Configuracion.getInstance();
+    //Guardar el progreso de los niveles
+    public static Boolean[] progress = new Boolean[10];
     
     /**
      * Initializes the controller class.
@@ -79,7 +81,11 @@ public class MenuPrincipalController implements Initializable {
         //player.play();
         //audio = new AudioClip((this.getClass().getResource("src/music/HOME-Resonance.mp3").toString()));
         musicaInicial = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
-        musicaInicial.play(0.15);
+        musicaInicial.play(0.05);
+        for (int i = 0; i < 10; i++){
+            progress[i] = false; 
+            System.out.println(progress[0]);
+        }
     }
 
     private void abrirJuegoLibre(ActionEvent event) throws IOException {
@@ -95,6 +101,7 @@ public class MenuPrincipalController implements Initializable {
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
         winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.show();
     }
 
@@ -127,6 +134,7 @@ public class MenuPrincipalController implements Initializable {
         // winStage is the stage of VentanaJuegoLibre
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
 
@@ -145,6 +153,7 @@ public class MenuPrincipalController implements Initializable {
         // winStage is the stage of VentanaJuegoLibre
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
@@ -210,6 +219,7 @@ public class MenuPrincipalController implements Initializable {
             //we asign new scene to current stage/window
             winStage.setScene(scene);
             winStage.setTitle("TWINS");
+            winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
             winStage.initModality(Modality.APPLICATION_MODAL);
             winStage.show();
         } else barajaNoCompatible();
@@ -233,6 +243,7 @@ public class MenuPrincipalController implements Initializable {
             //we asign new scene to current stage/window
             winStage.setScene(scene);
             winStage.setTitle("TWINS");
+            winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
             winStage.initModality(Modality.APPLICATION_MODAL);
             winStage.show();
         } else barajaNoCompatible();
@@ -257,6 +268,7 @@ public class MenuPrincipalController implements Initializable {
             //we asign new scene to current stage/window
             winStage.setScene(scene);
             winStage.setTitle("TWINS");
+            winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
             winStage.initModality(Modality.APPLICATION_MODAL);
             winStage.show();
             //System.out.println(mode);
@@ -291,6 +303,7 @@ public class MenuPrincipalController implements Initializable {
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
@@ -324,6 +337,7 @@ public class MenuPrincipalController implements Initializable {
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
