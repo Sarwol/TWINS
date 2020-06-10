@@ -24,16 +24,6 @@ public class PartidaPorCartaController extends JuegoLibreController {
     private Carta cartaAEncontrar;
 
     /**
-     * Initializes the controller class.
-     */
-    
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
-//        super.initialize(url, rb);
-//        
-//    }
-
-    /**
      * Looks for cards that haven't been found and chooses a random one among
      * them.
      */
@@ -75,7 +65,6 @@ public class PartidaPorCartaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 this.seleccionarCartaAEncontrar();
                 audioOK.play(0.1);
-                //setTimer(duracionTurno, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");

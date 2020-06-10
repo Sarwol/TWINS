@@ -33,21 +33,6 @@ public abstract class JuegoLibreController extends JuegoController {
     //Objeto configuración (parámetros default si es la primera vez que se crea)
     public Configuracion parametros = Configuracion.getInstance();
 
-    /**
-     * Initializes the controller class.
-     */
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
-//        // Loads parameters from config class
-//        recibirParametros();
-//        puntuacion = new Puntuacion(0);
-//        setUpPauseMenuAccess();
-//        setUpPairSelection();
-//        setTimers(duracionPartida, duracionTurno);
-//        
-//        configurarTablero();
-//        setAnimation();
-//    }
     @Override
     public void setTimers(int roundDuration, int turnDuration) {
         if (parametros.isLimitePartida()) {
@@ -61,12 +46,10 @@ public abstract class JuegoLibreController extends JuegoController {
     @Override
     public void configurarTablero() {
         Baraja baraja = duplicarCartas(parametros.getBarajaNormal());
-        //configurarTablero(copiaBaraja(parametros.getBarajaNormal()));
         configurarTablero(copiaBaraja(baraja));
     }
 
     public void configurarTablero(Baraja barajaElegida) {
-//        barajaElegida = duplicarCartas(barajaElegida);
         // Add event handlers
         for (Carta carta : barajaElegida) {
 //            System.out.println(carta);
@@ -82,7 +65,6 @@ public abstract class JuegoLibreController extends JuegoController {
             mostrarCartasPrincipio();
         }
         tablero.barajarTablero();
-//        System.out.println(tablero.getChildren().size());
     }
 
     /**
@@ -94,10 +76,6 @@ public abstract class JuegoLibreController extends JuegoController {
      * objetos que contiene
      */
     public Baraja copiaBaraja(Baraja barajaOriginal) {
-//        Baraja nuevaCopiaBaraja = new Baraja(barajaOriginal.getNombre(), 
-//                barajaOriginal.getImagenReverso());
-//        nuevaCopiaBaraja.setCategorias(barajaOriginal.getCategorias());
-//        System.out.println(barajaOriginal + " ANTES DE COPIABARAJA");
         Baraja nuevaCopiaBaraja = new Baraja();
         nuevaCopiaBaraja.setPathImagenReverso(barajaOriginal.getPathImagenReverso());
         nuevaCopiaBaraja.setNombre(barajaOriginal.getNombre());
@@ -109,12 +87,10 @@ public abstract class JuegoLibreController extends JuegoController {
                     cartaOriginal.getCategoria());
             nuevaCopiaBaraja.añadirCarta(nuevaCarta);
         }
-//        System.out.println(nuevaCopiaBaraja + " NUEVA COPIA BARAJA");
         return nuevaCopiaBaraja;
     }
 
     public Baraja duplicarCartas(Baraja baraja) {
-//        System.out.println("Baraja antes de duplicar: " + baraja);
         Baraja barajaDuplicada = new Baraja();
         barajaDuplicada.setNombre(baraja.getNombre());
         barajaDuplicada.setCategorias(baraja.getCategorias());
@@ -124,29 +100,19 @@ public abstract class JuegoLibreController extends JuegoController {
 
             // HAGO COPIA
             Carta cartaDuplicada = new Carta();
-//            try {
-//                //carta.setPathImagenBaraja(this.getClass().getResource("/images/card.png").toURI().toString());
-//            } catch (URISyntaxException ex) {
-//                Logger.getLogger(JuegoLibreController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            System.out.println("Carta a duplicar: " + carta);
+
             cartaDuplicada.setcartaID(carta.getCartaID());
             cartaDuplicada.setCategoria(carta.getCategoria());
             cartaDuplicada.setImagenCarta(carta.getImagenCarta());
             cartaDuplicada.setImagenBaraja(carta.getImagenBaraja());
             cartaDuplicada.setPathImagenBaraja(baraja.getPathImagenReverso());
-//            System.out.println(cartaDuplicada.getPathImagenBaraja());
-//            cartaDuplicada.setPathImagenCarta(carta.getPathImagenCarta());
-//            System.out.println(cartaDuplicada.getPathImagenCarta());
 
             barajaDuplicada.añadirCarta(cartaDuplicada);
         }
 
         for (Carta carta : baraja) {
             barajaDuplicada.añadirCarta(carta);
-
         }
-//        System.out.println("Baraja después de duplicar: " + barajaDuplicada);
         return barajaDuplicada;
     }
 
@@ -183,7 +149,6 @@ public abstract class JuegoLibreController extends JuegoController {
         victoriaWinStage.setScene(scene);
         victoriaWinStage.initModality(Modality.APPLICATION_MODAL);
         victoriaWinStage.show();
-        //stopAudio(cancion);
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }

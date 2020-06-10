@@ -64,37 +64,6 @@ public class JuegoNivelesController extends JuegoController {
     @FXML
     private Label minPointsLabel;
 
-    /**
-     * Initializes the controller class.
-     */
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
-//
-//        // TODO
-//        //super.initialize(url, rb);
-//        // loads the default parameters
-//        recibirParametros();
-//
-//        // initial score
-//        puntuacion = new Puntuacion(0);
-//        // configures access to the pause menu
-//        setUpPauseMenuAccess();
-//        // Configures pair selection mechanics
-//        setUpPairSelection();
-//        // Specify levels to be loaded
-//        // configures countdowns
-//        setTimers(duracionPartida, duracionTurno);
-//        // initialize tablero
-//        configurarTablero();
-//        // loads the card turning animation
-//        setAnimation();
-//        // Loading the levels
-//        //String [] levels = {"nivel1.ser"};
-//        //niveles = loadLevels(levels);
-//        //setupLevel(0);
-//        // Loads label for minimum required points
-//
-//    }
 
     @Override
     public void configurarTablero() {
@@ -116,19 +85,11 @@ public class JuegoNivelesController extends JuegoController {
      */
     public void setUpLevel(int levelIndex) {
         Nivel nivel = niveles.get(levelIndex);
-//        System.out.println("LEVEL PARAMETERS: " + nivel);
         anchuraTablero = nivel.getBoardHeight();
         longitudTablero = nivel.getBoardWidth();
         duracionPartida = nivel.getTime();
         minPoints = nivel.getMinPoints();
     }
-//    @Override
-//    public void configurarTablero(){
-//        tablero.setFilas(anchuraTablero);
-//        tablero.setColumnas(longitudTablero);
-//        tablero.setBaraja(barajaActual.getCartas());
-//        tablero.barajarTablero();
-//    }
 
     /**
      * Gets a list with all the specified levels
@@ -299,7 +260,6 @@ public class JuegoNivelesController extends JuegoController {
         derrotaWinStage.setScene(scene);
         derrotaWinStage.initModality(Modality.APPLICATION_MODAL);
         derrotaWinStage.show();
-        //stopAudio(cancion);
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
     }

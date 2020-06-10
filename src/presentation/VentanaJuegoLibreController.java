@@ -47,7 +47,6 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        //player.setOnPaused(() -> System.out.println("pausado"));
     }    
 
     @FXML
@@ -70,7 +69,6 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
-        //System.out.println(mode);
     }
 
     @FXML
@@ -85,10 +83,10 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Stage winStage = new Stage();
         ventanaJuegoLibreController.initWindow(winStage);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        //thisStage.close();
-        //parentStage.close();
+        
         //We create the scene foe win1
         Scene scene = new Scene(root);
+        
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
@@ -109,15 +107,16 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         thisStage.close();
         parentStage.close();
+        
         //We create the scene foe win1
         Scene scene = new Scene(root);
+        
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
         winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
-        //System.out.println(mode);
     }
 
     @FXML
@@ -130,22 +129,22 @@ public class VentanaJuegoLibreController extends MenuPrincipalController impleme
         Stage winStage = new Stage();
         partidaCartController.initWindow(winStage, mode);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        thisStage.close();
+        thisStage.close();       
         parentStage.close();
+        
         //We create the scene foe win1
         Scene scene = new Scene(root);
+        
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
         winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
-         //System.out.println(mode);
     }
 
     @FXML
     private void volver(ActionEvent event) throws IOException {
-        //winStage.close();
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
         thisStage.close();
     }

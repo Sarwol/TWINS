@@ -75,11 +75,6 @@ public class MenuPrincipalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
-        //player = new MediaPlayer(cargarCancion("src/music/HOME-Resonance.mp3"));
-        //player.setAutoPlay(true);
-        //player.play();
-        //audio = new AudioClip((this.getClass().getResource("src/music/HOME-Resonance.mp3").toString()));
         musicaInicial = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
         musicaInicial.play(0.05);
         for (int i = 0; i < 10; i++){
@@ -109,22 +104,6 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void abrirNiveles(ActionEvent event) throws IOException {
-        /*
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuSeleccionNiveles.fxml"));
-        Parent root = (Parent) myLoader.load();
-        MenuSeleccionNivelesController menuSeleccionNivelesController = myLoader.<MenuSeleccionNivelesController>getController();
-        Stage winStage = new Stage();
-        Stage thisStage = (Stage) salirButton.getScene().getWindow();
-        menuSeleccionNivelesController.initWindow(winStage);
-        Scene scene = new Scene(root);
-        winStage.setScene(scene);
-        winStage.setTitle("TWINS");
-        winStage.initModality(Modality.APPLICATION_MODAL);
-        winStage.show();
-        // From VentanaJuegoLibre
-        musicaInicial.stop();
-        thisStage.close();
-        */
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuSeleccionNiveles.fxml"));
         Parent root = (Parent) myLoader.load();
         MenuSeleccionNivelesController menuSeleccionNivelesController = myLoader.<MenuSeleccionNivelesController>getController();
@@ -139,7 +118,6 @@ public class MenuPrincipalController implements Initializable {
         winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
-
     }
 
     @FXML
@@ -172,25 +150,12 @@ public class MenuPrincipalController implements Initializable {
         } else {
             System.out.println("CANCEL");
             }
-        //((Stage) ((Node) event.getSource()).getScene().getWindow()).hide();
-        //System.exit(0);
     }
 
     public Media cargarCancion(String cancion) {
         return new Media(new File(cancion).toURI().toString());
     }
 
-    /*public void stopMediaPlayer(){
-        player.stop();
-        player.setOnPaused(() -> System.out.println("pausado"));
-        
-    }
-    
-    public void playMediaPlayer(){
-        player.setAutoPlay(true);
-        player.play();
-    }
-     */
     public void play() {
         musicaInicial.play();
     }
@@ -298,8 +263,6 @@ public class MenuPrincipalController implements Initializable {
         Stage winStage = new Stage();
         juegoMultijugadorController.initWindow(winStage, musicaInicial);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        //thisStage.close();
-        //parentStage.close();
         //We create the scene foe win1
         Scene scene = new Scene(root);
         //we asign new scene to current stage/window
@@ -332,8 +295,6 @@ public class MenuPrincipalController implements Initializable {
         Stage winStage = new Stage();
         ventanaJuegoLibreController.initWindow(winStage);
         Stage thisStage = (Stage) estandarButton.getScene().getWindow();
-        //thisStage.close();
-        //parentStage.close();
         //We create the scene foe win1
         Scene scene = new Scene(root);
         //we asign new scene to current stage/window
@@ -355,7 +316,6 @@ public class MenuPrincipalController implements Initializable {
     
     public void initDeckPersistence(){
         File coleccion = new File(System.getProperty("user.home") + File.separator + "coleccion.xml");
-//        System.out.println("EXISTS? coleccion.xml " + coleccion.exists());
         if(!coleccion.exists()){ // create the file
             String initialSetup = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<coleccion>\n</coleccion>";
 
@@ -367,7 +327,6 @@ public class MenuPrincipalController implements Initializable {
                 System.out.println("Cannot create file 'coleccion.xml'");
                 fnfe.printStackTrace();
             }
-
             if(out != null) out.close();
         }
     }

@@ -84,8 +84,6 @@ public class EditorBarajasController implements Initializable {
 
     Baraja barajaActual;
 
-    //prueba
-    Baraja prueba;
     // Para volver al menú principal
     private Stage winStage;
     private Stage parentStage;
@@ -99,20 +97,11 @@ public class EditorBarajasController implements Initializable {
         try {
             coleccionBarajas = jaxbResolver.getColeccionFromXML();
             barajas = coleccionBarajas.leerBarajas();
-//            System.out.println(barajas);
+
         } catch (JAXBException ex) {
             Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        //prueba
-//        List<Carta> pruebaCartas = new ArrayList<Carta>();
-//        prueba = new Baraja();
-//        prueba.setCategorias(Arrays.asList(
-//                new Categoria("FRUTAS"),
-//                new Categoria("PAJAROS"),
-//                new Categoria("COCHES")
-//        ));
-//        prueba.setNombre("prueba");
         cartas = new ArrayList<Carta>();
 
         barajasObservableList = FXCollections.observableList(barajas);
@@ -121,7 +110,7 @@ public class EditorBarajasController implements Initializable {
         listaBarajas.setCellFactory(c -> new BarajaListCell());
         // Populate card list when clicking a deck
         listaBarajas.getSelectionModel().selectedIndexProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (barajasObservableList.size() > 0) { // can't select if there's nothing to select
+            if (barajasObservableList.size() > 0) { 
                 barajaActual = barajaSeleccionada();
                 cartas = barajaActual.getCartas();
                 cartasObservableList = FXCollections.observableList(cartas);
@@ -153,16 +142,11 @@ public class EditorBarajasController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.showAndWait();
-        //abrirVentana(cargador);
-
         cartaNueva = controladorPareja.devolverCarta();
 
         if (cartaNueva != null) {
             cartaNueva.setcartaID(cartas.size());
             cartasObservableList.add(cartaNueva);
-            //barajaActual.añadirCarta(cartaNueva);
-//            System.out.println("CARTA BUENA " + cartaNueva);
-
         }
     }
 
@@ -191,16 +175,12 @@ public class EditorBarajasController implements Initializable {
     @FXML
     private void eliminarBaraja(ActionEvent event) {
         int posicionBaraja = listaBarajas.getSelectionModel().getSelectedIndex();
-//        System.out.println("INDEX: " + posicionBaraja);
-//        System.out.println("BARAJA AT INDEX: " + barajasObservableList.get(posicionBaraja));
         eliminarSeleccionado(posicionBaraja, barajasObservableList);
     }
 
     @FXML
     private void nuevaImagenReverso(ActionEvent event) {
-//        Image reverso = uploadImage();
         String path = uploadPathImage();
-//        System.out.println("PATH REVERSO:" + path);
         imagenReverso.setImage(new Image(path, 50, 50, false, false));
         barajaActual.setImagenReverso(new Image(path, 50, 50, false, false));
         barajaActual.setPathImagenReverso(path);
@@ -215,15 +195,20 @@ public class EditorBarajasController implements Initializable {
     private void volverAMenuPrincipal(ActionEvent event) {
         List<Deck> decks = new ArrayList();
         for (Baraja baraja : barajas) {
-//            coleccionBarajas.addBaraja(baraja.convertirADeck());
             decks.add(baraja.convertirADeck());
             coleccionBarajas.setBarajas(decks);
         }
+        
+        if(barajas.isEmpty()){
+            coleccionBarajas.getBarajas().clear();
+        }
+        
         try {
             JAXBContext context = jaxbResolver.getCtx();
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(coleccionBarajas, new FileWriter(System.getProperty("user.home") + File.separator + "coleccion.xml"));
+          
         } catch (JAXBException ex) {
             Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -266,7 +251,6 @@ public class EditorBarajasController implements Initializable {
         try {
             path = file.toURI().toString();
         } catch (Exception e) {
-//            System.out.println("PROBLEMA ASIGNANDO URI");
             e.printStackTrace();
         }
         return path;
@@ -323,7 +307,6 @@ public class EditorBarajasController implements Initializable {
         } catch (JAXBException ex) {
             Logger.getLogger(EditorBarajasController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return coleccion.leerBarajas();
     }
 
@@ -336,12 +319,8 @@ public class EditorBarajasController implements Initializable {
     private void muteMusic(MouseEvent event) {
         if (musicaInicial.isPlaying()) {
             musicaInicial.stop();
-            //Image image = new Image(this.getClass().getResource("/images/appImages/muteOffIcon.png").toURI().toString());
-            //muteView.setImage(image);
         } else {
             musicaInicial.play(0.05);
-            //Image image = new Image(this.getClass().getResource("/images/appImages/muteOnIcon.png").toURI().toString());
-            //muteView.setImage(image);
         }
     }
 

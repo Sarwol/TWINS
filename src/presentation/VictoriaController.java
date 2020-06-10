@@ -54,7 +54,6 @@ public class VictoriaController implements Initializable {
     @FXML
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
-        //System.out.println(modo);
         Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -75,7 +74,6 @@ public class VictoriaController implements Initializable {
         winStage.show();
         winStage.setTitle("TWINS");
         winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
-        //stopAudio(cancion);
         Stage thisStage = (Stage) puntu.getScene().getWindow();
         thisStage.close();
     }
@@ -83,7 +81,6 @@ public class VictoriaController implements Initializable {
     void initVictoriaWindow(Stage stage, Puntuacion p, int t, String m) {
         winStage = stage;
         puntu.setText(p.getPuntos() + "");
-        //tempo.setText(t + "");
         modo = m;
     }
 

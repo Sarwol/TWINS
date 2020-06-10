@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,6 +73,8 @@ public class NuevaBarajaController implements Initializable {
         nuevaBaraja = null;
         categorias = new ArrayList<Categoria>();
         categoriaObservableList = FXCollections.observableArrayList(categorias);
+        
+        añadirButton.disableProperty().bind(Bindings.isEmpty(categoriaField.textProperty()));
     }    
 
     @FXML
@@ -82,7 +85,6 @@ public class NuevaBarajaController implements Initializable {
         nuevaBaraja = new Baraja(nombre,cartas,reverso);
         nuevaBaraja.setCategorias(listaCategorias.getItems());
         nuevaBaraja.setPathImagenReverso(pathImagenReverso);
-//        System.out.println(nuevaBaraja.getCategorias());
         cancelar(event);
     }
 
@@ -96,6 +98,7 @@ public class NuevaBarajaController implements Initializable {
         Categoria nueva = new Categoria(categoriaField.getText());
         categoriaObservableList.add(nueva);
         listaCategorias.setItems(categoriaObservableList);
+        categoriaField.clear();
     }
 
     @FXML

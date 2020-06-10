@@ -60,20 +60,7 @@ public class NuevaParejaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cartaNueva = null;
- 
-        
-        
-        
-//        barajaSeleccionada.setCategorias(Arrays.asList(
-//                new Categoria("FRUTAS"),
-//                new Categoria("PAJAROS"),
-//                new Categoria("COCHES")
-//        ));
-        
-//        barajaCategorias = barajaSeleccionada.getCategorias();
-//        categoriasObservableList = FXCollections.observableList(barajaCategorias);
-//        categoriaComboBox.setItems(categoriasObservableList);
-    }
+     }
 
     @FXML
     private void subirImagen(ActionEvent event) {
@@ -88,7 +75,6 @@ public class NuevaParejaController implements Initializable {
         cartaNueva.setCategoria(categoriaComboBox.getSelectionModel().getSelectedItem());
         cartaNueva.setPathImagenCarta(pathImagenCarta);
         cartaNueva.setPathImagenBaraja(reverso);
-//        System.out.println("CARTA:" + cartaNueva);
         cancelar(event);
     }
 
@@ -132,10 +118,6 @@ public class NuevaParejaController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.showAndWait();
-    }
-
-    public FXMLLoader crearCargador(String fxml) {
-        return new FXMLLoader(getClass().getResource(fxml));
     }
     
     public void inicializarBaraja(Baraja baraja){

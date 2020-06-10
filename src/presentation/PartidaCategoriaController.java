@@ -25,7 +25,7 @@ public class PartidaCategoriaController extends JuegoLibreController {
     private Label categoriaLabel;
     
    
-    public List<Integer> listaNumCategorias = new ArrayList<Integer>();
+    public List<Integer> listaNumCategorias = new ArrayList<>();
     public Baraja barajaCatActual = parametros.getBarajaCategoria();
     private Categoria categoriaActual;
     protected int contador = 0;
@@ -57,16 +57,11 @@ public class PartidaCategoriaController extends JuegoLibreController {
                 punt.setText(puntuacion.getPuntos() + "");
                 contador++;
                 audioOK.play(0.1);
-                if (contador == listaNumCategorias.get(indiceCat)*2) {
-                    // CAMBIO CATEGORIA
-                    indiceCat++;
-                    contador = 0;
-                    if(indiceCat < barajaCatActual.getCategorias().size()){
-                        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
-                        categoriaLabel.setText(categoriaActual.toString());
-                    } else {categoriaLabel.setText("FIN!!");}
-                }
-            } else {
+                if (contador == listaNumCategorias.get(indiceCat)) {
+                        // CAMBIO CATEGORIA
+                       cambiarCategoria();
+                    }
+                } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
                 // Wait a specified amount of time before turning the cards back around
@@ -92,9 +87,17 @@ public class PartidaCategoriaController extends JuegoLibreController {
     @Override
     public void recibirParametros(){
         super.recibirParametros();
-       // CAMBIO CATEGORIA
         listaNumCategorias = barajaCatActual.getListaNumCategorias(parametros.getAnchuraTablero()*parametros.getLarguraTablero());
         categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
         categoriaLabel.setText(categoriaActual.toString());
+    }
+    
+    private void cambiarCategoria(){
+         indiceCat++;
+         contador = 0;
+         if(indiceCat < barajaCatActual.getCategorias().size()){
+                        categoriaActual = barajaCatActual.getCategorias().get(indiceCat);
+                        categoriaLabel.setText(categoriaActual.toString());
+         } else {categoriaLabel.setText("FIN!!");} 
     }
 }

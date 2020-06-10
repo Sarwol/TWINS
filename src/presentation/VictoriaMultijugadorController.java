@@ -62,7 +62,6 @@ public class VictoriaMultijugadorController implements Initializable {
     @FXML
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
-        //System.out.println(modo);
         Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -74,8 +73,6 @@ public class VictoriaMultijugadorController implements Initializable {
     private void exit_onClick(ActionEvent event) throws IOException{
         Stage thisStage = (Stage) resetBtn.getScene().getWindow();
         thisStage.close();
-        //AudioClip vuelta_cancion = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
-        //vuelta_cancion.play(0.15);
         JuegoMultijugadorController.musica.play(0.05);
     }
     
