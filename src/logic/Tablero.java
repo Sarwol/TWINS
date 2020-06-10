@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author davit
  */
+//@SuppressWarnings("unchecked")
 public class Tablero extends GridPane {
     private int filas;
     private int columnas;
@@ -29,7 +30,7 @@ public class Tablero extends GridPane {
         baraja = new ArrayList();
     }
     
-    public Tablero(int filas, int columnas, ArrayList<Carta> baraja){
+    public Tablero(int filas, int columnas, List<Carta> baraja){
         this(filas, columnas);
         this.baraja = baraja;
     }
@@ -86,7 +87,7 @@ public class Tablero extends GridPane {
 //                System.out.println("i: " + i + " | j: " + j + " | " + carta);
                 if(carta.getCartaID() == i){
                     copiaBaraja.add(carta);
-//                    System.out.println("ADDED CARD: " + carta);
+                    System.out.println("ADDED CARD: " + carta);
                 }
             }
         }
