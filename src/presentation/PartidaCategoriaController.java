@@ -5,16 +5,13 @@
  */
 package presentation;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
-import logic.Puntuacion;
 
 /**
  * FXML Controller class para Partida por categoría.

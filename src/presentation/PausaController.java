@@ -22,7 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static presentation.ParametrosPartidaController.*;
 
 /**
  * FXML Controller class
@@ -73,7 +72,7 @@ public class PausaController implements Initializable {
 //        if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
             audio.play(0.3);
-            System.out.println("SETUP GAME SONG: " + cancion);
+//            System.out.println("SETUP GAME SONG: " + cancion);
 //        }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);

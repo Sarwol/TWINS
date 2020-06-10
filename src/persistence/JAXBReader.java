@@ -24,9 +24,9 @@ public class JAXBReader {
         JAXBContext context = dr.getCtx();
        
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        Coleccion coleccion = (Coleccion) unmarshaller.unmarshal(new File("coleccion.xml"));
+        Coleccion coleccion = (Coleccion) unmarshaller.unmarshal(new File(System.getProperty("user.home") + File.separator + "coleccion.xml"));
         
-        System.out.println(coleccion.getBarajas());
+//        System.out.println(coleccion.getBarajas());
     }
     
 }

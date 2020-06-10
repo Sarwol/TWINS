@@ -14,11 +14,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -357,7 +355,7 @@ public class MenuPrincipalController implements Initializable {
     
     public void initDeckPersistence(){
         File coleccion = new File(System.getProperty("user.home") + File.separator + "coleccion.xml");
-        System.out.println("EXISTS? coleccion.xml " + coleccion.exists());
+//        System.out.println("EXISTS? coleccion.xml " + coleccion.exists());
         if(!coleccion.exists()){ // create the file
             String initialSetup = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<coleccion>\n</coleccion>";
 

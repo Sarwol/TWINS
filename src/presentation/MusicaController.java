@@ -5,35 +5,20 @@
  */
 package presentation;
 
-import static java.awt.PageAttributes.MediaType.C;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ResourceBundle;
-import static javafx.application.Platform.exit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import static presentation.JuegoLibreController.observPauseList;
-import static presentation.PausaController.pauseMusic;
 
 /**
  * FXML Controller class

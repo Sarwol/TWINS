@@ -8,14 +8,10 @@ package logic;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javafx.scene.image.Image;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import logic.Categoria;
 
 /**
  *
@@ -175,7 +171,7 @@ public class Deck implements Iterable<Card>{
             card.setcartaID(i++);
 //            System.out.println(card.getCartaID());
             Carta carta = new Carta(card.getCartaID(),card.getImagenCarta(),card.getImagenBaraja(),card.getCategoria());
-            System.out.println("PATH PERSISTENCIA: " + card.getCartaID() + "        " + card.getImagenBaraja());
+//            System.out.println("PATH PERSISTENCIA: " + card.getCartaID() + "        " + card.getImagenBaraja());
             cartas.add(carta);
         }
         return cartas;

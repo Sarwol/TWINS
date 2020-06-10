@@ -5,7 +5,6 @@
  */
 package presentation;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -16,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 import logic.Baraja;
 import logic.Carta;
 import logic.Categoria;
@@ -85,7 +82,7 @@ public class NuevaBarajaController implements Initializable {
         nuevaBaraja = new Baraja(nombre,cartas,reverso);
         nuevaBaraja.setCategorias(listaCategorias.getItems());
         nuevaBaraja.setPathImagenReverso(pathImagenReverso);
-        System.out.println(nuevaBaraja.getCategorias());
+//        System.out.println(nuevaBaraja.getCategorias());
         cancelar(event);
     }
 

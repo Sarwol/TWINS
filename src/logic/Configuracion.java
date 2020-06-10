@@ -346,14 +346,14 @@ public class Configuracion {
             e.printStackTrace();
         }
         if (barajaCartas == null) {
-            System.out.println("BARAJA IS NULL!!!!");
+//            System.out.println("BARAJA IS NULL!!!!");
         }
         try {
             barajaCartas.setPathImagenReverso(this.getClass().getResource("/images/card.png").toURI().toString());
         } catch (URISyntaxException ex) {
             Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(barajaCartas.getPathImagenReverso() + " ajhksbdalhsijkbdasjkhdbaskjdbnaskjdbaskjdbaskjdbaskjb");
+//        System.out.println(barajaCartas.getPathImagenReverso() + " ajhksbdalhsijkbdasjkhdbaskjdbnaskjdbaskjdbaskjdbaskjb");
         return barajaCartas;
     }
     
@@ -383,7 +383,7 @@ public class Configuracion {
                     carta.setCategoria(new Categoria("PAJAROS"));
                 }
                 baraja.add(carta);
-                System.out.println("CARTA CREADA: " + carta);
+//                System.out.println("CARTA CREADA: " + carta);
             }
 
 //        }
@@ -391,7 +391,7 @@ public class Configuracion {
         laBaraja.setCategorias(Arrays.asList(new Categoria("FRUTAS"), new Categoria("PAJAROS")));
         laBaraja.setPathImagenReverso(this.getClass().getResource("/images/card.png").toURI().toString());
         }catch(URISyntaxException e){e.printStackTrace();}
-        System.out.println(laBaraja.getPathImagenReverso() + " ajhksbdalhsijkbdasjkhdbaskjdbnaskjdbaskjdbaskjdbaskjb");
+//        System.out.println(laBaraja.getPathImagenReverso() + " ajhksbdalhsijkbdasjkhdbaskjdbnaskjdbaskjdbaskjdbaskjb");
         return laBaraja;
     }
 }

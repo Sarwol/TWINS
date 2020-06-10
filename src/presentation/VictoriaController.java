@@ -21,7 +21,6 @@ import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import logic.Puntuacion;
 
 /**

@@ -13,15 +13,10 @@ import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.media.AudioClip;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static presentation.ParametrosPartidaController.*;
 
 /**
  * FXML Controller class
@@ -72,7 +67,7 @@ public class PausaNivelesController implements Initializable {
 //        if(cancionActual != null /*&& cancionActual != ""*/){
             setAudio(cancion);
             audio.play(0.3);
-            System.out.println("SETUP GAME SONG: " + cancion);
+//            System.out.println("SETUP GAME SONG: " + cancion);
 //        }
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);

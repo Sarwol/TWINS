@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.media.AudioClip;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import logic.Puntuacion;
 

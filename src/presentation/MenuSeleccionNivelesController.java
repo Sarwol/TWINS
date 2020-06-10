@@ -23,7 +23,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static presentation.MenuPrincipalController.musicaInicial;
 
 /**
  * FXML Controller class
@@ -259,7 +258,7 @@ public class MenuSeleccionNivelesController implements Initializable {
   private void volver_onClick(ActionEvent event) {
     Stage thisStage = (Stage)this.b1.getScene().getWindow();
     thisStage.close();
-    System.out.println("Esto es: " + MenuPrincipalController.progress[0]);
+//    System.out.println("Esto es: " + MenuPrincipalController.progress[0]);
   }
   
   void initWindow(Stage stage, Stage pStage, AudioClip mI) {

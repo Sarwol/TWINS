@@ -6,8 +6,6 @@
 package presentation;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -16,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -94,7 +91,7 @@ public class JuegoMultijugadorController extends JuegoController {
         }
         tablero.setBaraja(barajaActual.getCartas());
         tablero.barajarTablero();
-        System.out.println("FINISHED SETTING DECK");
+//        System.out.println("FINISHED SETTING DECK");
     }
 
     @Override
@@ -120,7 +117,7 @@ public class JuegoMultijugadorController extends JuegoController {
         puntuacion = puntuacionJugador1;
         puntosJugador1.setStyle("-fx-font-weight: bold;");
         punt = puntJugador1;
-        System.out.println("RECEIVING PARAMETERS TO JUEGOMULTIJUGADOR");
+//        System.out.println("RECEIVING PARAMETERS TO JUEGOMULTIJUGADOR");
     }
 
     @Override

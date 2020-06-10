@@ -5,16 +5,13 @@
  */
 package presentation;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,9 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 import logic.Baraja;
-import logic.Card;
 import logic.Carta;
 import logic.Categoria;
 
@@ -93,7 +88,7 @@ public class NuevaParejaController implements Initializable {
         cartaNueva.setCategoria(categoriaComboBox.getSelectionModel().getSelectedItem());
         cartaNueva.setPathImagenCarta(pathImagenCarta);
         cartaNueva.setPathImagenBaraja(reverso);
-        System.out.println("CARTA:" + cartaNueva);
+//        System.out.println("CARTA:" + cartaNueva);
         cancelar(event);
     }
 

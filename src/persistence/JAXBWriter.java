@@ -60,6 +60,6 @@ public class JAXBWriter {
        
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        marshaller.marshal(coleccion, new FileWriter("coleccion.xml"));
+        marshaller.marshal(coleccion, new FileWriter(System.getProperty("user.home") + File.separator + "coleccion.xml"));
     }
 }

@@ -6,9 +6,6 @@
 package presentation;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -85,7 +82,7 @@ public abstract class JuegoLibreController extends JuegoController {
             mostrarCartasPrincipio();
         }
         tablero.barajarTablero();
-        System.out.println(tablero.getChildren().size());
+//        System.out.println(tablero.getChildren().size());
     }
 
     /**
@@ -112,7 +109,7 @@ public abstract class JuegoLibreController extends JuegoController {
                     cartaOriginal.getCategoria());
             nuevaCopiaBaraja.añadirCarta(nuevaCarta);
         }
-        System.out.println(nuevaCopiaBaraja + " NUEVA COPIA BARAJA");
+//        System.out.println(nuevaCopiaBaraja + " NUEVA COPIA BARAJA");
         return nuevaCopiaBaraja;
     }
 
@@ -132,7 +129,7 @@ public abstract class JuegoLibreController extends JuegoController {
 //            } catch (URISyntaxException ex) {
 //                Logger.getLogger(JuegoLibreController.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-            System.out.println("Carta a duplicar: " + carta);
+//            System.out.println("Carta a duplicar: " + carta);
             cartaDuplicada.setcartaID(carta.getCartaID());
             cartaDuplicada.setCategoria(carta.getCategoria());
             cartaDuplicada.setImagenCarta(carta.getImagenCarta());

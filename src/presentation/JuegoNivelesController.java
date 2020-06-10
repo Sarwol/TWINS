@@ -5,16 +5,11 @@
  */
 package presentation;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -121,7 +116,7 @@ public class JuegoNivelesController extends JuegoController {
      */
     public void setUpLevel(int levelIndex) {
         Nivel nivel = niveles.get(levelIndex);
-        System.out.println("LEVEL PARAMETERS: " + nivel);
+//        System.out.println("LEVEL PARAMETERS: " + nivel);
         anchuraTablero = nivel.getBoardHeight();
         longitudTablero = nivel.getBoardWidth();
         duracionPartida = nivel.getTime();

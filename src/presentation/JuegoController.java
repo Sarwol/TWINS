@@ -383,7 +383,7 @@ public abstract class JuegoController implements Initializable {
             e.printStackTrace();	
         }	
         if (barajaCartas == null) {	
-            System.out.println("BARAJA IS NULL!!!!");	
+//            System.out.println("BARAJA IS NULL!!!!");	
         }	
         return barajaCartas;	
     }	
