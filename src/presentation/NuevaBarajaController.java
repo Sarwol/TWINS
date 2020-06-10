@@ -82,7 +82,6 @@ public class NuevaBarajaController implements Initializable {
         nuevaBaraja = new Baraja(nombre,cartas,reverso);
         nuevaBaraja.setCategorias(listaCategorias.getItems());
         nuevaBaraja.setPathImagenReverso(pathImagenReverso);
-//        System.out.println(nuevaBaraja.getCategorias());
         cancelar(event);
     }
 
