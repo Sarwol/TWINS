@@ -141,12 +141,14 @@ public class ParametrosPartidaController implements Initializable {
     protected List<String> gameSongList = new ArrayList<>();
     public static String cancionActual;
     public static boolean sinMusica = false;
-    ////////////////////////////////////////////////////////////////////////////////
 
     //Parámetro de la Partida
     //Parámetros
+    
     protected List<Integer> tamañoTablero = new ArrayList<>();
+    
     //Parámetros que actualizarán los datos de la siguiente partida
+    
     public static int nuevaLargura = Configuracion.LARGURA_TABLERO_DEFAULT;
     public static int nuevaAnchura = Configuracion.ANCHURA_TABLERO_DEFAULT;
     public static int nuevoTiempoTurno = Configuracion.TIEMPO_TURNO_DEFAULT;
@@ -164,26 +166,23 @@ public class ParametrosPartidaController implements Initializable {
     public static String sonidoActualGiro = "/music/flip.wav";
 
     //Barajas
-    /*Baraja barajaDefault = generarBaraja(24, "card", "Baraja1");
-    Baraja baraja2 = generarBaraja(24, "fruit", "Baraja2");*/
     public List<Baraja> listaBarajas;
     public static Baraja barajaNormalActual;
     public static Baraja barajaCategoriaActual;
     private Baraja barajaActual = parametros.getBarajaNormal();
     public static String imagenCarta = "fruit";
-    ////////////////////////////////////////////////////////////////////////////////////         
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Populates interfaces with latest parameters
         loadCurrentParameters();
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         //Barajas
         barajaNormalActual = parametros.getBarajaNormal();
         barajaCategoriaActual = parametros.getBarajaCategoria();
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         populateFields();
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         //Música de la partida
         ObservableList<String> itemsSong = FXCollections.observableArrayList(gameSongList);
         desplegableMusica.setItems(itemsSong);
@@ -191,7 +190,7 @@ public class ParametrosPartidaController implements Initializable {
 
         setAudio(cancionActual);
         audio.stop();
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         barajasBox.setCellFactory(new Callback<ListView<Baraja>, ListCell<Baraja>>() {
             @Override
             public ListCell<Baraja> call(ListView<Baraja> p) {
@@ -306,7 +305,6 @@ public class ParametrosPartidaController implements Initializable {
         normal.setSelected(true);
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
     //Métodos Música
     @FXML
     private void playGameMusic(ActionEvent event) {
@@ -355,7 +353,6 @@ public class ParametrosPartidaController implements Initializable {
         }
 
     }
-    ///////////////////////////////////////////////////////////////////////////////////
 
     //Métodos Parámetros de Partida
     public void setComboBox(int i, int j, int k) {
@@ -386,7 +383,6 @@ public class ParametrosPartidaController implements Initializable {
     }
     //Métodos de Efectos de Partida
 
-    //////////////////////////////////////////////////////////////////////////////////////
     //Métodos de los Efectos
     @FXML
     private void disableCardTime(ActionEvent event) {

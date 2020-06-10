@@ -29,21 +29,15 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @FXML
     private Button volerButton;
     
-   
-    
-    
-    //public String cancion;
     public static String cancionActual;
-    
     
     private MediaPlayer mediaplayer;
     protected List<String> lista = new ArrayList<String>();
-   
     
     private Stage winStage;
-    @FXML
-    private ComboBox<String> desplegableMusica;
     
+    @FXML
+    private ComboBox<String> desplegableMusica;   
 
     /**
      * Initializes the controller class.
@@ -51,9 +45,6 @@ public class MusicaController extends JuegoLibreController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        /*if(cancionActual != null) 
-            audio.stop();
-        */
         setLista();
         ObservableList<String> items = FXCollections.observableArrayList(lista);
         desplegableMusica.setItems(items);
@@ -71,58 +62,38 @@ public class MusicaController extends JuegoLibreController implements Initializa
 	if(cancionActual != null){
             audio.stop();
             setAudio(cancionActual);
-        }
-         
+        }     
         seleccionarCancion();
-        //cancionActual = cancion;
         winStage.hide(); 
         
     }
 
     private void elegirCancion1(ActionEvent event) {
         audio.stop();
-       
         cancionActual = "/music/Cancion1.mp3";
         setAudio(cancionActual);
-        audio.play(0.5);
-        
-        
-        
+        audio.play(0.5);   
     }
     private void elegirCancion2(ActionEvent event) {
         audio.stop();
-        
-       
         cancionActual = "/music/Cancion2.mp3";
         setAudio(cancionActual);
         audio.play(0.5);
-         //cancion = new File("Cancion2.mp3").toURI().toString();
-    
     }
 
     private void elegirCancion3(ActionEvent event) {
-        //if(songIsPlaying(cancion))
-            audio.stop();
-        
-        //manejarCanciones(cancion3RadioButton);
+        audio.stop();       
         cancionActual = "/music/Cancion3.mp3";
-         setAudio(cancionActual);
+        setAudio(cancionActual);
         audio.play(0.5);
-         //cancion = new File("Cancion3.mp3").toURI().toString();
     }
 
     private void elegirCancion4(ActionEvent event) {
-        //if(songIsPlaying(cancion))
-            audio.stop();
-        
-        //manejarCanciones(cancion4RadioButton);
+        audio.stop();
         cancionActual = "/music/Cancion4.mp3";
          setAudio(cancionActual);
          audio.play(0.3);
-         //cancion = new File("Cancion4.mp3").toURI().toString();
     }
-
-  
      
     void initMusicaWindow(Stage stage) {
         winStage = stage;

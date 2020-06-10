@@ -52,7 +52,6 @@ public class VictoriaNivelesController implements Initializable {
     @FXML
     private void reset_onClick(ActionEvent event) throws IOException {
         winStage.close();
-        //System.out.println(modo);
         Parent root = FXMLLoader.load(getClass().getResource(modo));
         Scene scene = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -74,7 +73,6 @@ public class VictoriaNivelesController implements Initializable {
     void initVictoriaWindow(Stage stage, Puntuacion p, int t, String m) {
         winStage = stage;
         puntu.setText(p.getPuntos() + "");
-        //tempo.setText(t + "");
         modo = m;
     }
     

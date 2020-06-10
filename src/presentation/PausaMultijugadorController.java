@@ -49,31 +49,19 @@ public class PausaMultijugadorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        //audio.stop();
         pauseMusic = new AudioClip(this.getClass().getResource("/music/cancionPausa.mp3").toString());
         pauseMusic.play(0.07);
-        /*if(cancionActual != null) {
-            setAudio(cancionActual);
-            audio.stop();
-        }
-        
-        cancionActual = cancion;*/
     }    
 
     @FXML
     private void resume_onClick(ActionEvent event) throws IOException {
-       //try{
-//        cancion = cancionActual;
-//        if(cancionActual != null /*&& cancionActual != ""*/){
-            setAudio(cancion);
-            audio.play(0.3);
-//            System.out.println("SETUP GAME SONG: " + cancion);
-//        }
+        setAudio(cancion);
+        audio.play(0.3);
+
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
         countdownPartida.play();
         countdownTurno.play();
-       //} catch (Exception e){}
         winStage.hide(); 
     }
 
@@ -86,8 +74,6 @@ public class PausaMultijugadorController implements Initializable {
         parentStage.close();
         Stage thisStage = (Stage) resume.getScene().getWindow();
         thisStage.close();
-        //AudioClip vuelta_cancion = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
-        //vuelta_cancion.play(0.15);
         JuegoMultijugadorController.musica.play(0.05);
     }
     

@@ -58,28 +58,6 @@ public class JuegoMultijugadorController extends JuegoController {
     public static AudioClip musica;
     private Stage winStage;
 
-    /**
-     * Initializes the controller class.
-     */
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {
-//        // TODO
-//        // loads the default parameters
-//        recibirParametros();                        // abstract
-//        // initial score
-//        puntuacion = new Puntuacion(0);             // same for all game modes
-//        // configures access to the pause menu
-//        setUpPauseMenuAccess();                     // same for all game modes
-//        // Configures pair selection mechanics
-//        setUpPairSelection();                       // same for all game modes
-//        // configures countdowns
-//        setTimers(duracionPartida, duracionTurno);  // same for all game modes
-//        // initialize tablero
-//        configurarTablero();                        // abstract
-//        // loads the card turning animation
-//        setAnimation();
-//    }
-//    
     @Override
     public void configurarTablero() {
         barajaActual = generarBaraja(longitudTablero * anchuraTablero, "fruit", "Baraja Default");
@@ -91,7 +69,6 @@ public class JuegoMultijugadorController extends JuegoController {
         }
         tablero.setBaraja(barajaActual.getCartas());
         tablero.barajarTablero();
-//        System.out.println("FINISHED SETTING DECK");
     }
 
     @Override
@@ -117,7 +94,6 @@ public class JuegoMultijugadorController extends JuegoController {
         puntuacion = puntuacionJugador1;
         puntosJugador1.setStyle("-fx-font-weight: bold;");
         punt = puntJugador1;
-//        System.out.println("RECEIVING PARAMETERS TO JUEGOMULTIJUGADOR");
     }
 
     @Override
@@ -138,7 +114,6 @@ public class JuegoMultijugadorController extends JuegoController {
                 puntuacion.sumarPuntos();
                 audioOK.play(0.1);
                 punt.setText(puntuacion.getPuntos() + "");
-                //setTimer(duracionTurno, tiempoTurno);
             } else {
                 puntuacion.restarPuntos();
                 punt.setText(puntuacion.getPuntos() + "");
@@ -184,10 +159,8 @@ public class JuegoMultijugadorController extends JuegoController {
                         parSeleccionado.remove(0);
                     }
                     switchPlayers();
-//                    System.out.println("RESETTING TURN TIME");
                 }
                 tiempoTurno.setText((tiempoActualTurno--) + "");
-//                System.out.println("DECREASING TURN TIME");
 
             }
         }));
@@ -244,7 +217,6 @@ public class JuegoMultijugadorController extends JuegoController {
         victoriaWinStage.setScene(scene);
         victoriaWinStage.initModality(Modality.APPLICATION_MODAL);
         victoriaWinStage.show();
-        //stopAudio(cancion);
         Stage thisStage = (Stage) tablero.getScene().getWindow();
         thisStage.close();
         
@@ -258,8 +230,6 @@ public class JuegoMultijugadorController extends JuegoController {
         winStage = stage;
         musica = mI;
         modo = "JuegoMultijugador.fxml";
-        //System.out.println("INIT WINDOW");
-
     }
     
     @FXML

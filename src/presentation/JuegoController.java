@@ -290,7 +290,6 @@ public abstract class JuegoController implements Initializable {
     public void resetTurnCountdown() {	
         // Reset turn countdown	
         tiempoActualTurno = duracionTurno;	
-        //tiempoTurno.setText(tiempoActualTurno + "");	
     }	
 
     /**	
@@ -320,15 +319,8 @@ public abstract class JuegoController implements Initializable {
                     carta.turn();	
                     turnAnimation.setNode(carta);	
                     turnAnimation.play();	
-//                    System.out.println("CARTA:" + carta);	
                 }	
                 cartasPorGirar.clear();	
-//                carta1.turn();	
-//                turnAnimation.setNode(carta1);	
-//                turnAnimation.play();	
-//                carta2.turn();	
-//                turnAnimation.setNode(carta2);	
-//                turnAnimation.play();	
             }	
         });	
         new Thread(waitTurnCards).start();	
@@ -362,13 +354,11 @@ public abstract class JuegoController implements Initializable {
             return null;	
         }	
         try {	
-
             List<Carta> baraja = new ArrayList<>();	
             Image deckCardImage = new Image(this.getClass().getResource("/images/card.png").toURI().toString(), 50, 50, false, false);	
-
+            
             for (int i = 0; i < 2; i++) {	
                 for (int j = 0; j < numCartas / 2; j++) {	
-                    //System.out.println(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png"));	
                     Image currentCardImage = new Image(this.getClass().getResource("/images/" + cartaModelo + (j + 1) + ".png").toURI().toString(), 50, 50, false, false);	
 
                     Carta carta = new Carta(j, currentCardImage, deckCardImage);	
@@ -383,7 +373,6 @@ public abstract class JuegoController implements Initializable {
             e.printStackTrace();	
         }	
         if (barajaCartas == null) {	
-//            System.out.println("BARAJA IS NULL!!!!");	
         }	
         return barajaCartas;	
     }	
@@ -415,7 +404,6 @@ public abstract class JuegoController implements Initializable {
 
     public void setAudio(String sonido) {	
         audio = new AudioClip(this.getClass().getResource(sonido).toString());	
-        //note.play();	
     }	
 
     @FXML	

@@ -67,20 +67,14 @@ public class PausaController implements Initializable {
 
     @FXML
     private void resume_onClick(ActionEvent event) throws IOException {
-       //try{
-//        cancion = cancionActual;
-//        if(cancionActual != null /*&& cancionActual != ""*/){
-            setAudio(cancion);
-            audio.play(0.3);
-//            System.out.println("SETUP GAME SONG: " + cancion);
-//        }
+        setAudio(cancion);
+        audio.play(0.3);
         pauseMusic.stop();
         observPauseList.set(0, Boolean.TRUE);
         if(countdownPartida != null && countdownTurno != null){
             countdownPartida.play();
             countdownTurno.play();
         }
-       //} catch (Exception e){}
         winStage.hide(); 
     }
 
@@ -106,7 +100,6 @@ public class PausaController implements Initializable {
         wStage.show();
         wStage.setTitle("TWINS");
         wStage.getIcons().add(new Image("/buttons/twinslogo.png"));
-        //stopAudio(cancion);
         pauseMusic.stop();
         
     }
