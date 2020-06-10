@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -28,7 +29,7 @@ import static presentation.ParametrosPartidaController.*;
  *
  * @author User
  */
-public class PausaController extends JuegoLibreController implements Initializable {    
+public class PausaController implements Initializable {    
     @FXML
     private Button resume;
     @FXML
@@ -105,6 +106,7 @@ public class PausaController extends JuegoLibreController implements Initializab
         wStage.initModality(Modality.APPLICATION_MODAL);
         wStage.show();
         wStage.setTitle("TWINS");
+        wStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         //stopAudio(cancion);
         pauseMusic.stop();
         
@@ -121,4 +123,7 @@ public class PausaController extends JuegoLibreController implements Initializab
         this.countdownTurno = countdownTurno;
     }
     
+    public void setAudio(String sonido) {	
+        audio = new AudioClip(this.getClass().getResource(sonido).toString());	
+    }
 }

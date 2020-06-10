@@ -528,7 +528,7 @@ public class ParametrosPartidaController implements Initializable {
             JAXBContext context = dr.getCtx();
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            coleccion = (Coleccion) unmarshaller.unmarshal(new File("coleccion.xml"));
+            coleccion = (Coleccion) unmarshaller.unmarshal(new File(System.getProperty("user.home") + File.separator + "coleccion.xml"));
         } catch (JAXBException ex) {
             Logger.getLogger(ParametrosPartidaController.class.getName()).log(Level.SEVERE, null, ex);
         }

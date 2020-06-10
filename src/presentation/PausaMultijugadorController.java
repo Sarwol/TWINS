@@ -28,7 +28,7 @@ import static presentation.ParametrosPartidaController.*;
  *
  * @author User
  */
-public class PausaMultijugadorController extends JuegoLibreController implements Initializable {    
+public class PausaMultijugadorController implements Initializable {    
     @FXML
     private Button resume;
     @FXML
@@ -93,7 +93,7 @@ public class PausaMultijugadorController extends JuegoLibreController implements
         thisStage.close();
         //AudioClip vuelta_cancion = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
         //vuelta_cancion.play(0.15);
-        JuegoMultijugadorController.musica.play(0.15);
+        JuegoMultijugadorController.musica.play(0.05);
     }
     
 
@@ -107,4 +107,7 @@ public class PausaMultijugadorController extends JuegoLibreController implements
         this.countdownTurno = countdownTurno;
     }
     
+    public void setAudio(String sonido) {	
+        audio = new AudioClip(this.getClass().getResource(sonido).toString());	
+    }
 }

@@ -20,4 +20,17 @@
             <categoria nombre="VERDURAS"/>
         </categorias>
     </deck>
+    <deck nombre="dfgvhb" imagenReverso="file:/C:/Users/User/Downloads/full-moon-moon-png.jpg">
+        <cartas>
+            <carta cartaID="0" imagenCarta="file:/C:/Users/User/Downloads/mountain-under-starry-sky-1624504.jpg" imagenBaraja="file:/C:/Users/User/Downloads/mountain-under-starry-sky-1624504.jpg">
+                <categoria nombre="GATOS"/>
+            </carta>
+            <carta cartaID="1" imagenCarta="file:/C:/Users/User/Downloads/cereal.jpg" imagenBaraja="file:/C:/Users/User/Downloads/cereal.jpg">
+                <categoria nombre="GATOS"/>
+            </carta>
+        </cartas>
+        <categorias>
+            <categoria nombre="GATOS"/>
+        </categorias>
+    </deck>
 </coleccion>

@@ -8,7 +8,9 @@ package presentation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
@@ -59,6 +62,9 @@ public class JuegoNivelesController extends JuegoController {
     // Para activar el siguiente nivel si se gana el anterior
     private Button nextLevel;
     
+    private Label completeLabel;
+  
+    private int count;
     
     @FXML
     private Label minPointsLabel;
@@ -153,7 +159,8 @@ public class JuegoNivelesController extends JuegoController {
     private Nivel loadLevel(String fileName) {
         Nivel nivel = null;
         try {
-            FileInputStream fileIn = new FileInputStream("." + File.separator + "src" + File.separator + "levels" + File.separator + fileName);
+            //FileInputStream fileIn = new FileInputStream("." + File.separator + "src" + File.separator + "levels" + File.separator + fileName);
+            InputStream fileIn = this.getClass().getResourceAsStream("/levels/" + fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             nivel = (Nivel) in.readObject();
             in.close();
@@ -186,6 +193,7 @@ public class JuegoNivelesController extends JuegoController {
         Scene scene = new Scene(root);
         pausaWinStage.setScene(scene);
         pausaWinStage.setTitle("Pausa");
+        pausaWinStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         pausaWinStage.initModality(Modality.APPLICATION_MODAL);
         pausaWinStage.show();
     }
@@ -214,6 +222,7 @@ public class JuegoNivelesController extends JuegoController {
             ioe.printStackTrace();
         }
 
+        MenuPrincipalController.progress[count] = true;
         return allCardsFound && minScoreReached;
     }
 
@@ -224,6 +233,8 @@ public class JuegoNivelesController extends JuegoController {
         countdownPartida.stop();
         countdownTurno.stop();
 
+        completeLabel.setText("COMPLETED");
+        
         if (nextLevel != null) {
             nextLevel.setDisable(false);
         }
@@ -242,9 +253,11 @@ public class JuegoNivelesController extends JuegoController {
         thisStage.close();
     }
 
-    void initWindow(Stage winStage, Button b) {
+    void initWindow(Stage winStage, Button b, Label l, int c) {
         this.winStage = winStage;
         this.nextLevel = b;
+        this.completeLabel = l;
+        this.count = c;
         modo = "JuegoNiveles.fxml";
 
     }

@@ -6,7 +6,9 @@
 package presentation;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
@@ -66,6 +68,8 @@ public class MenuPrincipalController implements Initializable {
     private Stage winStage;
     public static String mode;
     public Configuracion parametros = Configuracion.getInstance();
+    //Guardar el progreso de los niveles
+    public static Boolean[] progress = new Boolean[10];
     
     /**
      * Initializes the controller class.
@@ -79,7 +83,13 @@ public class MenuPrincipalController implements Initializable {
         //player.play();
         //audio = new AudioClip((this.getClass().getResource("src/music/HOME-Resonance.mp3").toString()));
         musicaInicial = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
-        musicaInicial.play(0.15);
+        musicaInicial.play(0.05);
+        for (int i = 0; i < 10; i++){
+            progress[i] = false; 
+            System.out.println(progress[0]);
+        }
+        //Si no existe persistencia de barajas lo creará
+        initDeckPersistence();
     }
 
     private void abrirJuegoLibre(ActionEvent event) throws IOException {
@@ -95,6 +105,7 @@ public class MenuPrincipalController implements Initializable {
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
         winStage.initModality(Modality.APPLICATION_MODAL);
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.show();
     }
 
@@ -127,6 +138,7 @@ public class MenuPrincipalController implements Initializable {
         // winStage is the stage of VentanaJuegoLibre
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
 
@@ -145,6 +157,7 @@ public class MenuPrincipalController implements Initializable {
         // winStage is the stage of VentanaJuegoLibre
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
@@ -210,6 +223,7 @@ public class MenuPrincipalController implements Initializable {
             //we asign new scene to current stage/window
             winStage.setScene(scene);
             winStage.setTitle("TWINS");
+            winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
             winStage.initModality(Modality.APPLICATION_MODAL);
             winStage.show();
         } else barajaNoCompatible();
@@ -233,6 +247,7 @@ public class MenuPrincipalController implements Initializable {
             //we asign new scene to current stage/window
             winStage.setScene(scene);
             winStage.setTitle("TWINS");
+            winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
             winStage.initModality(Modality.APPLICATION_MODAL);
             winStage.show();
         } else barajaNoCompatible();
@@ -257,6 +272,7 @@ public class MenuPrincipalController implements Initializable {
             //we asign new scene to current stage/window
             winStage.setScene(scene);
             winStage.setTitle("TWINS");
+            winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
             winStage.initModality(Modality.APPLICATION_MODAL);
             winStage.show();
             //System.out.println(mode);
@@ -291,6 +307,7 @@ public class MenuPrincipalController implements Initializable {
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
@@ -301,7 +318,7 @@ public class MenuPrincipalController implements Initializable {
         if(musicaInicial.isPlaying()) {
             musicaInicial.stop();   
         } else {
-            musicaInicial.play(0.15);    
+            musicaInicial.play(0.05);    
         }
     }
 
@@ -324,6 +341,7 @@ public class MenuPrincipalController implements Initializable {
         //we asign new scene to current stage/window
         winStage.setScene(scene);
         winStage.setTitle("TWINS");
+        winStage.getIcons().add(new Image("/buttons/twinslogo.png"));
         winStage.initModality(Modality.APPLICATION_MODAL);
         winStage.show();
     }
@@ -336,4 +354,23 @@ public class MenuPrincipalController implements Initializable {
                     + "el tablero que ha escogido. Por favor, ajuste el tamaño del tablero o cambie la baraja seleccionada");
             alert.showAndWait();
       }
+    
+    public void initDeckPersistence(){
+        File coleccion = new File(System.getProperty("user.home") + File.separator + "coleccion.xml");
+        System.out.println("EXISTS? coleccion.xml " + coleccion.exists());
+        if(!coleccion.exists()){ // create the file
+            String initialSetup = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<coleccion>\n</coleccion>";
+
+            PrintWriter out = null; 
+            try{
+               out = new PrintWriter(System.getProperty("user.home") + File.separator + "coleccion.xml");
+               out.println(initialSetup);
+            } catch(FileNotFoundException fnfe){
+                System.out.println("Cannot create file 'coleccion.xml'");
+                fnfe.printStackTrace();
+            }
+
+            if(out != null) out.close();
+        }
+    }
 }

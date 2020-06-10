@@ -65,7 +65,7 @@ public class VictoriaNivelesController implements Initializable {
     private void exit_onClick(ActionEvent event) throws IOException {
         Stage thisStage = (Stage) puntu.getScene().getWindow();
         thisStage.close();
-        MenuSeleccionNivelesController.musica.play(0.15);
+        MenuSeleccionNivelesController.musica.play(0.05);
     }
 
     @FXML

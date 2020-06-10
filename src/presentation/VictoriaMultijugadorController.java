@@ -81,7 +81,7 @@ public class VictoriaMultijugadorController implements Initializable {
         thisStage.close();
         //AudioClip vuelta_cancion = new AudioClip(this.getClass().getResource("/music/HOME-Resonance.mp3").toString());
         //vuelta_cancion.play(0.15);
-        JuegoMultijugadorController.musica.play(0.15);
+        JuegoMultijugadorController.musica.play(0.05);
     }
     
     void initVictoriaWindow(Stage stage, Puntuacion puntJ1, Puntuacion puntJ2, int t, String m) {
