@@ -25,7 +25,7 @@ public class Puntuacion {
     }
 
     public void setPuntos(int puntuacionFinal) {
-        this.puntos = puntos;
+        this.puntos = puntuacionFinal;
     }
     
     public int sumarPuntos(){

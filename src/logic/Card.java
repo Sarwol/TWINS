@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 
 //@XmlRootElement(name="card")
+@SuppressWarnings("unchecked")
 @XmlType(propOrder={"cartaID","imagenCarta","imagenBaraja","categoria"})
 public class Card {
     
